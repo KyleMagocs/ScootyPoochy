@@ -1,4 +1,7 @@
-from Contexts.game_context import run_game
+from Contexts.game_context import GameContext
+import pygame
 
 if __name__ == "__main__":
-    run_game()
+    pygame.init()
+    game = GameContext()
+    game.run_game()
