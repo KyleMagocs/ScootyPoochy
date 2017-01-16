@@ -2,9 +2,10 @@ from Objects.Player import Player
 
 
 class World:
-    def __init__(self, x_offset):
-        self.Player = None
-        self.x_offset = x_offset
+    def __init__(self, width, x_offset):
+        self.width = width
+        self.x_offset = x_offset * width
+        self.player = Player(init_x=self.x_offset + self.width/2, init_y=700)
         self.y = 0
 
     def load_level(self):
@@ -15,6 +16,10 @@ class World:
         pass
         # TODO:  HANDLE COLLISIONS AND STUFF
 
-    def draw(self):
-        pass
+    def draw(self, screen):
+        self.draw_player(screen)
         # TODO:  DRAW WORLD?
+
+    def draw_player(self, screen):
+        self.player.draw(screen)
+        # TODO: DRAW MY PLAYER
