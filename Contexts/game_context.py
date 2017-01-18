@@ -4,7 +4,7 @@ import pygame
 from Objects.World import World
 
 bg_image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'temp_images', 'background.png')
-player_image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'temp_images', 'player.png')
+player_image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'temp_images', 'TEMPDOG_sprite_temp.png')
 
 MAX_SPEED = 20
 
@@ -71,6 +71,11 @@ class GameContext:
             self.worlds[0].player.angle += 1
             self.worlds[0].player.x += 1  # REMOVE LATER
             pass
+        elif keys[pygame.K_w]:  # TODO:  REMOVE THIS, THAT'S NOT HOW IT WORKS
+            print("W")
+            # push player 1 up
+            self.worlds[0].y += self.worlds[0].player.character.max_speed / 4
+            pass
 
         if keys[pygame.K_LEFT]:
             print("LEFT")
@@ -85,6 +90,12 @@ class GameContext:
             self.worlds[1].player.speed = min(self.worlds[1].player.speed + 1, MAX_SPEED)
             self.worlds[1].player.angle += 1
             self.worlds[1].player.x += 1  # REMOVE LATER
+
+        elif keys[pygame.K_UP]:  # TODO:  REMOVE THIS, THAT'S NOT HOW IT WORKS
+            print("UP")
+            # push player 2 up
+            self.worlds[1].y += self.worlds[1].player.character.max_speed / 4
+            pass
 
     def run_game(self):
         clock = pygame.time.Clock()
