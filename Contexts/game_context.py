@@ -60,42 +60,34 @@ class GameContext:
         if keys[pygame.K_a]:
             print("A")
             # push player 1 left
-            self.worlds[0].player.speed = min(self.worlds[0].player.speed + 1, MAX_SPEED)
-            self.worlds[0].player.angle -= 1
-            self.worlds[0].player.x -= 1  # REMOVE LATER
-            pass
+            self.worlds[0].player.speed = min(self.worlds[0].player.speed + self.worlds[0].player.character.acceleration,
+                                              self.worlds[0].player.character.max_speed)
+            self.worlds[0].player.angle -= self.worlds[0].player.character.handling
+            print(self.worlds[0].player.angle)
+
         elif keys[pygame.K_d]:
             print("D")
             # push player 1 right
-            self.worlds[0].player.speed = min(self.worlds[0].player.speed + 1, MAX_SPEED)
-            self.worlds[0].player.angle += 1
-            self.worlds[0].player.x += 1  # REMOVE LATER
-            pass
-        elif keys[pygame.K_w]:  # TODO:  REMOVE THIS, THAT'S NOT HOW IT WORKS
-            print("W")
-            # push player 1 up
-            self.worlds[0].y += self.worlds[0].player.character.max_speed / 4
-            pass
+            self.worlds[0].player.speed = min(self.worlds[0].player.speed + self.worlds[0].player.character.acceleration,
+                                              self.worlds[0].player.character.max_speed)
+            self.worlds[0].player.angle += self.worlds[0].player.character.handling
+            print(self.worlds[0].player.angle)
 
         if keys[pygame.K_LEFT]:
             print("LEFT")
             # push player 2 left
-            self.worlds[1].player.speed = min(self.worlds[1].player.speed + 1, MAX_SPEED)
-            self.worlds[1].player.angle -= 1
-            self.worlds[1].player.x -= 1  # REMOVE LATER
+            self.worlds[1].player.speed = min(self.worlds[1].player.speed + self.worlds[1].player.character.acceleration,
+                                              self.worlds[1].player.character.max_speed)
+            self.worlds[1].player.angle -= self.worlds[1].player.character.handling
+            print(self.worlds[1].player.angle)
 
         elif keys[pygame.K_RIGHT]:
             print("RIGHT")
             # push player 2 right
-            self.worlds[1].player.speed = min(self.worlds[1].player.speed + 1, MAX_SPEED)
-            self.worlds[1].player.angle += 1
-            self.worlds[1].player.x += 1  # REMOVE LATER
-
-        elif keys[pygame.K_UP]:  # TODO:  REMOVE THIS, THAT'S NOT HOW IT WORKS
-            print("UP")
-            # push player 2 up
-            self.worlds[1].y += self.worlds[1].player.character.max_speed / 4
-            pass
+            self.worlds[1].player.speed = min(self.worlds[1].player.speed + self.worlds[1].player.character.acceleration,
+                                              self.worlds[1].player.character.max_speed)
+            self.worlds[1].player.angle += self.worlds[1].player.character.handling
+            print(self.worlds[1].player.angle)
 
     def run_game(self):
         clock = pygame.time.Clock()
@@ -111,6 +103,8 @@ class GameContext:
                     pass
 
             for world in self.worlds:
+                world.player.speed = max(0, world.player.speed - 0.05)
+                world.update()
                 world.draw(self.screen)
             pygame.display.update()
             clock.tick(fps)

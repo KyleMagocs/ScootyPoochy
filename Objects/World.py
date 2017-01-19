@@ -1,3 +1,5 @@
+import math
+
 from Objects.Level import Level
 from Objects.Player import Player
 
@@ -5,8 +7,10 @@ from Objects.Player import Player
 class World:
     def __init__(self, width, x_offset):
         self.width = width
-        self.level = Level()  # TODO:  GENERATE / LOAD LEVEL INSTEAD OF THIS
         self.x_offset = x_offset * width
+        self.level = Level()  # TODO:  GENERATE / LOAD LEVEL INSTEAD OF THIS
+        self.level.x = self.x_offset
+        self.level.y = 0 - 1600 + 700
         self.player = Player(init_x=self.x_offset + self.width/2, init_y=700)
         self.y = 0
 
@@ -15,20 +19,18 @@ class World:
         # TODO:  PARSE OUT LEVEL OBJECTS INTO LOCAL STORAGE
 
     def update(self):
-        # HANDLE WORLD Y DIRECTION
         # HANDLE PLAYER X DIRECTION
+        self.player.update()
+
+        # HANDLE WORLD Y DIRECTION
+        _update_y = max(0, math.cos(math.fabs(self.player.angle)) * self.player.speed)
+        self.y -= _update_y
+        self.level.update(addtl_x=0, addtl_y=_update_y)
+
         # HANDLE COLLISIONS
-        pass
         # TODO:  HANDLE COLLISIONS AND STUFF
 
     def draw(self, screen):
-        self.draw_level(screen)
-        self.draw_player(screen)
-        # TODO:  DRAW WORLD?
-
-    def draw_level(self, screen):
-        self.level.draw(screen, self.x_offset, self.y)
-
-    def draw_player(self, screen):
+        self.level.draw(screen)
         self.player.draw(screen)
-        # TODO: DRAW MY PLAYER
+        # TODO:  DRAW WORLD?

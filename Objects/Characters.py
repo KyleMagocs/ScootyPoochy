@@ -9,8 +9,8 @@ class CharacterBase:
     sprite_path = None
     portrait_path = None
     sprite = None
-    handling = 20
-    max_speed = 20
+    handling = .5
+    max_speed = 1
     poop_factor = .5
 
     attributes = None
@@ -26,9 +26,9 @@ class CharacterBase:
 class TestCharacter(CharacterBase):
     sprite_path = 'TEMPDOG_sprite_temp.png'
     portrait_path = 'TEMPDOG_PORTRAIT.png'
-    max_speed = 20
-    handling = 20
-    acceleration = 10
+    max_speed = .75
+    handling = .5
+    acceleration = .35
     width = 60
 
     attributes = {
@@ -43,10 +43,10 @@ class TestCharacter(CharacterBase):
 class Doge(CharacterBase):
     sprite_path = 'TEMPDOG_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
     portrait_path = 'TEMPDOG_PORTRAIT.png'
-    max_speed = 20
-    acceleration = 10
+    max_speed = .75
+    acceleration = .35
     width = 60
-    handling = 20
+    handling = .5
     attributes = {
         '+ very meme',
         '- much average'
@@ -60,10 +60,10 @@ class Doge(CharacterBase):
 class Carlos(CharacterBase):
     sprite_path = 'carlos_sprite_temp.png' # TODO: MAKE ACTUAL ART FOR CARLOS
     portrait_path = 'carlos_portrait_temp.png'
-    max_speed = 10
-    acceleration = 20
+    max_speed = .6
+    acceleration = .45
     width = 30
-    handling = 40
+    handling = .8
     attributes = {
         '- lower top speed',
         '+ high acceleration',
