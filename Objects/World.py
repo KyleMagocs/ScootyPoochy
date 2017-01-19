@@ -24,7 +24,7 @@ class World:
 
         # HANDLE WORLD Y DIRECTION
         _update_y = max(0, math.cos(math.fabs(self.player.angle)) * self.player.speed)
-        self.y -= _update_y
+        self.y += _update_y
         self.level.update(addtl_x=0, addtl_y=_update_y)
 
         # HANDLE COLLISIONS

@@ -89,6 +89,9 @@ class GameContext:
             self.worlds[1].player.angle += self.worlds[1].player.character.handling
             print(self.worlds[1].player.angle)
 
+        if keys[pygame.K_ESCAPE]:
+            pygame.quit()
+
     def run_game(self):
         clock = pygame.time.Clock()
         fps = 30

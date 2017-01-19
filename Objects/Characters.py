@@ -28,7 +28,7 @@ class TestCharacter(CharacterBase):
     portrait_path = 'TEMPDOG_PORTRAIT.png'
     max_speed = .75
     handling = .5
-    acceleration = .35
+    acceleration = .4
     width = 60
 
     attributes = {
@@ -58,10 +58,10 @@ class Doge(CharacterBase):
 
 
 class Carlos(CharacterBase):
-    sprite_path = 'carlos_sprite_temp.png' # TODO: MAKE ACTUAL ART FOR CARLOS
+    sprite_path = 'carlos_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR CARLOS
     portrait_path = 'carlos_portrait_temp.png'
     max_speed = .6
-    acceleration = .45
+    acceleration = .5
     width = 30
     handling = .8
     attributes = {
