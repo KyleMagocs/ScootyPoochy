@@ -23,7 +23,7 @@ class World:
         self.player.update()
 
         # HANDLE WORLD Y DIRECTION
-        _update_y = max(0, math.cos(self.player.angle) * self.player.speed)
+        _update_y = max(0, math.cos(self.player.angle * 0.0174533) * self.player.speed)  # 0.0174533 = rad convert
         self.y += _update_y
         self.level.update(addtl_x=0, addtl_y=_update_y)
 

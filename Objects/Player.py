@@ -23,7 +23,7 @@ class Player:
             self.angle = 30
         if self.angle < -30:
             self.angle = -30
-        self.x += math.sin(self.angle) * self.speed
+        self.x -= math.sin(self.angle * 0.0174533) * self.speed  # 0.0174533 = radians convert
 
     def draw(self, screen):
         new_sprite = pygame.transform.rotate(self.orig_sprite, self.angle)
