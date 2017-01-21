@@ -4,12 +4,14 @@ import pygame
 
 IMAGES_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'images', 'characters')
 
+ACCEL_COEF = 8
 
 class CharacterBase:
     sprite_path = None
     portrait_path = None
     sprite = None
     handling = .5
+    acceleration = .5
     max_speed = 1
     poop_factor = .5
 
@@ -20,7 +22,7 @@ class CharacterBase:
 
     def load_sprite(self):
         if self.sprite_path is not None:
-            self.sprite = pygame.image.load(os.path.join(IMAGES_PATH, self.sprite_path))
+            self.sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, self.sprite_path)).convert()
 
 
 class TestCharacter(CharacterBase):

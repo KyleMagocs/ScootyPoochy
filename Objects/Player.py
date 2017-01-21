@@ -1,5 +1,7 @@
 import math
 
+import pygame
+
 
 class Player:
     def __init__(self, init_x=0, init_y=700):
@@ -10,13 +12,19 @@ class Player:
 
         self.jump_state = 0  # 0 = not jumping, 1 = jumping
         self.character = None
+        self.orig_sprite = None
+
+    def set_character(self, character):
+        self.character = character
+        self.orig_sprite = character.sprite
 
     def update(self):
         if self.angle > 30:
             self.angle = 30
         if self.angle < -30:
             self.angle = -30
-        self.x += math.sin(math.fabs(self.angle)) * self.speed
+        self.x += math.sin(self.angle) * self.speed
 
     def draw(self, screen):
-        screen.blit(self.character.sprite, (self.x-self.character.width/2, self.y))
+        new_sprite = pygame.transform.rotate(self.orig_sprite, self.angle)
+        screen.blit(new_sprite, (self.x-self.character.width/2, self.y))

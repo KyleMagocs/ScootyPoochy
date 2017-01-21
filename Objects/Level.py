@@ -4,6 +4,7 @@ from Objects.Theme import TempTheme
 class Level:
     objects = None
     theme = None
+    friction = 0
     x = 0
     y = 0
 

@@ -1,6 +1,7 @@
 import os
 import pygame
 
+from Objects import Characters
 from Objects.World import World
 
 bg_image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'temp_images', 'background.png')
@@ -20,11 +21,12 @@ class GameContext:
     num_players = None
     player_sprites = list()
 
-    def __init__(self, character_list):
+    def __init__(self, screen, character_list):
         self.background = None
         self.num_players = len(character_list)
 
-        self.screen = pygame.display.set_mode(self.size)
+        self.screen = screen
+
         self.objects = pygame.sprite.Group()  # hold level objects
 
         self.worlds = list()
@@ -32,7 +34,7 @@ class GameContext:
         for i in range(0, len(character_list)):
             _world = World(width=(SCREEN_WIDTH / self.num_players), x_offset=i)
             _world.player.y = 700
-            _world.player.character = character_list[i]
+            _world.player.set_character(character_list[i])
             self.worlds.append(_world)
 
         self.players = pygame.sprite.Group()
@@ -60,33 +62,33 @@ class GameContext:
         if keys[pygame.K_a]:
             print("A")
             # push player 1 left
-            self.worlds[0].player.speed = min(self.worlds[0].player.speed + self.worlds[0].player.character.acceleration,
+            self.worlds[0].player.speed = min(self.worlds[0].player.speed + self.worlds[0].player.character.acceleration * Characters.ACCEL_COEF,
                                               self.worlds[0].player.character.max_speed)
-            self.worlds[0].player.angle -= self.worlds[0].player.character.handling
+            self.worlds[0].player.angle += self.worlds[0].player.character.handling
             print(self.worlds[0].player.angle)
 
         elif keys[pygame.K_d]:
             print("D")
             # push player 1 right
-            self.worlds[0].player.speed = min(self.worlds[0].player.speed + self.worlds[0].player.character.acceleration,
+            self.worlds[0].player.speed = min(self.worlds[0].player.speed + self.worlds[0].player.character.acceleration * Characters.ACCEL_COEF,
                                               self.worlds[0].player.character.max_speed)
-            self.worlds[0].player.angle += self.worlds[0].player.character.handling
+            self.worlds[0].player.angle -= self.worlds[0].player.character.handling
             print(self.worlds[0].player.angle)
 
         if keys[pygame.K_LEFT]:
             print("LEFT")
             # push player 2 left
-            self.worlds[1].player.speed = min(self.worlds[1].player.speed + self.worlds[1].player.character.acceleration,
+            self.worlds[1].player.speed = min(self.worlds[1].player.speed + self.worlds[1].player.character.acceleration * Characters.ACCEL_COEF,
                                               self.worlds[1].player.character.max_speed)
-            self.worlds[1].player.angle -= self.worlds[1].player.character.handling
+            self.worlds[1].player.angle += self.worlds[1].player.character.handling
             print(self.worlds[1].player.angle)
 
         elif keys[pygame.K_RIGHT]:
             print("RIGHT")
             # push player 2 right
-            self.worlds[1].player.speed = min(self.worlds[1].player.speed + self.worlds[1].player.character.acceleration,
+            self.worlds[1].player.speed = min(self.worlds[1].player.speed + self.worlds[1].player.character.acceleration * Characters.ACCEL_COEF,
                                               self.worlds[1].player.character.max_speed)
-            self.worlds[1].player.angle += self.worlds[1].player.character.handling
+            self.worlds[1].player.angle -= self.worlds[1].player.character.handling
             print(self.worlds[1].player.angle)
 
         if keys[pygame.K_ESCAPE]:
@@ -106,7 +108,7 @@ class GameContext:
                     pass
 
             for world in self.worlds:
-                world.player.speed = max(0, world.player.speed - 0.05)
+                world.player.speed = max(0, world.player.speed - world.level.theme.friction)
                 world.update()
                 world.draw(self.screen)
             pygame.display.update()
