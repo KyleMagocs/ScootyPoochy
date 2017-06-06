@@ -4,7 +4,7 @@ import pygame
 
 IMAGES_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'images', 'characters')
 
-ACCEL_COEF = 8
+ACCEL_COEF = 1
 
 
 class CharacterBase:

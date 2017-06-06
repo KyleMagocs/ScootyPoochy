@@ -9,7 +9,7 @@ class Trackball:
 
     def read(self):
         try:
-            data = self.device.read(self.endpoint.bEndpointAddress, self.endpoint.wMaxPacketSize)
+            data = self.device.read(self.endpoint.bEndpointAddress, self.endpoint.wMaxPacketSize, timeout=5)
 
             return raw_to_x_y(data)
         except usb.core.USBError as e:
