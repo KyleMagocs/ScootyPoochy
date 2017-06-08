@@ -4,7 +4,7 @@ import usb.util
 
 class Trackball:
     def __init__(self, vendor, product, id):
-        self.device = list(usb.core.find(idVendor=vendor, idProduct=product, find_all=True))[id]
+        self.device = (list(usb.core.find(idVendor=vendor, idProduct=product, find_all=True)))[id]
         self.endpoint = self.device[0][(0, 0)][0]
 
     def read(self):
@@ -16,6 +16,7 @@ class Trackball:
             return 0, 0  # default to not moving, I guess !
 
 
+# https://www.orangecoat.com/how-to/read-and-decode-data-from-your-mouse-using-this-pyusb-hack
 def raw_to_x_y(data_array):
     if data_array[2] == 0 and data_array[1] != 0: # right
         x_vel = data_array[1] * -1

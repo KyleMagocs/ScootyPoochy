@@ -1,7 +1,5 @@
-import math
-
 from Objects.Level import Level
-from Objects.Player import Player
+from Objects.PlayerCharacter import PlayerCharacter
 
 
 class World:
@@ -11,8 +9,8 @@ class World:
         self.level = Level()  # TODO:  GENERATE / LOAD LEVEL INSTEAD OF THIS
         self.level.x = self.x_offset
         self.level.y = 0 - 1600 + 700
-        self.player = Player(init_x=self.x_offset + self.width/2, init_y=700)
-        self.player.set_controls(x_offset*2, x_offset*2 + 1)
+        self.player_character = PlayerCharacter(init_x=self.x_offset + self.width / 2, init_y=700) # TODO:  This math is bad
+        self.player_character.set_controls(x_offset * 2, x_offset * 2 + 1)
         self.y = 0
 
     def load_level(self):
@@ -21,21 +19,20 @@ class World:
 
     def update(self):
         # HANDLE PLAYER X DIRECTION
-        self.player.update()
+        self.player_character.update()
 
         # HANDLE WORLD Y DIRECTION
-        #_update_y = max(0, math.cos(self.player.angle * 0.0174533) * self.player.speed)  # 0.0174533 = rad convert
-        if self.player.x < self.level.x:
-            self.player.x = 0
-        if self.player.x > self.level.x + self.width:
-            self.player.x = self.level.x + self.width
-        self.y += self.player.y_speed
-        self.level.update(addtl_x=0, addtl_y=self.player.y_speed)
+        if self.player_character.x < self.level.x:
+            self.player_character.x = 0
+        if self.player_character.x > self.level.x + self.width:
+            self.player_character.x = self.level.x + self.width
+        self.y += self.player_character.y_speed
+        self.level.update(addtl_x=0, addtl_y=self.player_character.y_speed)
 
         # HANDLE COLLISIONS
         # TODO:  HANDLE COLLISIONS AND STUFF
 
     def draw(self, screen):
         self.level.draw(screen)
-        self.player.draw(screen)
-        # TODO:  DRAW WORLD?
+        self.player_character.draw(screen)
+        # TODO:  DRAW STUFF?

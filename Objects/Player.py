@@ -1,41 +1,10 @@
-import math
-
-import pygame
-
 from controller_interface.trackball import Trackball
 
 
 class Player:
-    def __init__(self, init_x=0, init_y=700):
-        self.angle = 0
-        self.speed = 0
-        self.x = init_x
-        self.y = init_y
-        self.x_speed = 0
-        self.y_speed = 0
+    def __init__(self, player_id):
         self.DUMMY_FLAG = False
-
-        self.jump_state = 0  # 0 = not jumping, 1 = jumping
-        self.character = None
-        self.orig_sprite = None
-
-    def set_character(self, character):
-        self.character = character
-        self.orig_sprite = character.sprite
-
-    def update(self):
-        if self.y_speed != 0:
-            self.angle = -1 * math.atan(self.x_speed/self.y_speed) / 0.0174533
-        # if self.angle > 30:
-        #     self.angle = 30
-        # if self.angle < -30:
-        #     self.angle = -30
-        # self.x -= math.sin(self.angle * 0.0174533) * self.speed  # 0.0174533 = radians convert
-        self.x += self.x_speed
-
-    def draw(self, screen):
-        new_sprite = pygame.transform.rotate(self.orig_sprite, self.angle)
-        screen.blit(new_sprite, (self.x - self.character.width / 2, self.y))
+        self.set_controls(2*player_id, 2*player_id+1)
 
     # noinspection PyAttributeOutsideInit\
     # TODO:  Maybe move this to the init?

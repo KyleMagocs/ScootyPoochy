@@ -1,6 +1,7 @@
 import pygame
 
 from Contexts.game_context import GameContext
+from Contexts.global_context import GlobalContext
 from Objects.Characters import TestCharacter, Carlos
 
 SCREEN_WIDTH = 600
@@ -12,6 +13,5 @@ size = width, height = SCREEN_WIDTH, SCREEN_HEIGHT
 if __name__ == "__main__":
     pygame.init()
     screen = pygame.display.set_mode(size)
-    # # THIS WOULD BE CALLED FROM A PLAYER SELECT CONTEXT, WHEREIN IT WOULD MAKE A SHITLOAD MORE SENSE
-    game = GameContext(screen, (TestCharacter(), ))
-    game.run_game()
+    global_context = GlobalContext(screen)
+    global_context.main_loop()

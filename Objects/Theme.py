@@ -20,7 +20,7 @@ class Theme:
 
 class TempTheme(Theme):
     background_image = 'level_bg_temp.png'
-    friction = 1.1
+    friction = 5
 
     def __init__(self):
         Theme.__init__(self)

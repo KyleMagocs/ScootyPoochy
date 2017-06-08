@@ -13,7 +13,6 @@ SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 800
 SPRITE_WIDTH = 60
 
-CONTROL_TYPE = 'KEYBOARD'  # TODO:  NOT THIS
 CONTROL_TYPE = 'TRACKBALL'
 
 
@@ -34,8 +33,8 @@ class GameContext:
 
         for i in range(0, len(character_list)):
             _world = World(width=(SCREEN_WIDTH / self.num_players), x_offset=i)
-            _world.player.y = 700
-            _world.player.set_character(character_list[i])
+            _world.player_character.y = 700
+            _world.player_character.set_character(character_list[i])
             self.worlds.append(_world)
 
         self.players = pygame.sprite.Group()
@@ -56,42 +55,9 @@ class GameContext:
         self.draw_level_sprites()
 
     def draw_level_sprites(self):
-        pass
+        pass  # TODO:  world object should do this?
 
     def parse_keys(self, keys):
-        # TODO:  MAKE THIS LOGIC BETTER AND NOT HARDCODED
-        # if keys[pygame.K_a]:
-        #     print("A")
-        #     # push player 1 left
-        #     self.worlds[0].player.speed = min(self.worlds[0].player.speed + self.worlds[0].player.character.acceleration * Characters.ACCEL_COEF,
-        #                                       self.worlds[0].player.character.max_speed)
-        #     self.worlds[0].player.angle += self.worlds[0].player.character.handling
-        #     print(self.worlds[0].player.angle)
-        #
-        # elif keys[pygame.K_d]:
-        #     print("D")
-        #     # push player 1 right
-        #     self.worlds[0].player.speed = min(self.worlds[0].player.speed + self.worlds[0].player.character.acceleration * Characters.ACCEL_COEF,
-        #                                       self.worlds[0].player.character.max_speed)
-        #     self.worlds[0].player.angle -= self.worlds[0].player.character.handling
-        #     print(self.worlds[0].player.angle)
-
-        if keys[pygame.K_LEFT]:
-            print("LEFT")
-            # push player 2 left
-            self.worlds[1].player.speed = min(self.worlds[1].player.speed + self.worlds[1].player.character.acceleration * Characters.ACCEL_COEF,
-                                              self.worlds[1].player.character.max_speed)
-            self.worlds[1].player.angle += self.worlds[1].player.character.handling
-            print(self.worlds[1].player.angle)
-
-        elif keys[pygame.K_RIGHT]:
-            print("RIGHT")
-            # push player 2 right
-            self.worlds[1].player.speed = min(self.worlds[1].player.speed + self.worlds[1].player.character.acceleration * Characters.ACCEL_COEF,
-                                              self.worlds[1].player.character.max_speed)
-            self.worlds[1].player.angle -= self.worlds[1].player.character.handling
-            print(self.worlds[1].player.angle)
-
         if keys[pygame.K_ESCAPE]:
             pygame.quit()
 
@@ -100,35 +66,25 @@ class GameContext:
         fps = 30
 
         while True:
-            if CONTROL_TYPE == 'KEYBOARD':
-                for event in pygame.event.get():
-                    pass
-                keystate = pygame.key.get_pressed()
-                if keystate:
-                    self.parse_keys(keystate)
-                    pass
-            elif CONTROL_TYPE == 'TRACKBALL':
-                for world in self.worlds:
-                    input = world.player.read_input()
-                    left = input['left']
-                    right = input['right']
+            for world in self.worlds:
+                input = world.player_character.read_input()
+                left = input['left']
+                right = input['right']
 
-                    new_y_vel = (left[1]/75 + right[1]/75) / 2 * Characters.ACCEL_COEF
-                    new_x_vel = ((left[0]/75 - .5) + (right[0]/75 + 0.5)) / 2 * Characters.ACCEL_COEF
+                new_y_vel = (left[1]/50 + right[1]/50) / 2 * Characters.ACCEL_COEF
+                new_x_vel = ((left[0]/50 - 1) + (right[0]/50 + 1)) / 2 * Characters.ACCEL_COEF
 
-                    world.player.x_speed = world.player.x_speed - new_x_vel
-                    world.player.y_speed = world.player.y_speed + new_y_vel
+                world.player_character.x_speed = world.player_character.x_speed - new_x_vel
+                world.player_character.y_speed = world.player_character.y_speed + new_y_vel
 
-
-                # still gotta read keystate here for now
-                keystate = pygame.key.get_pressed()
-                if keystate:
-                    self.parse_keys(keystate)
+            keystate = pygame.key.get_pressed()
+            if keystate:
+                self.parse_keys(keystate)
 
             for world in self.worlds:
-                world.player.x_speed = world.player.x_speed / world.level.theme.friction
-                world.player.y_speed = world.player.y_speed / world.level.theme.friction
+                world.player_character.x_speed = world.player_character.x_speed / world.level.theme.friction
+                world.player_character.y_speed = world.player_character.y_speed / world.level.theme.friction
                 world.update()
                 world.draw(self.screen)
-            pygame.display.update()
+            pygame.display.flip()
             clock.tick(fps)
