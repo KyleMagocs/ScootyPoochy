@@ -65,27 +65,29 @@ class GameContext:
 
     def run_game(self):
         clock = pygame.time.Clock()
+        try:
+            while True:
+                for world in self.worlds:
+                    input = world.player_character.read_input()
+                    left = input['left']
+                    right = input['right']
 
-        while True:
-            for world in self.worlds:
-                input = world.player_character.read_input()
-                left = input['left']
-                right = input['right']
+                    new_y_vel = (left[1]/10 + right[1]/10) / 2 * Characters.ACCEL_COEF
+                    new_x_vel = ((left[0]/10 - 5) + (right[0]/10 + 5)) / 2 * Characters.ACCEL_COEF
 
-                new_y_vel = (left[1]/30 + right[1]/30) / 2 * Characters.ACCEL_COEF
-                new_x_vel = ((left[0]/30 - 1) + (right[0]/30 + 1)) / 2 * Characters.ACCEL_COEF
+                    world.player_character.x_speed = world.player_character.x_speed - new_x_vel
+                    world.player_character.y_speed = world.player_character.y_speed + new_y_vel
 
-                world.player_character.x_speed = world.player_character.x_speed - new_x_vel
-                world.player_character.y_speed = world.player_character.y_speed + new_y_vel
+                keystate = pygame.key.get_pressed()
+                if keystate:
+                    self.parse_keys(keystate)
 
-            keystate = pygame.key.get_pressed()
-            if keystate:
-                self.parse_keys(keystate)
-
-            for world in self.worlds:
-                world.player_character.x_speed = world.player_character.x_speed / world.level.theme.friction
-                world.player_character.y_speed = world.player_character.y_speed / world.level.theme.friction
-                world.update()
-                world.draw(self.screen)
-            pygame.display.flip()
-            clock.tick(fps)
+                for world in self.worlds:
+                    world.player_character.x_speed = world.player_character.x_speed / world.level.theme.friction
+                    world.player_character.y_speed = world.player_character.y_speed / world.level.theme.friction
+                    world.update()
+                    world.draw(self.screen)
+                pygame.display.flip()
+                clock.tick(fps)
+        except Exception as e:
+            print(e)
