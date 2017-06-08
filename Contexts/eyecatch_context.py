@@ -22,7 +22,7 @@ class EyecatchContext:
 
             self.screen.fill((0, 0, 0))
             font = pygame.font.SysFont('Comic Sans MS', 15)
-            label = font.render('EYECATCH! {0}'.format(self.timer / fps), 1, (0, 255, 255))
+            label = font.render('EYECATCH! {0:.2f}'.format(self.timer / fps), 1, (0, 255, 255))
             self.screen.blit(label, (200, 150))
             pygame.display.flip()
 

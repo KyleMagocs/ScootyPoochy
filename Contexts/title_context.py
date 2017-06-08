@@ -23,9 +23,9 @@ class TitleContext:
             self.screen.fill((0, 0, 0))
             font = pygame.font.SysFont('Comic Sans MS', 15)
             if (self.timer // 30) % 2 == 0:
-                label = font.render('TITLE! {0}'.format(self.timer/fps), 1, (255, 0, 255))
+                label = font.render('TITLE! {0:.2f}'.format(self.timer/fps), 1, (255, 0, 255))
             else:
-                label = font.render('TITLE! {0}'.format(self.timer/fps), 1, (255, 255, 255))
+                label = font.render('TITLE! {0:.2f}'.format(self.timer/fps), 1, (255, 255, 255))
             self.screen.blit(label, (200, 150))
             pygame.display.flip()
 

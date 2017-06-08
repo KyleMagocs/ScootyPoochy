@@ -1,8 +1,10 @@
 from Contexts.char_select_context import CharacterSelectContext
 from Contexts.eyecatch_context import EyecatchContext
 from Contexts.game_context import GameContext
+from Contexts.level_select_context import LevelSelectContext
 from Contexts.startup_context import StartupContext
 from Contexts.title_context import TitleContext
+from Objects.Level import Level
 
 
 class GlobalContext:
@@ -23,7 +25,10 @@ class GlobalContext:
 
         select = CharacterSelectContext(self.screen)
         characters = select.main_loop()
-        # from Objects.Characters import TestCharacter
-        # characters = [TestCharacter(), ]
-        game = GameContext(self.screen, characters)
+
+        theme_select = LevelSelectContext(self.screen)
+        theme = theme_select.main_loop()
+        # TODO:  Build level here
+
+        game = GameContext(self.screen, characters, Level())
         game.run_game()

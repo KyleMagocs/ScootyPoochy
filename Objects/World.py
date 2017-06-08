@@ -3,10 +3,10 @@ from Objects.PlayerCharacter import PlayerCharacter
 
 
 class World:
-    def __init__(self, width, x_offset):
+    def __init__(self, width, x_offset, level):
         self.width = width
         self.x_offset = x_offset * width
-        self.level = Level()  # TODO:  GENERATE / LOAD LEVEL INSTEAD OF THIS
+        self.level = level  # TODO:  GENERATE / LOAD LEVEL INSTEAD OF THIS
         self.level.x = self.x_offset
         self.level.y = 0 - 1600 + 700
         self.player_character = PlayerCharacter(init_x=self.x_offset + self.width / 2, init_y=700) # TODO:  This math is bad
