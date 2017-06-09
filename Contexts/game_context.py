@@ -2,6 +2,7 @@ import os
 import pygame
 
 import math
+from math import fabs as abs
 from Objects import Characters
 from Objects.World import World
 from controller_interface.trackball import Trackball
@@ -68,26 +69,27 @@ class GameContext:
         try:
             while True:
                 for world in self.worlds:
-                    input = world.player_character.read_input()
-                    left = input['left']
-                    right = input['right']
-
-                    new_y_vel = (left[1]/10 + right[1]/10) / 2 * Characters.ACCEL_COEF
-                    new_x_vel = ((left[0]/10 - 5) + (right[0]/10 + 5)) / 2 * Characters.ACCEL_COEF
-
-                    world.player_character.x_speed = world.player_character.x_speed - new_x_vel
-                    world.player_character.y_speed = world.player_character.y_speed + new_y_vel
+                    self.handle_input(world)
+                    world.update()
+                    world.draw(self.screen)
 
                 keystate = pygame.key.get_pressed()
                 if keystate:
                     self.parse_keys(keystate)
 
-                for world in self.worlds:
-                    world.player_character.x_speed = world.player_character.x_speed / world.level.theme.friction
-                    world.player_character.y_speed = world.player_character.y_speed / world.level.theme.friction
-                    world.update()
-                    world.draw(self.screen)
                 pygame.display.flip()
                 clock.tick(fps)
         except Exception as e:
             print(e)
+
+    def handle_input(self, world):
+        control_input = world.player_character.read_input()
+        left = control_input['left']
+        right = control_input['right']
+
+        addtl_y_vel = (left[1] / 10 + right[1] / 10) / 2 * Characters.ACCEL_COEF
+        addtl_x_vel = ((left[0] / 10 - 10) + (right[0] / 10 + 10)) / 2 * Characters.ACCEL_COEF
+
+        world.player_character.y_speed = (world.player_character.y_speed + addtl_y_vel) / world.level.theme.friction
+
+        world.player_character.x_speed = (world.player_character.x_speed - addtl_x_vel) / world.level.theme.friction
