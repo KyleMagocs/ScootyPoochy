@@ -3,8 +3,8 @@ import math
 import pygame
 
 from controller_interface.trackball import Trackball
-from vars import debug
-
+from vars import show_velocity
+import colors
 
 class PlayerCharacter:
     def __init__(self, init_x=0, init_y=700):
@@ -33,12 +33,13 @@ class PlayerCharacter:
     def draw(self, screen):
         new_sprite = pygame.transform.rotate(self.orig_sprite, self.angle)
         screen.blit(new_sprite, (self.x - self.character.width / 2, self.y))
-        if debug:
-            pygame.draw.line(screen, (100, 100, 255), [self.x , self.y + self.character.width / 2],
-                             [self.x + (self.x_speed*7), self.y - (self.y_speed*7) + self.character.width / 2], 3)
+        if show_velocity:
+            pygame.draw.line(screen, colors.debug_velocity_line, [self.x , self.y + self.character.width / 2],
+                             [self.x + (self.x_speed*10), self.y - (self.y_speed*10) + self.character.width / 2], 3)
 
     # noinspection PyAttributeOutsideInit\
     # TODO:  Maybe move this to the init?
+    # TODO:  Needs to move to player.py
     def set_controls(self, id_1, id_2):
         if id_1 > 1:
             self.DUMMY_FLAG = True

@@ -3,13 +3,13 @@ from Objects.PlayerCharacter import PlayerCharacter
 
 
 class World:
-    def __init__(self, width, x_offset, level):
+    def __init__(self, width, x_offset, y_offset, level):
         self.width = width
         self.x_offset = x_offset * width
         self.level = level  # TODO:  GENERATE / LOAD LEVEL INSTEAD OF THIS
         self.level.x = self.x_offset
-        self.level.y = 0 - 1600 + 700
-        self.player_character = PlayerCharacter(init_x=self.x_offset + self.width / 2, init_y=700) # TODO:  This math is bad
+        self.level.y = 0 - self.level.height + y_offset
+        self.player_character = PlayerCharacter(init_x=self.x_offset + self.width / 2, init_y=y_offset) # TODO:  This math is bad
         self.player_character.set_controls(x_offset * 2, x_offset * 2 + 1)
         self.y = 0
 

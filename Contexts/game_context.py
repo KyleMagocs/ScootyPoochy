@@ -33,8 +33,8 @@ class GameContext:
         self.worlds = list()
 
         for i in range(0, len(character_list)):
-            _world = World(width=(SCREEN_WIDTH / self.num_players), x_offset=i, level=level)
-            _world.player_character.y = 700
+            _world = World(width=(SCREEN_WIDTH / self.num_players), x_offset=i, y_offset=SCREEN_HEIGHT+10, level=level)
+            _world.player_character.y = SCREEN_HEIGHT - 100
             _world.player_character.set_character(character_list[i])
             self.worlds.append(_world)
 
@@ -66,6 +66,7 @@ class GameContext:
         clock = pygame.time.Clock()
         try:
             while True:
+                self.screen.fill((255, 255, 255))
                 for world in self.worlds:
                     self.handle_input(world)
                     world.update()

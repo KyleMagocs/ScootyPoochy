@@ -7,9 +7,11 @@ class Level:
     friction = 0
     x = 0
     y = 0
+    height = 0
+    width = 0
 
     def __init__(self):
-        self.theme = TempTheme()
+        self.theme = None
         pass
 
     def update(self, addtl_x, addtl_y):
@@ -21,3 +23,10 @@ class Level:
 
         # draw background at x, y
         # iterate through my_objects and draw each (pass camera x and camera y so they don't draw if they don't need to)
+
+
+class TempLevel(Level):
+    def __init__(self):
+        self.theme = TempTheme()
+        self.height = self.theme.background_sprite.get_height()
+        self.width = self.theme.background_sprite.get_width()
