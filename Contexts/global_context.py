@@ -6,7 +6,7 @@ from Contexts.startup_context import StartupContext
 from Contexts.title_context import TitleContext
 from Objects.Characters import TestCharacter
 from Objects.Level import Level
-from vars import debug
+from vars import skip_intro
 
 
 class GlobalContext:
@@ -14,7 +14,7 @@ class GlobalContext:
         self.screen = screen
 
     def main_loop(self):
-        if not debug:
+        if not skip_intro:
             startup = StartupContext(self.screen)
             if not startup.display_startup():
                 quit()

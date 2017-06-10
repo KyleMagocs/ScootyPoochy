@@ -1,11 +1,9 @@
 import os
+
 import pygame
 
-import math
-from math import fabs as abs
 from Objects import Characters
 from Objects.World import World
-from controller_interface.trackball import Trackball
 
 bg_image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'temp_images', 'background.png')
 player_image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'temp_images', 'TEMPDOG_sprite_temp.png')

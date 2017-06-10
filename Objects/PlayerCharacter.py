@@ -3,6 +3,7 @@ import math
 import pygame
 
 from controller_interface.trackball import Trackball
+from vars import debug
 
 
 class PlayerCharacter:
@@ -26,16 +27,15 @@ class PlayerCharacter:
     def update(self):
         if self.y_speed != 0:
             self.angle = -1 * math.atan(self.x_speed/self.y_speed) / 0.0174533
-        # if self.angle > 30:
-        #     self.angle = 30
-        # if self.angle < -30:
-        #     self.angle = -30
-        # self.x -= math.sin(self.angle * 0.0174533) * self.speed  # 0.0174533 = radians convert
+
         self.x += self.x_speed
 
     def draw(self, screen):
         new_sprite = pygame.transform.rotate(self.orig_sprite, self.angle)
         screen.blit(new_sprite, (self.x - self.character.width / 2, self.y))
+        if debug:
+            pygame.draw.line(screen, (100, 100, 255), [self.x , self.y + self.character.width / 2],
+                             [self.x + (self.x_speed*7), self.y - (self.y_speed*7) + self.character.width / 2], 3)
 
     # noinspection PyAttributeOutsideInit\
     # TODO:  Maybe move this to the init?
