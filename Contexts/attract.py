@@ -4,7 +4,7 @@ from vars import fps
 TOTAL_WAIT = 5
 
 
-class EyecatchContext:
+class AttractContext:
     def __init__(self, screen):
         self.screen = screen
         self.clock = pygame.time.Clock()

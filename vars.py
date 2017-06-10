@@ -1,3 +1,3 @@
 fps = 30
-skip_intro = False
+skip_intro = True
 show_velocity = True

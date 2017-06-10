@@ -1,10 +1,10 @@
-from Contexts.char_select_context import CharacterSelectContext
-from Contexts.eyecatch_context import EyecatchContext
-from Contexts.game_context import GameContext
-from Contexts.level_select_context import LevelSelectContext
-from Contexts.scoreboard_context import ScoreboardContext
-from Contexts.startup_context import StartupContext
-from Contexts.title_context import TitleContext
+from Contexts.char_select import CharacterSelectContext
+from Contexts.attract import AttractContext
+from Contexts.game import GameContext
+from Contexts.level_select import LevelSelectContext
+from Contexts.scoreboard import ScoreboardContext
+from Contexts.startup import StartupContext
+from Contexts.title import TitleContext
 from Objects.Characters import TestCharacter
 from Objects.Level import TempLevel
 from Objects.Player import Player
@@ -19,15 +19,11 @@ class GlobalContext:
         while True:
             player_array = []
             if not skip_intro:
-                startup = StartupContext(self.screen)
-                if not startup.display_startup():
-                    quit()
-
                 while True:
                     title = TitleContext(self.screen)
                     if title.display_loop():
                         break
-                    eyecatch = EyecatchContext(self.screen)
+                    eyecatch = AttractContext(self.screen)
                     eyecatch.display_loop()
 
                 select = CharacterSelectContext(self.screen)

@@ -85,6 +85,7 @@ class GameContext:
 
                 pygame.display.flip()
                 clock.tick(fps)
+                pygame.event.get()
         except Exception as e:
             print(e)
 

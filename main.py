@@ -1,8 +1,7 @@
 import pygame
 
-from Contexts.game_context import GameContext
-from Contexts.global_context import GlobalContext
-from Objects.Characters import TestCharacter, Carlos
+from Contexts.glob import GlobalContext
+from Contexts.startup import StartupContext
 
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 800
@@ -14,4 +13,7 @@ if __name__ == "__main__":
     pygame.init()
     screen = pygame.display.set_mode(size)
     global_context = GlobalContext(screen)
+    startup = StartupContext(screen)
+    if not startup.display_startup():
+        quit()
     global_context.main_loop()
