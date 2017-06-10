@@ -27,7 +27,7 @@ class GameContext:
         self.background = None
         self.num_players = len(character_list)
         self.screen = screen
-
+        self.victory = False
         self.objects = pygame.sprite.Group()  # hold level objects
 
         self.worlds = list()
@@ -67,10 +67,17 @@ class GameContext:
         try:
             while True:
                 self.screen.fill((255, 255, 255))
-                for world in self.worlds:
+                for world in self.worlds:  # should iterate on Players, who have Worlds
                     self.handle_input(world)
-                    world.update()
+                    if world.update():
+                        self.victory = world  # mark victory for Player rather than World
                     world.draw(self.screen)
+
+                if self.victory:
+                    pass
+                    # TODO:  FANCY FINISH ANIMATION
+                    # TODO:  PROBABLY A TIMER TO WAIT FOR IT TO FINISH, SO LIKE 10 * FPS frames?
+                    return self.victory
 
                 keystate = pygame.key.get_pressed()
                 if keystate:

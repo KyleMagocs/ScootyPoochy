@@ -32,6 +32,15 @@ class World:
         # HANDLE COLLISIONS
         # TODO:  HANDLE COLLISIONS AND STUFF
 
+        if self.check_victory():
+            return True
+
+
+        return False
+
+    def check_victory(self):
+        return False
+
     def draw(self, screen):
         self.level.draw(screen)
         self.player_character.draw(screen)
