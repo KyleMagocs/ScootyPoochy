@@ -2,8 +2,8 @@ from Objects import Characters
 from controller_interface.dummy import Dummy
 from controller_interface.trackball import Trackball
 
-DUMMY = 0
-TRACKBALL = 1
+DUMMY = 1
+TRACKBALL = 0
 KEYBOARD = 2
 GOOD_DUMMY = 3
 

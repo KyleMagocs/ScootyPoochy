@@ -23,8 +23,8 @@ class GlobalContext:
                     title = TitleContext(self.screen)
                     if title.display_loop():
                         break
-                    eyecatch = AttractContext(self.screen)
-                    eyecatch.display_loop()
+                    attract = AttractContext(self.screen)
+                    attract.display_loop()
 
                 select = CharacterSelectContext(self.screen)
                 characters = select.main_loop()
@@ -36,8 +36,9 @@ class GlobalContext:
                 theme = theme_select.main_loop()
                 # TODO:  Build level here
             else:
-                characters = [TestCharacter(),]
-            game = GameContext(self.screen, characters, TempLevel())
+                characters = [TestCharacter(), TestCharacter()]
+            levels = [TempLevel(), TempLevel()]
+            game = GameContext(self.screen, characters, levels)
             game_data = game.run_game()
 
             scoreboard = ScoreboardContext(self.screen)  # TODO:  Probably needs players

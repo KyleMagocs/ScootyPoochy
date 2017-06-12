@@ -22,7 +22,7 @@ class World:
 
         # HANDLE WORLD Y DIRECTION
         if self.player_character.x < self.level.x:
-            self.player_character.x = 0
+            self.player_character.x = self.level.x
         if self.player_character.x > self.level.x + self.width:
             self.player_character.x = self.level.x + self.width
         self.y += self.player_character.y_speed

@@ -4,16 +4,14 @@ import random
 class Dummy:
     def __init__(self):
         self.toggle = True
-        self.toggleCount = 0
-
-
+        self.toggleCount = 30
 
     def read(self):
         try:
             if self.toggle:
-                return random.randint(100, 200), random.randint(100, 200)
+                return random.randint(25, 50), random.randint(25, 50)
             else:
-                return random.randint(50, 100), random.randint(100, 200)
+                return -1 * random.randint(25, 50), random.randint(25, 50)
         finally:
             self.toggleCount += 1
             if self.toggleCount >= 60:
