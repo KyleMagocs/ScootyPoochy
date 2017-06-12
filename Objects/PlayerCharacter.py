@@ -2,9 +2,9 @@ import math
 
 import pygame
 
-from controller_interface.trackball import Trackball
 from vars import show_velocity
 import colors
+
 
 class PlayerCharacter:
     def __init__(self, init_x=0, init_y=700):
@@ -36,23 +36,3 @@ class PlayerCharacter:
         if show_velocity:
             pygame.draw.line(screen, colors.debug_velocity_line, [self.x , self.y + self.character.width / 2],
                              [self.x + (self.x_speed*10), self.y - (self.y_speed*10) + self.character.width / 2], 3)
-
-    # noinspection PyAttributeOutsideInit\
-    # TODO:  Maybe move this to the init?
-    # TODO:  Needs to move to player.py
-    def set_controls(self, id_1, id_2):
-        if id_1 > 1:
-            self.DUMMY_FLAG = True
-            return  # TODO:  SET UP MORE TRACKBALLS
-
-        self.trackball_one = Trackball(53769, 5506, id_1)
-        self.trackball_two = Trackball(53769, 5506, id_2)
-
-    def read_input(self):
-        if self.DUMMY_FLAG:
-            return {'left': (0, 0,), 'right': (0, 0,)}
-        tball_one = self.trackball_one.read()
-        tball_two = self.trackball_two.read()
-        # TODO:  BUTTONS ?
-
-        return {'left': tball_one, 'right': tball_two}

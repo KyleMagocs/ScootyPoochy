@@ -1,26 +1,48 @@
+from Objects import Characters
+from controller_interface.dummy import Dummy
 from controller_interface.trackball import Trackball
+
+DUMMY = 0
+TRACKBALL = 1
+KEYBOARD = 2
+GOOD_DUMMY = 3
 
 
 class Player:
-    def __init__(self, player_id):
+    def __init__(self, player_id, control_type=DUMMY):
         self.DUMMY_FLAG = False
-        self.set_controls(2*player_id, 2*player_id+1)
+        self.player_id = player_id
+        self.world = None
+        self.character = None
+        self.control_one = None
+        self.control_two = None
+        self.set_controls(control_type)
 
-    # noinspection PyAttributeOutsideInit\
-    # TODO:  Maybe move this to the init?
-    def set_controls(self, id_1, id_2):
-        if id_1 > 1:
-            self.DUMMY_FLAG = True
-            return  # TODO:  SET UP MORE TRACKBALLS
-
-        self.trackball_one = Trackball(53769, 5506, id_1)
-        self.trackball_two = Trackball(53769, 5506, id_2)
+    def set_controls(self, control_type):
+        if control_type == DUMMY:
+            self.control_one = Dummy()
+            self.control_two = Dummy()
+        elif control_type == TRACKBALL:
+            self.control_one = Trackball(53769, 5506, self.player_id*2)
+            self.control_two = Trackball(53769, 5506, (self.player_id*2) + 1)
+        else:
+            raise Exception('DIDNT GET AN INPUT?!?!?')
 
     def read_input(self):
-        if self.DUMMY_FLAG:
-            return {'left': (0, 0,), 'right': (0, 0,)}
-        tball_one = self.trackball_one.read()
-        tball_two = self.trackball_two.read()
-        # TODO:  BUTTONS ?
+        left = self.control_one.read()
+        right = self.control_two.read()
+        # TODO:  BUTTONS
 
-        return {'left': tball_one, 'right': tball_two}
+        return {'left': left, 'right': right}
+
+    def handle_input(self):
+        control_input = self.read_input()
+        left = control_input['left']
+        right = control_input['right']
+
+        addtl_y_vel = (left[1] / 10 + right[1] / 10) / 2 * Characters.ACCEL_COEF
+        addtl_x_vel = ((left[0] / 10 - 10) + (right[0] / 10 + 10)) / 2 * Characters.ACCEL_COEF
+
+        self.world.player_character.y_speed = (self.world.player_character.y_speed + addtl_y_vel) / self.world.level.theme.friction
+
+        self.world.player_character.x_speed = (self.world.player_character.x_speed - addtl_x_vel) / self.world.level.theme.friction

@@ -11,7 +11,7 @@ class ScoreboardContext:
         self.clock = pygame.time.Clock()
         self.timer = 0
 
-    def main_loop(self):
+    def main_loop(self, game_data):
         while True:
             self.timer += 1
             if self.timer > TOTAL_WAIT * fps:

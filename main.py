@@ -12,8 +12,9 @@ size = width, height = SCREEN_WIDTH, SCREEN_HEIGHT
 if __name__ == "__main__":
     pygame.init()
     screen = pygame.display.set_mode(size)
-    global_context = GlobalContext(screen)
     startup = StartupContext(screen)
-    if not startup.display_startup():
+    startup_result = startup.display_startup()
+    if not startup_result:
         quit()
+    global_context = GlobalContext(screen)
     global_context.main_loop()

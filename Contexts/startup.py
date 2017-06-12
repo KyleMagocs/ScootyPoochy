@@ -1,7 +1,9 @@
 import pygame
+
+from Objects.Player import Player
 from vars import fps
 
-TOTAL_WAIT = 5
+TOTAL_WAIT = 2
 
 class StartupContext:
     def __init__(self, screen):
@@ -13,7 +15,7 @@ class StartupContext:
         while True:
             self.timer += 1
             if self.timer > TOTAL_WAIT * fps:
-                return True
+                return True   # TODO:  Check for trackball connections and such
             self.screen.fill((0, 0, 0))
             font = pygame.font.SysFont('Comic Sans MS', 15)
             label = font.render('STARTUP! {0:.2f}'.format(self.timer/fps), 1, (255, 255, 0))
@@ -21,4 +23,4 @@ class StartupContext:
             pygame.display.flip()
             self.clock.tick(fps)
             pygame.event.get()
-        return True
+        return False

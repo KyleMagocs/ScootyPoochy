@@ -38,7 +38,7 @@ class GlobalContext:
             else:
                 characters = [TestCharacter(),]
             game = GameContext(self.screen, characters, TempLevel())
-            winning_player = game.run_game()
+            game_data = game.run_game()
 
             scoreboard = ScoreboardContext(self.screen)  # TODO:  Probably needs players
-            scoreboard.main_loop()
+            scoreboard.main_loop(game_data)

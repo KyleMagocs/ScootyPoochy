@@ -10,7 +10,6 @@ class World:
         self.level.x = self.x_offset
         self.level.y = 0 - self.level.height + y_offset
         self.player_character = PlayerCharacter(init_x=self.x_offset + self.width / 2, init_y=y_offset) # TODO:  This math is bad
-        self.player_character.set_controls(x_offset * 2, x_offset * 2 + 1)
         self.y = 0
 
     def load_level(self):
