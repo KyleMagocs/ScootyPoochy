@@ -7,10 +7,15 @@ IMAGES_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'i
 ACCEL_COEF = 1
 
 
+def get_all_characters():
+    return [TestCharacter, Doge, Carlos, ]
+
+
 class CharacterBase:
     sprite_path = None
     portrait_path = None
     sprite = None
+    portrait = None
     handling = .5
     acceleration = .5
     max_speed = 1
@@ -20,12 +25,19 @@ class CharacterBase:
 
     def __init__(self):
         self.load_sprite()
+        self.load_portrait()
 
     def load_sprite(self):
         if self.sprite_path is not None:
             _sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, self.sprite_path)).convert()
             _sprite.set_colorkey((255, 0, 255), pygame.RLEACCEL)
             self.sprite = _sprite
+
+    def load_portrait(self):
+        if self.portrait_path is not None:
+            _portrait = pygame.image.load_extended(os.path.join(IMAGES_PATH, self.sprite_path)).convert()
+            _portrait.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+            self.portrait = _portrait
 
 
 class TestCharacter(CharacterBase):
@@ -46,8 +58,8 @@ class TestCharacter(CharacterBase):
 
 
 class Doge(CharacterBase):
-    sprite_path = 'TEMPDOG_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
-    portrait_path = 'TEMPDOG_PORTRAIT.png'
+    sprite_path = 'DOGE_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
+    portrait_path = 'DOGE_portrait_temp.png'
     max_speed = .7 * 6
     acceleration = .35
     width = 60

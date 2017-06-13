@@ -5,7 +5,7 @@ from Contexts.level_select import LevelSelectContext
 from Contexts.scoreboard import ScoreboardContext
 from Contexts.startup import StartupContext
 from Contexts.title import TitleContext
-from Objects.Characters import TestCharacter
+from Objects.Characters import TestCharacter, Doge
 from Objects.Level import TempLevel
 from Objects.Player import Player
 from vars import skip_intro
@@ -36,7 +36,7 @@ class GlobalContext:
                 theme = theme_select.main_loop()
                 # TODO:  Build level here
             else:
-                characters = [TestCharacter(), TestCharacter()]
+                characters = [TestCharacter(), Doge()]
             levels = [TempLevel(), TempLevel()]
             game = GameContext(self.screen, characters, levels)
             game_data = game.run_game()

@@ -2,10 +2,7 @@ import pygame
 
 from Contexts.glob import GlobalContext
 from Contexts.startup import StartupContext
-
-SCREEN_WIDTH = 1200
-SCREEN_HEIGHT = 800
-SPRITE_WIDTH = 60
+from vars import SCREEN_WIDTH, SCREEN_HEIGHT
 
 size = width, height = SCREEN_WIDTH, SCREEN_HEIGHT
 

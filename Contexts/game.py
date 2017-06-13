@@ -1,17 +1,9 @@
-import os
-
 import pygame
 
 from Objects.Player import Player
 from Objects.World import World
 
-bg_image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'temp_images', 'background.png')
-player_image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'temp_images', 'TEMPDOG_sprite_temp.png')
-
-SCREEN_WIDTH = 1200
-SCREEN_HEIGHT = 800
-SPRITE_WIDTH = 60
-
+from vars import SCREEN_WIDTH, SCREEN_HEIGHT
 from vars import fps
 
 
@@ -20,7 +12,7 @@ class GameContext:
     num_players = None
     player_sprites = list()
 
-    def __init__(self, screen, character_list, levels):
+    def __init__(self, screen, character_list, levels):  # TODO:  This should receive players, not characters
         self.background = None
         self.num_players = len(character_list)
         self.screen = screen
@@ -30,7 +22,7 @@ class GameContext:
         self.players = []
 
         for i in range(0, len(character_list)):
-            player = Player(i, i)  # TODO:  This should receive players, not characters
+            player = Player(i, i)
             player.world = World(width=(SCREEN_WIDTH / self.num_players), x_offset=i, y_offset=SCREEN_HEIGHT+10, level=levels[i])
             player.world.player_character.y = SCREEN_HEIGHT - 100
             player.world.player_character.set_character(character_list[i])
@@ -52,8 +44,9 @@ class GameContext:
     def draw_level_sprites(self):
         pass  # TODO:  world object should do this?
 
-    def parse_keys(self, keys):
-        if keys[pygame.K_ESCAPE]:
+    def check_keys(self):
+        keystate = pygame.key.get_pressed()
+        if keystate[pygame.K_ESCAPE]:
             pygame.quit()
             quit()
 
@@ -74,14 +67,14 @@ class GameContext:
                     # TODO:  PROBABLY A TIMER TO WAIT FOR IT TO FINISH, SO LIKE 10 * FPS frames?
                     return self.victory
 
-                keystate = pygame.key.get_pressed()
-                if keystate:
-                    self.parse_keys(keystate)
+                self.check_keys()
 
                 pygame.display.flip()
                 clock.tick(fps)
                 pygame.event.get()
         except Exception as e:
             print(e)
+
+
 
 
