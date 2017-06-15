@@ -17,11 +17,12 @@ class CharacterWheel:
     inc = (0,0,0)
     final_color = (150, 150, 150)
     counter = 0
-    characters = []
+
 
     def __init__(self, x, y, init_color, blend_frames):
         self.x = x
         self.y = y
+        self.characters = []
         self.color = init_color
         self.final_color = init_color
         self.final_angle = 0
@@ -80,13 +81,13 @@ class CharacterSelectCharacter:
         self.orig_sprite = self.character.portrait
         self.current_sprite = self.orig_sprite
         self.angle = 0
-        self.scale = 0.2
+        self.scale = 0.25
         self.x = 0
         self.y = 0
 
     def update(self):
-        if self.angle < 30 or self.angle > 330 or (self.angle > 110 and self.angle < 190):
-            self.scale = max(math.fabs(math.cos(self.angle * 3 % 360 * radians_factor)), 0.3)
+        if self.angle < 30 or self.angle > 330 or (self.angle > 150 and self.angle < 210):
+            self.scale = max(math.fabs(math.cos(self.angle * 3 % 180 * radians_factor)), 0.25)
         self.current_sprite = pygame.transform.scale(self.orig_sprite, (int(self.scale * self.orig_sprite.get_width()), int(self.scale * self.orig_sprite.get_height())))
 
     def draw(self, screen):
