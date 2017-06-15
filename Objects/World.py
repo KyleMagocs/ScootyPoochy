@@ -34,7 +34,6 @@ class World:
         if self.check_victory():
             return True
 
-
         return False
 
     def check_victory(self):
@@ -43,4 +42,3 @@ class World:
     def draw(self, screen):
         self.level.draw(screen)
         self.player_character.draw(screen)
-        # TODO:  DRAW STUFF?

@@ -35,7 +35,7 @@ class CharacterBase:
 
     def load_portrait(self):
         if self.portrait_path is not None:
-            _portrait = pygame.image.load_extended(os.path.join(IMAGES_PATH, self.sprite_path)).convert()
+            _portrait = pygame.image.load_extended(os.path.join(IMAGES_PATH, self.portrait_path)).convert()
             _portrait.set_colorkey((255, 0, 255), pygame.RLEACCEL)
             self.portrait = _portrait
 
