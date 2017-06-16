@@ -145,34 +145,38 @@ class CharacterSelectContext:
         self.clock = pygame.time.Clock()
         self.timer = 0
 
-    def check_keys(self):
-        pass
+    def check_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_w:
+                    self.left_wheel.update_angle(-1)
+                if event.key == pygame.K_s:
+                    self.left_wheel.update_angle(1)
+                if event.key == pygame.K_UP:
+                    self.right_wheel.update_angle(1)
+                if event.key == pygame.K_DOWN:
+                    self.right_wheel.update_angle(-1)
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    quit()
 
     def main_loop(self):
         while True:
-            for event in pygame.event.get():
-                if event.type == pygame.KEYUP:
-                    color = rand_colors[random.randint(0, len(rand_colors) - 1)]
-                    if event.key == pygame.K_w:
-                        self.left_wheel.update_angle(-1)
-                    if event.key == pygame.K_s:
-                        self.left_wheel.update_angle(1)
-                    if event.key == pygame.K_UP:
-                        self.right_wheel.update_angle(1)
-                    if event.key == pygame.K_DOWN:
-                        self.right_wheel.update_angle(-1)
-                    if event.key == pygame.K_ESCAPE:
-                        pygame.quit()
-                        quit()
-            self.timer += 1
-            self.check_keys()
-            if self.timer > TOTAL_WAIT * fps:
-                self.timer = 0
-            self.draw_background()
-            self.left_wheel.draw(self.screen)
-            self.right_wheel.draw(self.screen)
+            self.check_events()
+
+            # self.timer += 1
+            # if self.timer > TOTAL_WAIT * fps:
+            #     self.timer = 0
+
+            self.draw()
+
             pygame.display.flip()
             self.clock.tick(fps)
+
+    def draw(self):
+        self.draw_background()
+        self.left_wheel.draw(self.screen)
+        self.right_wheel.draw(self.screen)
 
     def draw_characters(self):
         pass
