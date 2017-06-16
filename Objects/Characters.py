@@ -1,6 +1,7 @@
 import os
-
 import pygame
+
+from colors import *
 
 IMAGES_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'images', 'characters')
 
@@ -8,7 +9,7 @@ ACCEL_COEF = 1
 
 
 def get_all_characters():
-    return [Carlos, Doge, TestCharacter, ]
+    return [Carlos, Doge, TestCharacter, Carlos,]
 
 
 class CharacterBase:
@@ -20,7 +21,7 @@ class CharacterBase:
     acceleration = .5
     max_speed = 1
     poop_factor = .5
-
+    color = (200,200,200)
     attributes = None
 
     def __init__(self):
@@ -47,6 +48,7 @@ class TestCharacter(CharacterBase):
     handling = .9
     acceleration = .4
     width = 60
+    color = red
 
     attributes = {
         '+ test character',
@@ -64,6 +66,7 @@ class Doge(CharacterBase):
     acceleration = .35
     width = 60
     handling = .95
+    color = blue
     attributes = {
         '+ very meme',
         '- much average'
@@ -81,6 +84,7 @@ class Carlos(CharacterBase):
     acceleration = .5
     width = 30
     handling = .8
+    color = green
     attributes = {
         '- lower top speed',
         '+ high acceleration',
