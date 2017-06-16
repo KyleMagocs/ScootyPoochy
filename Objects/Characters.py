@@ -9,7 +9,7 @@ ACCEL_COEF = 1
 
 
 def get_all_characters():
-    return [Carlos, Doge, TestCharacter, Carlos,]
+    return [Carlos, Doge, TestCharacter,]
 
 
 class CharacterBase:
@@ -23,6 +23,7 @@ class CharacterBase:
     poop_factor = .5
     color = (200,200,200)
     attributes = None
+    name = None
 
     def __init__(self):
         self.load_sprite()
@@ -49,7 +50,7 @@ class TestCharacter(CharacterBase):
     acceleration = .4
     width = 60
     color = red
-
+    name = 'XYLONS DOG'
     attributes = {
         '+ test character',
         '- test character'
@@ -67,6 +68,7 @@ class Doge(CharacterBase):
     width = 60
     handling = .95
     color = blue
+    name = 'DOGE'
     attributes = {
         '+ very meme',
         '- much average'
@@ -85,6 +87,7 @@ class Carlos(CharacterBase):
     width = 30
     handling = .8
     color = green
+    name = 'Chichi'
     attributes = {
         '- lower top speed',
         '+ high acceleration',

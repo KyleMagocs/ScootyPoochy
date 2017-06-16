@@ -2,12 +2,12 @@ import random
 
 import pygame
 import math
-from Objects.Characters import get_all_characters, TestCharacter
+from Objects.Characters import get_all_characters
 from vars import fps
 from colors import *
 
 TOTAL_WAIT = 1
-transition_frames = 40
+transition_frames = 25
 all_chars = get_all_characters()
 
 radians_factor = 0.0174533  # TODO:  move this out to vars, it's used everywhere
@@ -19,12 +19,10 @@ class CharacterWheel:
     final_color = (150, 150, 150)
     counter = 0
 
-    def __init__(self, x, y, init_color, blend_frames, angle_offset, left_or_right=1):
+    def __init__(self, x, y, blend_frames, angle_offset, left_or_right=1):
         self.x = x
         self.y = y
         self.characters = []
-        self.color = init_color
-        self.final_color = init_color
         self.final_angle = 0
         self.angle_counter = 0
         self.moving = 0
@@ -33,11 +31,19 @@ class CharacterWheel:
         self.angle_offset = angle_offset
         self.selected_character_index = 0
         self.load_characters()
+        self.color = self.characters[self.selected_character_index].character.color
+        self.final_color = self.color
 
     def load_characters(self):
-        for i in range(len(all_chars)):
-            self.characters.append(CharacterSelectCharacter(all_chars[i]()))
-            self.characters[i].angle = int(360 / len(all_chars) * i * self.factor)
+        char_indices = range(len(all_chars))
+        if self.factor < 0:
+            char_indices = char_indices.__reversed__()
+
+        for i in char_indices:
+            self.characters.append(CharacterSelectCharacter(all_chars[i](), int(360 / len(all_chars) * i + self.angle_offset)))
+
+
+        # self.selected_character_index = len(self.characters) - 1
         self.update_chars(0) # Todo:  this is kind of hacky
 
     def update_chars(self, angle_inc):
@@ -65,12 +71,12 @@ class CharacterWheel:
         self.color = (new_r, new_g, new_b)
 
     def update_angle(self, direction):
-            # self.angle_counter = 0
-            if self.moving != direction:
-                self.selected_character_index = (self.selected_character_index + direction) % len(self.characters)
+        # self.angle_counter = 0
+        if self.moving != direction:
+            self.selected_character_index = (self.selected_character_index - (direction*self.factor)) % len(self.characters)
             new_color = self.characters[self.selected_character_index].character.color
             self.set_color(new_color[0], new_color[1], new_color[2])  # todo:  hacky
-            self.moving = direction
+        self.moving = direction
 
     def update(self):
         self.update_color()
@@ -84,25 +90,40 @@ class CharacterWheel:
         if self.moving:
             self.update_chars(360 / len(self.characters) / self.blend_frames * self.moving)
 
+    def display_stats(self, screen):
+        if not self.moving:
+            name = self.characters[self.selected_character_index].character.name
+            stats = self.characters[self.selected_character_index].character.attributes
+            font = pygame.font.SysFont('Comic Sans MS', 15)
+            label = font.render(name, 1, self.characters[self.selected_character_index].character.color)
+            screen.blit(label, (self.x + (200*self.factor), 600))
+            stat_y = 620
+            for stat in stats:
+                label = font.render(stat, 1, self.characters[self.selected_character_index].character.color)
+                screen.blit(label, (self.x + (200 * self.factor) - 75, stat_y))
+                stat_y += 20
 
     def draw(self, screen):
         self.update()
         try:
-            pygame.draw.circle(screen, self.color, (self.x, self.y), 400, 8)
+            pygame.draw.circle(screen, self.color, (self.x, self.y), 400, 9)
             pygame.draw.circle(screen, self.color, (self.x, self.y), 330, 4)
+            pygame.draw.circle(screen, self.color, (self.x, self.y), 315, 1)
+            pygame.draw.circle(screen, self.color, (self.x, self.y), 310, 1)
             for char in self.characters:
                 char.draw(screen)
+            self.display_stats(screen)
         except Exception as e:
             print(e)
 
 
 class CharacterSelectCharacter:
-    def __init__(self, character):
+    def __init__(self, character, init_angle):
         self.character = character
         self.character.load_portrait()
         self.orig_sprite = self.character.portrait
         self.current_sprite = self.orig_sprite
-        self.angle = 0
+        self.angle = init_angle
         self.scale = 0.25
         self.x = 0
         self.y = 0
@@ -118,8 +139,8 @@ class CharacterSelectCharacter:
 
 class CharacterSelectContext:
     def __init__(self, screen):
-        self.left_wheel = CharacterWheel(-100, 200, (250, 100, 50), transition_frames, 0)
-        self.right_wheel = CharacterWheel(1300, 200, (50, 200, 100), transition_frames, -60)
+        self.left_wheel = CharacterWheel(-100, 200, transition_frames, 0, 1)
+        self.right_wheel = CharacterWheel(1300, 200, transition_frames, -1 * (360/len(all_chars)*(len(all_chars)/2-1)), -1)
         self.screen = screen
         self.clock = pygame.time.Clock()
         self.timer = 0
@@ -134,16 +155,12 @@ class CharacterSelectContext:
                     color = rand_colors[random.randint(0, len(rand_colors) - 1)]
                     if event.key == pygame.K_w:
                         self.left_wheel.update_angle(-1)
-                        #self.left_wheel.set_color(color[0], color[1], color[2])
                     if event.key == pygame.K_s:
                         self.left_wheel.update_angle(1)
-                        #self.left_wheel.set_color(color[0], color[1], color[2])
                     if event.key == pygame.K_UP:
                         self.right_wheel.update_angle(1)
-                        #self.right_wheel.set_color(color[0], color[1], color[2])
                     if event.key == pygame.K_DOWN:
                         self.right_wheel.update_angle(-1)
-                        #self.right_wheel.set_color(color[0], color[1], color[2])
                     if event.key == pygame.K_ESCAPE:
                         pygame.quit()
                         quit()
@@ -162,8 +179,8 @@ class CharacterSelectContext:
 
     def draw_background(self):
         self.screen.fill(background_fill)
-        font = pygame.font.SysFont('Comic Sans MS', 15)
-        label = font.render('CHOOSE YOUR CHARACTERS! {0:.2f}'.format(self.timer / fps), 1, (100, 200, 100))
+        font = pygame.font.SysFont('Impact', 20)
+        label = font.render('CHOOSE YOUR CHARACTERS!'.format(self.timer / fps), 1, (100, 200, 100))
         self.screen.blit(label, (450, 100))
 
 
