@@ -6,8 +6,9 @@ from vars import show_velocity
 import colors
 
 
-class PlayerCharacter:
+class PlayerCharacter(pygame.sprite.Sprite):
     def __init__(self, init_x=0, init_y=700):
+        super().__init__()
         self.angle = 0
         self.speed = 0
         self.x = init_x

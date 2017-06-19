@@ -1,7 +1,7 @@
 import pygame
 
-from Objects.Player import Player
-from Objects.World import World
+from objects.Player import Player
+from objects.World import World
 
 from vars import SCREEN_WIDTH, SCREEN_HEIGHT
 from vars import fps

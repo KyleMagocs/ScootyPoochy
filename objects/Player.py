@@ -1,6 +1,6 @@
-from Objects import Characters
+from objects import Characters
 from controller_interface.dummy import Dummy
-from controller_interface.trackball import Trackball
+
 
 DUMMY = 1
 TRACKBALL = 0
@@ -23,6 +23,7 @@ class Player:
             self.control_one = Dummy()
             self.control_two = Dummy()
         elif control_type == TRACKBALL:
+            from controller_interface.trackball import Trackball
             self.control_one = Trackball(53769, 5506, self.player_id*2)
             self.control_two = Trackball(53769, 5506, (self.player_id*2) + 1)
         else:

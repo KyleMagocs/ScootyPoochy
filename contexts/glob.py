@@ -1,13 +1,13 @@
-from Contexts.char_select import CharacterSelectContext
-from Contexts.attract import AttractContext
-from Contexts.game import GameContext
-from Contexts.level_select import LevelSelectContext
-from Contexts.scoreboard import ScoreboardContext
-from Contexts.startup import StartupContext
-from Contexts.title import TitleContext
-from Objects.Characters import TestCharacter, Doge
-from Objects.Level import TempLevel
-from Objects.Player import Player
+from contexts.char_select import CharacterSelectContext
+from contexts.attract import AttractContext
+from contexts.game import GameContext
+from contexts.level_select import LevelSelectContext
+from contexts.scoreboard import ScoreboardContext
+from contexts.startup import StartupContext
+from contexts.title import TitleContext
+from objects.Characters import TestCharacter, Doge
+from objects.Level import TempLevel
+from objects.Player import Player
 from vars import skip_intro
 
 

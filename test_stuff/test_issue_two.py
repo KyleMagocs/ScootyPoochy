@@ -1,4 +1,4 @@
-from Objects.Characters import get_all_characters
+from objects.Characters import get_all_characters
 
 import pygame
 

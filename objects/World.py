@@ -1,5 +1,4 @@
-from Objects.Level import Level
-from Objects.PlayerCharacter import PlayerCharacter
+from sprites.PlayerCharacter import PlayerCharacter
 
 
 class World:

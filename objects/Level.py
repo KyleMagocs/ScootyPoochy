@@ -1,4 +1,4 @@
-from Objects.Theme import TempTheme
+from objects.Theme import TempTheme
 
 
 class Level:

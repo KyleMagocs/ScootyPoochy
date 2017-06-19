@@ -2,7 +2,7 @@ import random
 
 import pygame
 import math
-from Objects.Characters import get_all_characters
+from objects.Characters import get_all_characters
 from vars import fps
 from colors import *
 
