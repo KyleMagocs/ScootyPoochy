@@ -2,12 +2,13 @@ import pygame
 
 from colors import *
 from objects.CharSelectWheel import CharacterWheel
-from objects.Characters import get_all_characters
 from vars import fps
+
+from objects.Characters import get_all_characters
+all_chars = get_all_characters()
 
 TOTAL_WAIT = 1
 transition_frames = 25
-all_chars = get_all_characters()
 
 
 class CharacterSelectContext:

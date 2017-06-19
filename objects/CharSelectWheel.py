@@ -2,7 +2,8 @@ import math
 
 import pygame
 
-from contexts.char_select import all_chars
+from objects.Characters import get_all_characters
+all_chars = get_all_characters()
 from sprites.CharacterSelectCharacter import CharacterSelectCharacter
 from vars import radians_factor
 
@@ -17,7 +18,6 @@ class CharacterWheel:
         self.x = x
         self.y = y
         self.characters = []
-        self.final_angle = 0
         self.angle_counter = 0
         self.moving = 0
         self.blend_frames = blend_frames
@@ -35,19 +35,14 @@ class CharacterWheel:
 
         for i in char_indices:
             self.characters.append(
-                CharacterSelectCharacter(all_chars[i](), int(360 / len(all_chars) * i + self.angle_offset)))
+                CharacterSelectCharacter(all_chars[i](), int(360 / len(all_chars) * i + self.angle_offset), self.x, self.y))
 
-
-        # self.selected_character_index = len(self.characters) - 1
-        self.update_chars(0) # Todo:  this is kind of hacky
+        self.update_chars(0)  # Todo:  this is kind of hacky
 
     def update_chars(self, angle_inc):
         for char in self.characters:
             char.angle = (char.angle + angle_inc) % 360
             char.update()
-
-            char.x = math.cos(char.angle * radians_factor) * 365 + self.x - (char.current_sprite.get_width() / 2)
-            char.y = math.sin(char.angle * radians_factor) * 365 + self.y - (char.current_sprite.get_height() / 2)
 
     def set_color(self, r, g, b):
         self.counter = 0
@@ -70,7 +65,7 @@ class CharacterWheel:
         if self.moving != direction:
             self.selected_character_index = (self.selected_character_index - (direction*self.factor)) % len(self.characters)
             new_color = self.characters[self.selected_character_index].character.color
-            self.set_color(new_color[0], new_color[1], new_color[2])  # todo:  hacky
+            self.set_color(new_color[0], new_color[1], new_color[2])
         self.moving = direction
 
     def update(self):
@@ -98,15 +93,16 @@ class CharacterWheel:
                 screen.blit(label, (self.x + (200 * self.factor) - 75, stat_y))
                 stat_y += 20
 
+    def draw_circles(self, screen):
+        radius = 310
+        pygame.draw.circle(screen, self.color, (self.x, self.y), radius + 90, 9)
+        pygame.draw.circle(screen, self.color, (self.x, self.y), radius + 20, 4)
+        pygame.draw.circle(screen, self.color, (self.x, self.y), radius + 5, 1)
+        pygame.draw.circle(screen, self.color, (self.x, self.y), radius, 1)
+
     def draw(self, screen):
         self.update()
-        try:
-            pygame.draw.circle(screen, self.color, (self.x, self.y), 400, 9)
-            pygame.draw.circle(screen, self.color, (self.x, self.y), 330, 4)
-            pygame.draw.circle(screen, self.color, (self.x, self.y), 315, 1)
-            pygame.draw.circle(screen, self.color, (self.x, self.y), 310, 1)
-            for char in self.characters:
-                char.draw(screen)
-            self.display_stats(screen)
-        except Exception as e:
-            print(e)
+        self.draw_circles(screen)
+        for char in self.characters:
+            char.draw(screen)
+        self.display_stats(screen)
