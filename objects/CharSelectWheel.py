@@ -15,18 +15,22 @@ class CharacterWheel:
     counter = 0
 
     def __init__(self, x, y, blend_frames, angle_offset, left_or_right=1):
+        self.spawn_counter = 0
         self.x = x
         self.y = y
         self.characters = []
         self.angle_counter = 0
+        self.final_angle = 0
         self.moving = 0
+        self.spawning = False
         self.blend_frames = blend_frames
         self.factor = left_or_right
         self.angle_offset = angle_offset
         self.selected_character_index = 0
         self.load_characters()
-        self.color = self.characters[self.selected_character_index].character.color
-        self.final_color = self.color
+        self.radius = 0
+        self.color = (0, 0, 0)
+        self.final_color = self.characters[self.selected_character_index].character.color
 
     def load_characters(self):
         char_indices = range(len(all_chars))
@@ -66,6 +70,7 @@ class CharacterWheel:
             self.selected_character_index = (self.selected_character_index - (direction*self.factor)) % len(self.characters)
             new_color = self.characters[self.selected_character_index].character.color
             self.set_color(new_color[0], new_color[1], new_color[2])
+            # Todo:  set self.final_angle here
         self.moving = direction
 
     def update(self):
@@ -76,6 +81,8 @@ class CharacterWheel:
         if math.fabs(self.angle_counter) > self.blend_frames or self.moving and self.angle_counter == 0:
             self.moving = 0
             self.angle_counter = 0
+
+            # TODO:  Fix issue 4 here
 
         if self.moving:
             self.update_chars(360 / len(self.characters) / self.blend_frames * self.moving)
@@ -94,15 +101,24 @@ class CharacterWheel:
                 stat_y += 20
 
     def draw_circles(self, screen):
-        radius = 310
-        pygame.draw.circle(screen, self.color, (self.x, self.y), radius + 90, 9)
-        pygame.draw.circle(screen, self.color, (self.x, self.y), radius + 20, 4)
-        pygame.draw.circle(screen, self.color, (self.x, self.y), radius + 5, 1)
-        pygame.draw.circle(screen, self.color, (self.x, self.y), radius, 1)
+        pygame.draw.circle(screen, self.color, (self.x, self.y), int(self.radius + 90), 9)
+        pygame.draw.circle(screen, self.color, (self.x, self.y), int(self.radius + 20), 4)
+        pygame.draw.circle(screen, self.color, (self.x, self.y), int(self.radius + 5), 1)
+        pygame.draw.circle(screen, self.color, (self.x, self.y), int(self.radius + 1), 1)
 
     def draw(self, screen):
-        self.update()
+        if self.spawning:
+            self.spawn_counter += 1
+            self.radius += 300 / self.blend_frames
+            self.color = (self.color[0]+9, self.color[1]+9, self.color[2]+9)
+            if self.spawn_counter > self.blend_frames:
+                self.spawning = False
+                self.set_color(self.final_color[0], self.final_color[1], self.final_color[2])
+
         self.draw_circles(screen)
-        for char in self.characters:
-            char.draw(screen)
-        self.display_stats(screen)
+
+        if not self.spawning and self.radius > 0:
+            self.update()
+            for char in self.characters:
+                char.draw(screen)
+            self.display_stats(screen)

@@ -14,6 +14,7 @@ transition_frames = 25
 class CharacterSelectContext:
     def __init__(self, screen):
         self.left_wheel = CharacterWheel(-100, 200, transition_frames, 0, 1)
+        self.left_wheel.spawning = True
         self.right_wheel = CharacterWheel(1300, 200, transition_frames, -1 * (360 / len(all_chars) * (len(all_chars) / 2 - 1)), -1)
         self.screen = screen
         self.clock = pygame.time.Clock()
@@ -38,9 +39,11 @@ class CharacterSelectContext:
         while True:
             self.check_events()
 
-            # self.timer += 1
-            # if self.timer > TOTAL_WAIT * fps:
-            #     self.timer = 0
+            self.timer += 1
+            if self.timer == TOTAL_WAIT * fps:
+                self.left_wheel.spawning = True
+            if self.timer == TOTAL_WAIT * 2 * fps:
+                self.right_wheel.spawning = True
 
             self.draw()
 

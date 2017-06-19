@@ -9,7 +9,7 @@ ACCEL_COEF = 1
 
 
 def get_all_characters():
-    return [Carlos, Doge, TestCharacter,]
+    return [Carlos, Doge, TestCharacter,Carlos, Doge, TestCharacter,]
 
 
 class CharacterBase:
