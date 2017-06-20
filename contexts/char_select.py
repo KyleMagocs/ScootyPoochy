@@ -5,6 +5,7 @@ from objects.CharSelectWheel import CharacterWheel
 from vars import fps
 
 from objects.Characters import get_all_characters
+import vars
 all_chars = get_all_characters()
 
 TOTAL_WAIT = 1
@@ -12,13 +13,16 @@ transition_frames = 25
 
 
 class CharacterSelectContext:
+
     def __init__(self, screen):
         self.left_wheel = CharacterWheel(-100, 200, transition_frames, 0, 1)
-        self.left_wheel.spawning = True
         self.right_wheel = CharacterWheel(1300, 200, transition_frames, -1 * (360 / len(all_chars) * (len(all_chars) / 2 - 1)), -1)
         self.screen = screen
         self.clock = pygame.time.Clock()
         self.timer = 0
+
+    def both_wheels_confirmed(self):
+        return self.left_wheel.confirmed and self.right_wheel.confirmed
 
     def check_events(self):
         for event in pygame.event.get():
@@ -27,28 +31,31 @@ class CharacterSelectContext:
                     self.left_wheel.update_angle(-1)
                 if event.key == pygame.K_s:
                     self.left_wheel.update_angle(1)
+                if event.key == pygame.K_SPACE:
+                    self.left_wheel.spawn_or_confirm()
                 if event.key == pygame.K_UP:
                     self.right_wheel.update_angle(1)
                 if event.key == pygame.K_DOWN:
                     self.right_wheel.update_angle(-1)
+                if event.key == pygame.K_RETURN:
+                    self.right_wheel.spawn_or_confirm()
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     quit()
 
     def main_loop(self):
         while True:
+            if self.timer % 5 == 0:
+                vars.selected_character_color_index = (vars.selected_character_color_index + 1) % 3
             self.check_events()
 
             self.timer += 1
-            if self.timer == TOTAL_WAIT * fps:
-                self.left_wheel.spawning = True
-            if self.timer == TOTAL_WAIT * 2 * fps:
-                self.right_wheel.spawning = True
-
             self.draw()
 
             pygame.display.flip()
             self.clock.tick(fps)
+            if self.both_wheels_confirmed():
+                return [self.left_wheel.get_selected_character(), self.right_wheel.get_selected_character(),]
 
     def draw(self):
         self.draw_background()

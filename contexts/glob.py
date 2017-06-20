@@ -29,9 +29,6 @@ class GlobalContext:
                 select = CharacterSelectContext(self.screen)
                 characters = select.main_loop()
 
-                # for i in range(0, len(characters)):
-                #     player_array.append(Player(i))   # TODO:  Expand this
-
                 theme_select = LevelSelectContext(self.screen)
                 theme = theme_select.main_loop()
                 # TODO:  Build level here
