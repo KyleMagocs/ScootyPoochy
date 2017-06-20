@@ -6,6 +6,7 @@ from vars import radians_factor
 import vars
 from colors import selected_character_colors
 
+
 class CharacterSelectCharacter(pygame.sprite.Sprite):
     def __init__(self, character, init_angle, offset_x, offset_y):
         super().__init__()
