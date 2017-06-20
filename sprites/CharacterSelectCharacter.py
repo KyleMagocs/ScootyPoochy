@@ -38,4 +38,9 @@ class CharacterSelectCharacter(pygame.sprite.Sprite):
         if self.selected:
             # draw rectangle
             pygame.draw.rect(screen, selected_character_colors[vars.selected_character_color_index],
-                             (self.x, self.y, self.current_sprite.get_width(), self.current_sprite.get_height()), 4)  # TODO:  This is terrible
+                             (self.x, self.y, self.current_sprite.get_width(), self.current_sprite.get_height()), 6)  # TODO:  This is terrible
+
+        else:
+            pygame.draw.rect(screen, (150, 150, 150),
+                             (self.x, self.y, self.current_sprite.get_width(), self.current_sprite.get_height()),
+                             4)  # TODO:  This is terrible
