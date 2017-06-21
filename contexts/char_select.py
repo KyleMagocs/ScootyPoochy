@@ -16,7 +16,7 @@ class CharacterSelectContext:
 
     def __init__(self, screen):
         self.left_wheel = CharacterWheel(-100, 200, transition_frames, 0, 1)
-        self.right_wheel = CharacterWheel(1300, 200, transition_frames, -1 * (360 / len(all_chars) * (len(all_chars) / 2 - 1)), -1)
+        self.right_wheel = CharacterWheel(vars.SCREEN_WIDTH+100, 200, transition_frames, -1 * (360 / len(all_chars) * (len(all_chars) / 2 - 1)), -1)
         self.screen = screen
         self.clock = pygame.time.Clock()
         self.timer = 0

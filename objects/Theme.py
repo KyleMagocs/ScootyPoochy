@@ -6,7 +6,7 @@ ASSETS_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'i
 
 
 def get_all_themes():
-    return [TempTheme, TempTheme2, TempTheme3, TempTheme4, TempTheme5, TempTheme]
+    return [TempTheme, TempTheme2, TempTheme3, TempTheme4, TempTheme5, TempTheme, TempTheme3]
 
 
 class Theme:

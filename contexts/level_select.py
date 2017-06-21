@@ -1,8 +1,9 @@
 import pygame
-
+import math
 from objects.Characters import TestCharacter
 from objects.Theme import get_all_themes
-from vars import fps
+from vars import fps, radians_factor
+import vars
 
 TOTAL_WAIT = 5
 
@@ -21,6 +22,21 @@ def generate_grid_coords():
         x += 210
     return ret
 
+
+def generate_circle_coords():
+    ret = []
+    themes = get_all_themes()
+    inc = 360 / (len(themes) + 1)
+    radius = 300
+    for i in range(0, len(themes) + 1):
+        x = math.cos(i * inc * radians_factor) * radius + vars.SCREEN_WIDTH / 2
+        y = math.sin(i * inc * radians_factor) * radius + vars.SCREEN_HEIGHT / 2
+
+        ret.append((x, y,))
+
+    return ret
+
+
 grid_coords = generate_grid_coords()
 
 
@@ -36,7 +52,7 @@ class SelectorTheme(pygame.sprite.Sprite):
         pass
 
     def draw(self, screen):
-        screen.blit(self.sprite, (self.x, self.y))
+        screen.blit(self.sprite, (self.x - self.sprite.get_width() / 2, self.y - self.sprite.get_height() / 2))
 
 
 class LevelSelector:
@@ -65,10 +81,12 @@ class LevelSelector:
 
     def draw(self, screen):
         pygame.draw.rect(screen, self.color[self.disp_color],
-                         (self.x + self.player_id, self.y + self.player_id, self.width, self.height), 5)
+                         (self.x + self.player_id - self.width / 2, self.y + self.player_id - self.height / 2,
+                          self.width, self.height), 5)
         font = pygame.font.SysFont('Comic Sans MS', 15)
         label = font.render(self.player_name, 1, self.color[1])
-        screen.blit(label, (self.x + (self.width - 15) * self.player_id + 5, self.y - 20))
+        screen.blit(label,
+                    (self.x + (self.width - 15) * self.player_id + 5 - self.width / 2, self.y - 20 - self.height / 2))
 
 
 class LevelSelectContext:
@@ -88,13 +106,11 @@ class LevelSelectContext:
         y = 200
         themes = get_all_themes()
         for i in range(0, len(themes)):
-
             selector_theme = SelectorTheme(themes[i])
             selector_theme.x = grid_coords[i][0]
             selector_theme.y = grid_coords[i][1]
 
             self.thumbs.add(selector_theme)
-
 
     def check_events(self):
         for event in pygame.event.get():
@@ -132,6 +148,9 @@ class LevelSelectContext:
             self.p2.update()
             for theme_thumb in self.thumbs:  # todo: replace with real sprite group stuff
                 theme_thumb.draw(self.screen)
+
+            if self.timer > 3:
+                return
 
             self.p1.draw(self.screen)
             self.p2.draw(self.screen)

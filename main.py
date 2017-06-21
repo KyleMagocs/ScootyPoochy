@@ -14,13 +14,13 @@ if __name__ == "__main__":
 
     # character_select = CharacterSelectContext(screen)
     # selected_characters = character_select.main_loop()
+    #
+    # level_select = LevelSelectContext(screen)
+    # level = level_select.main_loop()
 
-    level_select = LevelSelectContext(screen)
-    level = level_select.main_loop()
-
-    # startup = StartupContext(screen)
-    # startup_result = startup.display_startup()
-    # if not startup_result:
-    #     quit()
-    # global_context = GlobalContext(screen)
-    # global_context.main_loop()
+    startup = StartupContext(screen)
+    startup_result = startup.display_startup()
+    if not startup_result:
+        quit()
+    global_context = GlobalContext(screen)
+    global_context.main_loop()

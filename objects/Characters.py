@@ -1,12 +1,11 @@
 import os
+
 import pygame
 
 from colors import *
-
-IMAGES_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'images', 'characters')
+from vars import IMAGES_PATH
 
 ACCEL_COEF = 1
-
 
 def get_all_characters():
     return [Carlos, Doge, TestCharacter,Carlos, Doge, TestCharacter,]
