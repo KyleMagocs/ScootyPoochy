@@ -23,9 +23,13 @@ class Player:
             self.control_one = Dummy()
             self.control_two = Dummy()
         elif control_type == TRACKBALL:
-            from controller_interface.trackball import Trackball
-            self.control_one = Trackball(53769, 5506, self.player_id*2)
-            self.control_two = Trackball(53769, 5506, (self.player_id*2) + 1)
+            try:
+                from controller_interface.trackball import Trackball
+                self.control_one = Trackball(53769, 5506, self.player_id*2)
+                self.control_two = Trackball(53769, 5506, (self.player_id*2) + 1)
+            except:
+                self.control_one = Dummy()  # TODO:  Fallback to keyboard?
+                self.control_two = Dummy()
         else:
             raise Exception('DIDNT GET AN INPUT?!?!?')
 
@@ -44,6 +48,4 @@ class Player:
         addtl_y_vel = (left[1] / 10 + right[1] / 10) / 2 * Characters.ACCEL_COEF
         addtl_x_vel = ((left[0] / 10 - 10) + (right[0] / 10 + 10)) / 2 * Characters.ACCEL_COEF
 
-        self.world.player_character.y_speed = (self.world.player_character.y_speed + addtl_y_vel) / self.world.level.theme.friction
-
-        self.world.player_character.x_speed = (self.world.player_character.x_speed - addtl_x_vel) / self.world.level.theme.friction
+        return addtl_x_vel, addtl_y_vel

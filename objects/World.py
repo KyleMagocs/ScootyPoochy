@@ -20,8 +20,12 @@ class World:
         pass
         # TODO:  PARSE OUT LEVEL OBJECTS INTO LOCAL STORAGE
 
-    def update(self):
+    def update(self, y_vel, x_vel):
         # HANDLE PLAYER X DIRECTION
+
+        self.player_character.y_speed = (self.player_character.y_speed + y_vel) / self.level.theme.friction
+        self.player_character.x_speed = (self.player_character.x_speed - x_vel) / self.level.theme.friction
+
         self.player_character.update()
 
         # HANDLE WORLD Y DIRECTION
@@ -37,8 +41,9 @@ class World:
         col = pygame.sprite.groupcollide(self.level.objects, self.player_group, dokilla=False, dokillb=False)
 
         for sprite in col:
-            if sprite.get_wrecked():
-                self.score += 1
+            if sprite.breakable and sprite.get_wrecked():
+                self.score += sprite.score
+            if not sprite.
 
         if self.check_victory():
             return True

@@ -25,7 +25,7 @@ class GameContext:
         for i in range(0, len(character_list)):
             player = Player(i, i)
             player.world = World(width=(SCREEN_WIDTH / self.num_players), x_offset=i, y_offset=SCREEN_HEIGHT+10, level=levels[i])
-            player.world.player_character.y = SCREEN_HEIGHT - 100
+            player.world.player_character.y = SCREEN_HEIGHT - 150
             player.world.player_character.set_character(character_list[i])
             self.players.append(player)
 
@@ -57,8 +57,8 @@ class GameContext:
             while True:
                 self.screen.fill((255, 255, 255))
                 for player in self.players:  # should iterate on Players, who have Worlds
-                    player.handle_input()
-                    if player.world.update():
+                    x_vel, y_vel = player.handle_input()
+                    if player.world.update(x_vel, y_vel):
                         self.victory = True  # mark game finish because
                     player.world.draw(self.screen)
 

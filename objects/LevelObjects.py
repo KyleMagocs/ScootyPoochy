@@ -8,7 +8,7 @@ import vars
 class LevelObject(pygame.sprite.Sprite):
     breakable = 0  # 1 for breakable objects
     broken = 0  # 1 to trigger broken state
-
+    passable = 1 #
     image_path = None
 
     def __init__(self):
@@ -25,6 +25,7 @@ class LevelObject(pygame.sprite.Sprite):
 class Lamp(LevelObject):
     breakable = 1
     broken = None
+    score = 10
 
     image_path = 'objects/lamp.png'
 
@@ -59,9 +60,35 @@ class Lamp(LevelObject):
 
 class Couch(LevelObject):
     breakable = 0
+    score = 10
 
-    image_path = 'couch.png'
+    image_path = 'objects/couch.png'
 
-    def __init__(self):
-        LevelObject.__init__(self)
+    def __init__(self, init_pos):
+        super().__init__()
+        self.image = self.load_sprite()
+        self.rect = self.image.get_rect()
+        self.rect.height = 275
+        self.rect.width = 75
+        self.x = init_pos[0]
+        self.y = init_pos[1]
+
+    def load_sprite(self):
+        _image = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
+        _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+        return _image
+
+    def update(self, addtl_x, addtl_y):
+        self.x += addtl_x
+        self.y += addtl_y
+        self.rect.x = self.x
+        self.rect.y = self.y
+
+    def draw(self, screen):
+        screen.blit(self.image, (self.rect.x, self.rect.y - self.image.get_height() + self.rect.height))
+        if vars.draw_rects:
+            pygame.draw.rect(screen, (255, 255, 255), self.rect, 1)   #
+
+    def get_rect(self):
+        pass
 

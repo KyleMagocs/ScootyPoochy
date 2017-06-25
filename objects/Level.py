@@ -1,6 +1,6 @@
 import pygame
 
-from objects.LevelObjects import Lamp
+from objects.LevelObjects import Lamp, Couch
 from objects.Theme import TempTheme
 
 
@@ -44,11 +44,20 @@ class TempLevel(Level):
         self.height = self.theme.background_sprite.get_height()
         self.width = self.theme.background_sprite.get_width()
 
-        _lamp = Lamp((200, 200,))
-        _lamp2 = Lamp((300, 400,))
-        _lamp3= Lamp((100, -50,))
-        _lamp4 = Lamp((500, 300,))
-        self.objects.add(_lamp)  # TODO:  Yank later
-        self.objects.add(_lamp2)  # TODO:  Yank later
-        self.objects.add(_lamp3)  # TODO:  Yank later
-        self.objects.add(_lamp4)  # TODO:  Yank later
+        lamp_coords = [
+            (200,200),
+            (400,-100),
+            (150,-250),
+            (300,-400),
+            (200,-550),
+            (75,-700),
+            (375,-900),
+            (200,-1100),
+        ]
+        for x,y in lamp_coords:
+            _lamp = Lamp((x, y,))
+            self.objects.add(_lamp)  # TODO:  Yank later
+
+
+        _couch = Couch((480, -50))
+        self.objects.add(_couch)  # TODO:  Yank later
