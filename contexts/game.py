@@ -1,5 +1,6 @@
 import pygame
 
+from objects.LevelObjects import Lamp
 from objects.Player import Player
 from objects.World import World
 
@@ -17,7 +18,7 @@ class GameContext:
         self.num_players = len(character_list)
         self.screen = screen
         self.victory = False
-        self.objects = pygame.sprite.Group()  # hold level objects
+        # self.objects = pygame.sprite.Group()  # hold level objects
 
         self.players = []
 
@@ -28,7 +29,7 @@ class GameContext:
             player.world.player_character.set_character(character_list[i])
             self.players.append(player)
 
-        self.players_group = pygame.sprite.Group()
+        # self.players_group = pygame.sprite.Group()
 
         self.clock = pygame.time.Clock()
 
@@ -40,9 +41,9 @@ class GameContext:
 
     def draw_sprites(self):
         self.draw_level_sprites()
-
-    def draw_level_sprites(self):
-        pass  # TODO:  world object should do this?
+    #
+    # def draw_level_sprites(self):
+    #     pass  # TODO:  world object should do this?
 
     def check_keys(self):
         keystate = pygame.key.get_pressed()

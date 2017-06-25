@@ -30,13 +30,13 @@ class CharacterBase:
 
     def load_sprite(self):
         if self.sprite_path is not None:
-            _sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, self.sprite_path)).convert()
+            _sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, 'characters', self.sprite_path)).convert()
             _sprite.set_colorkey((255, 0, 255), pygame.RLEACCEL)
             self.sprite = _sprite
 
     def load_portrait(self):
         if self.portrait_path is not None:
-            _portrait = pygame.image.load_extended(os.path.join(IMAGES_PATH, self.portrait_path)).convert()
+            _portrait = pygame.image.load_extended(os.path.join(IMAGES_PATH, 'characters', self.portrait_path)).convert()
             _portrait.set_colorkey((255, 0, 255), pygame.RLEACCEL)
             self.portrait = _portrait
 
@@ -48,6 +48,7 @@ class TestCharacter(CharacterBase):
     handling = .9
     acceleration = .4
     width = 60
+    height = 60
     color = red
     name = 'XYLONS DOG'
     attributes = {
@@ -65,6 +66,7 @@ class Doge(CharacterBase):
     max_speed = .7 * 6
     acceleration = .35
     width = 60
+    height = 60
     handling = .95
     color = blue
     name = 'DOGE'
@@ -84,6 +86,7 @@ class Carlos(CharacterBase):
     max_speed = .6 * 6
     acceleration = .5
     width = 30
+    height = 30
     handling = .8
     color = green
     name = 'Chichi'

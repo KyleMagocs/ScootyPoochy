@@ -1,3 +1,5 @@
+import pygame
+
 from sprites.PlayerCharacter import PlayerCharacter
 
 
@@ -5,10 +7,13 @@ class World:
     def __init__(self, width, x_offset, y_offset, level):
         self.width = width
         self.x_offset = x_offset * width
-        self.level = level  # TODO:  GENERATE / LOAD LEVEL INSTEAD OF THIS
+        self.score = 0
+        self.level = level
         self.level.x = self.x_offset
+        self.level.update_objects(self.x_offset)
         self.level.y = 0 - self.level.height + y_offset
         self.player_character = PlayerCharacter(init_x=self.x_offset + self.width / 2, init_y=y_offset) # TODO:  This math is bad
+        self.player_group = pygame.sprite.Group(self.player_character)
         self.y = 0
 
     def load_level(self):
@@ -28,7 +33,12 @@ class World:
         self.level.update(addtl_x=0, addtl_y=self.player_character.y_speed)
 
         # HANDLE COLLISIONS
-        # TODO:  HANDLE COLLISIONS AND STUFF
+
+        col = pygame.sprite.groupcollide(self.level.objects, self.player_group, dokilla=False, dokillb=True)
+
+        for sprite in col:
+            if sprite.get_wrecked():
+                self.score += 1
 
         if self.check_victory():
             return True

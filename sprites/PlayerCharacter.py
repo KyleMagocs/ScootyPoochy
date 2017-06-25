@@ -2,7 +2,8 @@ import math
 
 import pygame
 
-from vars import show_velocity
+from utils.sprite_utils import rot_center
+from vars import show_velocity, draw_rects
 import colors
 
 
@@ -24,16 +25,21 @@ class PlayerCharacter(pygame.sprite.Sprite):
     def set_character(self, character):
         self.character = character
         self.orig_sprite = character.sprite
+        self.rect = self.orig_sprite.get_rect()
 
     def update(self):
         if self.y_speed != 0:
             self.angle = -1 * math.atan(self.x_speed/self.y_speed) / 0.0174533
-
         self.x += self.x_speed
+        self.rect.x = self.x
+        self.rect.y = self.y
 
     def draw(self, screen):
-        new_sprite = pygame.transform.rotate(self.orig_sprite, self.angle)
-        screen.blit(new_sprite, (self.x - self.character.width / 2, self.y))
+        _image = rot_center(self.orig_sprite, self.angle)
+        screen.blit(_image, (self.rect.x, self.rect.y))
         if show_velocity:
-            pygame.draw.line(screen, colors.debug_velocity_line, [self.x , self.y + self.character.width / 2],
-                             [self.x + (self.x_speed*10), self.y - (self.y_speed*10) + self.character.width / 2], 3)
+            pygame.draw.line(screen, colors.debug_velocity_line, [self.x + self.character.width / 2, self.y + self.character.height / 2],
+                             [self.x + (self.x_speed*15) + self.character.width / 2,
+                              self.y - (self.y_speed*15) + self.character.height / 2], 3)
+        if draw_rects:
+            pygame.draw.rect(screen, self.character.color, self.rect, 1)   #
