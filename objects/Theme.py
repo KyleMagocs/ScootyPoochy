@@ -32,7 +32,7 @@ class Theme:
 
 
 class TempTheme(Theme):
-    background_image = 'level_bg_temp.png'
+    background_image = 'house_bg_temp.png'
     thumbnail_image = 'test_theme_thumbnail.png'
     friction = 2.5
 

@@ -25,16 +25,16 @@ class World:
         self.player_character.update()
 
         # HANDLE WORLD Y DIRECTION
-        if self.player_character.x < self.level.x:
-            self.player_character.x = self.level.x
-        if self.player_character.x > self.level.x + self.width:
-            self.player_character.x = self.level.x + self.width
+        if self.player_character.x < self.level.x + 60:
+            self.player_character.x = self.level.x + 60
+        if self.player_character.x > self.level.x + self.width - 60:
+            self.player_character.x = self.level.x + self.width - 60
         self.y += self.player_character.y_speed
         self.level.update(addtl_x=0, addtl_y=self.player_character.y_speed)
 
         # HANDLE COLLISIONS
 
-        col = pygame.sprite.groupcollide(self.level.objects, self.player_group, dokilla=False, dokillb=True)
+        col = pygame.sprite.groupcollide(self.level.objects, self.player_group, dokilla=False, dokillb=False)
 
         for sprite in col:
             if sprite.get_wrecked():
