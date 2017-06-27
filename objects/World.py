@@ -20,11 +20,11 @@ class World:
         pass
         # TODO:  PARSE OUT LEVEL OBJECTS INTO LOCAL STORAGE
 
-    def update(self, y_vel, x_vel):
+    def update(self, x_vel, y_vel):
         # HANDLE PLAYER X DIRECTION
 
-        self.player_character.y_speed = (self.player_character.y_speed + y_vel) / self.level.theme.friction
         self.player_character.x_speed = (self.player_character.x_speed - x_vel) / self.level.theme.friction
+        self.player_character.y_speed = (self.player_character.y_speed + y_vel) / self.level.theme.friction
 
         self.player_character.update()
 
@@ -33,8 +33,17 @@ class World:
             self.player_character.x = self.level.x + 60
         if self.player_character.x > self.level.x + self.width - 60:
             self.player_character.x = self.level.x + self.width - 60
-        self.y += self.player_character.y_speed
-        self.level.update(addtl_x=0, addtl_y=self.player_character.y_speed)
+        if self.level.y + self.player_character.y_speed >= 0:
+            #self.y = 0
+            self.level.update(addtl_x=0, addtl_y=0)
+            self.player_character.y -= self.player_character.y_speed
+        else:
+            #self.y += self.player_character.y_speed
+            self.level.update(addtl_x=0, addtl_y=self.player_character.y_speed)
+        #
+        # self.y += self.player_character.y_speed
+        # self.level.update(addtl_x=0, addtl_y=self.player_character.y_speed)
+
 
         # HANDLE COLLISIONS
 
@@ -43,7 +52,6 @@ class World:
         for sprite in col:
             if sprite.breakable and sprite.get_wrecked():
                 self.score += sprite.score
-            if not sprite.
 
         if self.check_victory():
             return True

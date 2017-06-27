@@ -1,5 +1,5 @@
 from objects import Characters
-from controller_interface.dummy import Dummy
+from controller_interface.dummy import Dummy, SprintDummy
 
 
 DUMMY = 1
@@ -20,8 +20,8 @@ class Player:
 
     def set_controls(self, control_type):
         if control_type == DUMMY:
-            self.control_one = Dummy()
-            self.control_two = Dummy()
+            self.control_one = SprintDummy()
+            self.control_two = SprintDummy()
         elif control_type == TRACKBALL:
             try:
                 from controller_interface.trackball import Trackball
