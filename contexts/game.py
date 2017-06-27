@@ -53,28 +53,25 @@ class GameContext:
 
     def run_game(self):
         clock = pygame.time.Clock()
-        try:
-            while True:
-                self.screen.fill((255, 255, 255))
-                for player in self.players:  # should iterate on Players, who have Worlds
-                    x_vel, y_vel = player.handle_input()
-                    if player.world.update(x_vel, y_vel):
-                        self.victory = True  # mark game finish because
-                    player.world.draw(self.screen)
+        while True:
+            self.screen.fill((255, 255, 255))
+            for player in self.players:  # should iterate on Players, who have Worlds
+                x_vel, y_vel = player.handle_input()
+                if player.world.update(x_vel, y_vel):
+                    self.victory = True  # mark game finish because
+                player.world.draw(self.screen)
 
-                if self.victory:
-                    pass
-                    # TODO:  FANCY FINISH ANIMATION
-                    # TODO:  PROBABLY A TIMER TO WAIT FOR IT TO FINISH, SO LIKE 10 * FPS frames?
-                    return self.victory
+            if self.victory:
+                pass
+                # TODO:  FANCY FINISH ANIMATION
+                # TODO:  PROBABLY A TIMER TO WAIT FOR IT TO FINISH, SO LIKE 10 * FPS frames?
+                # return self.victory
 
-                self.check_keys()
+            self.check_keys()
 
-                pygame.display.flip()
-                clock.tick(fps)
-                pygame.event.get()
-        except Exception as e:
-            print(e)
+            pygame.display.flip()
+            clock.tick(fps)
+            pygame.event.get()
 
 
 

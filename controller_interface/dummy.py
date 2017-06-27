@@ -53,9 +53,9 @@ class SprintDummy(Dummy):
     def read(self):
         try:
             if self.toggle:
-                return random.randint(25, 50), random.randint(100, 150)
+                return random.randint(25, 50), random.randint(150, 200)
             else:
-                return -1 * random.randint(25, 50), random.randint(100, 150)
+                return -1 * random.randint(25, 50), random.randint(150, 200)
         finally:
             self.toggleCount += 1
             if self.toggleCount >= 60:

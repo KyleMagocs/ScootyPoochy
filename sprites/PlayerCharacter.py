@@ -14,6 +14,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.speed = 0
         self.x = init_x
         self.y = init_y
+        self.eff_y = 0  # used for tracking effective y (because real y is static)
         self.x_speed = 0
         self.y_speed = 0
         self.DUMMY_FLAG = False
