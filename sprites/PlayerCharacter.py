@@ -2,8 +2,9 @@ import math
 
 import pygame
 
+from objects.Characters import PoopTrail
 from utils.sprite_utils import rot_center
-from vars import show_velocity, draw_rects
+from vars import show_velocity, draw_rects, SCREEN_HEIGHT
 import colors
 
 
@@ -17,7 +18,9 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.eff_y = 0  # used for tracking effective y (because real y is static)
         self.x_speed = 0
         self.y_speed = 0
-        self.DUMMY_FLAG = False
+        self.poops = pygame.sprite.Group()
+
+        self.distance_travelled = 0
 
         self.jump_state = 0  # 0 = not jumping, 1 = jumping
         self.character = None
@@ -34,8 +37,11 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.x += self.x_speed
         self.rect.x = self.x
         self.rect.y = self.y
+        for poop in self.poops:
+            poop.rect.y += self.y_speed
 
     def draw(self, screen):
+        self.poops.draw(screen)
         _image = rot_center(self.orig_sprite, self.angle)
         screen.blit(_image, (self.rect.x, self.rect.y))
         if show_velocity:
@@ -44,3 +50,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
                               self.y - (self.y_speed*15) + self.character.height / 2], 3)
         if draw_rects:
             pygame.draw.rect(screen, self.character.color, self.rect, 1)   #
+
+    def spawn_poop(self):
+        new_poop = PoopTrail('poop_temp.png', self.x+self.character.width/2, self.y+self.character.width/2)
+        self.poops.add(new_poop)

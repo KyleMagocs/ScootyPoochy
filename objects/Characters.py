@@ -10,6 +10,18 @@ ACCEL_COEF = 1
 def get_all_characters():
     return [Carlos, Doge, TestCharacter,Carlos, Doge, TestCharacter,]
 
+class PoopTrail(pygame.sprite.Sprite):
+    def __init__(self, image_path, x, y):
+        super().__init__()
+        self.x = x
+        self.y = y
+        _sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, 'objects', image_path)).convert()
+        _sprite.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+        self.image = _sprite
+        self.rect = self.image.get_rect()
+        self.rect.x = self.x
+        self.rect.y = self.y
+
 
 class CharacterBase:
     sprite_path = None
