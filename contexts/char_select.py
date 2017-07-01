@@ -62,9 +62,6 @@ class CharacterSelectContext:
         self.left_wheel.draw(self.screen)
         self.right_wheel.draw(self.screen)
 
-    def draw_characters(self):
-        pass
-
     def draw_background(self):
         self.screen.fill(background_fill)
         font = pygame.font.SysFont('Impact', 20)

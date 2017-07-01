@@ -11,6 +11,7 @@ class AttractContext:
         self.timer = 0
 
     def display_loop(self):
+        # movie = pygame.movie.Movie('video/attractive.MOV')
         while True:
             self.timer += 1
             if self.timer > TOTAL_WAIT * fps:
@@ -24,6 +25,9 @@ class AttractContext:
             font = pygame.font.SysFont('Comic Sans MS', 15)
             label = font.render('EYECATCH! {0:.2f}'.format(self.timer / fps), 1, (0, 255, 255))
             self.screen.blit(label, (200, 150))
+            font = pygame.font.SysFont('Comic Sans', 60)
+            label = font.render('PUT A VIDEO HERE'.format(self.timer / fps), 1, (0, 255, 255))
+            self.screen.blit(label, (300, 450))
             pygame.display.flip()
 
             self.clock.tick(fps)

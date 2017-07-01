@@ -149,7 +149,7 @@ class LevelSelectContext:
             for theme_thumb in self.thumbs:  # todo: replace with real sprite group stuff
                 theme_thumb.draw(self.screen)
 
-            if self.timer > 3:
+            if self.timer > 60:
                 return
 
             self.p1.draw(self.screen)

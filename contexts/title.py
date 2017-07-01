@@ -22,11 +22,17 @@ class TitleContext:
 
             self.screen.fill((0, 0, 0))
             font = pygame.font.SysFont('Comic Sans MS', 15)
+            font2 = pygame.font.SysFont('Impact', 70)
+
             if (self.timer // 30) % 2 == 0:
                 label = font.render('TITLE! {0:.2f}'.format(self.timer/fps), 1, (255, 0, 255))
             else:
                 label = font.render('TITLE! {0:.2f}'.format(self.timer/fps), 1, (255, 255, 255))
             self.screen.blit(label, (200, 150))
+
+            label = font2.render('SUPER POOCH SCOOT !!'.format(self.timer / fps), 1, (255, 0, 255))
+            self.screen.blit(label, (375, 250))
+
             pygame.display.flip()
 
             self.clock.tick(fps)
