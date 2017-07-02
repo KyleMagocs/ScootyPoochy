@@ -87,11 +87,6 @@ class Couch(LevelObject):
         self.rect.x = self.x
         self.rect.y = self.y
 
-    def draw(self, screen):
-        screen.blit(self.image, (self.rect.x, self.rect.y - self.image.get_height() + self.rect.height))
-        if vars.draw_rects:
-            pygame.draw.rect(screen, (255, 255, 255), self.rect, 1)   #
-
     def get_rect(self):
         pass
 

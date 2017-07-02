@@ -85,7 +85,7 @@ class World:
         screen.blit(label, (self.x_offset + self.width / 4 + 2, vars.SCREEN_HEIGHT / 2 - 10 + 2))
 
     def spawn_poop(self):
-        new_poop = PoopTrail('poop_temp.png', self.player_character.x + self.player_character.character.width / 2,
+        new_poop = PoopTrail(self.player_character.character, self.player_character.x + self.player_character.character.width / 2,
                              self.player_character.y + self.player_character.character.width / 2)
         self.poops.add(new_poop)
 

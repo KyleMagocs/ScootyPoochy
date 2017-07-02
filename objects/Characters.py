@@ -12,11 +12,13 @@ def get_all_characters():
     return [Carlos, Doge, TestCharacter,Carlos, Doge, TestCharacter,]
 
 class PoopTrail(pygame.sprite.Sprite):
-    def __init__(self, image_path, x, y):
+    def __init__(self, character, x, y):
         super().__init__()
         self.x = x
         self.y = y
-        _sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, 'objects', image_path)).convert()
+        _sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, 'objects',
+                                                          character.poop_paths[random.randint(0, len(character.poop_paths)-1)])).convert()
+        # _sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, 'objects', image_path)).convert()
         _sprite.set_colorkey((255, 0, 255), pygame.RLEACCEL)
         _image = rot_center(_sprite, random.randint(0, 360))
         self.image = _image
@@ -64,6 +66,7 @@ class CharacterBase:
 class TestCharacter(CharacterBase):
     sprite_path = 'TEMPDOG_sprite_temp.png'
     portrait_path = 'TEMPDOG_PORTRAIT.png'
+    poop_paths = ['poop_temp.png']
     max_speed = .75 * 6
     handling = .9
     acceleration = .4
@@ -83,6 +86,7 @@ class TestCharacter(CharacterBase):
 class Doge(CharacterBase):
     sprite_path = 'DOGE_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
     portrait_path = 'DOGE_portrait_temp.png'
+    poop_paths = ['poop_temp.png']
     max_speed = .7 * 6
     acceleration = .35
     width = 60
@@ -103,6 +107,7 @@ class Doge(CharacterBase):
 class Carlos(CharacterBase):
     sprite_path = 'carlos_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR CARLOS
     portrait_path = 'carlos_portrait_temp.png'
+    poop_paths = ['poop_temp.png']
     max_speed = .6 * 6
     acceleration = .5
     width = 30
