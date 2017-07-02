@@ -38,8 +38,6 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
-
-
     def draw(self, screen):
         _image = rot_center(self.orig_sprite, self.angle)
         screen.blit(_image, (self.rect.x, self.rect.y))
