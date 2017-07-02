@@ -22,13 +22,16 @@ class PoopTrail(pygame.sprite.Sprite):
         _sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, 'objects',
                                                           character.poop_paths[random.randint(0, len(
                                                               character.poop_paths) - 1)])).convert()
-        # _sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, 'objects', image_path)).convert()
         _sprite.set_colorkey((255, 0, 255), pygame.RLEACCEL)
-        _image = rot_center(_sprite, random.randint(0, 360))
-        self.image = _image
+
+        self.image = _sprite
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y
+        self.rotate_image()
+
+    def rotate_image(self, angle=random.randint(0, 360)):
+        self.image = rot_center(self.image, angle)
 
     def update(self, addtl_x, addtl_y):
         self.x += addtl_x
@@ -37,16 +40,25 @@ class PoopTrail(pygame.sprite.Sprite):
         self.rect.y = self.y
 
 
+class NortPoop(PoopTrail):
+    def __init__(self, character, x, y, angle):
+        super().__init__(character, x, y)
+        self.rotate_image(angle)
+
+
 class CharacterBase:
     sprite_path = None
     portrait_path = None
     sprite = None
     portrait = None
+    poop_paths = []
     handling = .5
     acceleration = .5
     max_speed = 1
     poop_factor = .5
     color = (200, 200, 200)
+    width = 0
+    height = 0
     attributes = None
     name = None
 
@@ -67,6 +79,9 @@ class CharacterBase:
             _portrait.set_colorkey((255, 0, 255), pygame.RLEACCEL)
             self.portrait = _portrait
 
+    def get_a_poop(self, x, y, angle):
+        new_poop = PoopTrail(self, x + self.width / 2, y + self.width / 2)
+        return new_poop
 
 class TestCharacter(CharacterBase):
     sprite_path = 'TEMPDOG_sprite_temp.png'
@@ -112,8 +127,7 @@ class Doge(CharacterBase):
 class Nort(CharacterBase):
     sprite_path = 'nort_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
     portrait_path = 'nort_portrait_temp.png'
-    poop_paths = ['nort_poop_temp.png',
-                  'nort_poop_temp_2.png']
+    poop_paths = ['nort_poop_temp.png',]
     # for nort's poop to work the way I want, characters need to spawn poop,
     # not the world
     max_speed = .7 * 6
@@ -131,6 +145,10 @@ class Nort(CharacterBase):
 
     def __init__(self):
         CharacterBase.__init__(self)
+
+    def get_a_poop(self, x, y, angle):
+        new_poop = NortPoop(self, x + self.width / 2, y + self.width / 2, angle)
+        return new_poop
 
 
 class Carlos(CharacterBase):
