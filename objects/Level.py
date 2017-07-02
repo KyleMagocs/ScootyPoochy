@@ -28,15 +28,6 @@ class Level:
     def draw(self, screen):
         screen.blit(self.theme.background_sprite, (self.x, self.y))
 
-        for sprite in self.objects.sprites():
-            sprite.draw(screen)
-
-        # self.objects.draw(screen)
-
-        # draw background at x, y
-        # iterate through my_objects and draw each (pass camera x and camera y so they don't draw if they don't need to)
-
-
 class TempLevel(Level):
     def __init__(self):
         super().__init__()

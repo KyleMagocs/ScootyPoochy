@@ -92,7 +92,11 @@ class World:
     def draw(self, screen):
         self.level.draw(screen)
         self.poops.draw(screen)
+        for sprite in [x for x in self.level.objects if x.y < self.player_character.y]:
+            sprite.draw(screen)
         self.player_character.draw(screen)
+        for sprite in [x for x in self.level.objects if x.y >= self.player_character.y]:
+            sprite.draw(screen)
         if self.finish:
             self.draw_win_text(screen)
 
