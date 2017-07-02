@@ -54,8 +54,8 @@ class World:
                 # self.y += self.player_character.y_speed
                 self.level.update(addtl_x=0, addtl_y=self.player_character.y_speed)
                 for poop in self.poops:
-                    poop.rect.y += self.player_character.y_speed
-                    if poop.rect.y > vars.SCREEN_HEIGHT:
+                    poop.update(0, self.player_character.y_speed)
+                    if poop.rect.y > vars.SCREEN_HEIGHT or poop.rect.y < 0:
                         self.poops.remove(poop)
             self.player_character.eff_y += self.player_character.y_speed
         self.player_character.distance_travelled += math.sqrt(x_vel*x_vel+y_vel*y_vel)

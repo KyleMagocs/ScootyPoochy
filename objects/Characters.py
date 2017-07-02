@@ -22,6 +22,12 @@ class PoopTrail(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
+    def update(self, addtl_x, addtl_y):
+        self.x += addtl_x
+        self.y += addtl_y
+        self.rect.x = self.x
+        self.rect.y = self.y
+
 
 class CharacterBase:
     sprite_path = None
