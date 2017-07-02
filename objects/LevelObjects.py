@@ -15,11 +15,19 @@ class LevelObject(pygame.sprite.Sprite):
         super().__init__()
         self.x = 0
         self.y = 0
+        self.rect = None
 
     def get_wrecked(self):
         if self.breakable and not self.broken:
             self.broken = 1
             self.image = pygame.transform.rotate(self.image, -90)
+
+    def draw(self, screen):
+        if self.rect.y + self.rect.height < 0 or self.rect.y - self.image.get_height() > vars.SCREEN_HEIGHT:
+            return
+        screen.blit(self.image, (self.rect.x, self.rect.y - self.image.get_height() + self.rect.height))
+        if vars.draw_rects:
+            pygame.draw.rect(screen, (255, 255, 255), self.rect, 1)   #
 
 
 class Lamp(LevelObject):
@@ -48,11 +56,6 @@ class Lamp(LevelObject):
         self.y += addtl_y
         self.rect.x = self.x
         self.rect.y = self.y
-
-    def draw(self, screen):
-        screen.blit(self.image, (self.rect.x, self.rect.y - self.image.get_height() + self.rect.height))
-        if vars.draw_rects:
-            pygame.draw.rect(screen, (255, 255, 255), self.rect, 1)   #
 
     def get_rect(self):
         pass
