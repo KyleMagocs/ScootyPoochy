@@ -1,6 +1,8 @@
 from objects import Characters
 from controller_interface.dummy import Dummy, SprintDummy
+import math
 
+from vars import SCREEN_HEIGHT
 
 DUMMY = 1
 TRACKBALL = 0
@@ -39,6 +41,9 @@ class Player:
         # TODO:  BUTTONS
 
         return {'left': left, 'right': right}
+
+    def get_progress(self):
+        return math.fabs((self.world.player_character.eff_y) / self.world.level.height)
 
     def handle_input(self):
         control_input = self.read_input()

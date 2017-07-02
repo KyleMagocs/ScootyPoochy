@@ -36,8 +36,17 @@ class GameContext:
         self.gameOverFlag = 0
         self.gameOverCount = 0
 
-    def draw_hud(self):
-        pass
+    def draw_hud(self, screen):
+        pygame.draw.line(screen, (0, 0, 0), (SCREEN_WIDTH/2, 100), (SCREEN_WIDTH/2, SCREEN_HEIGHT-100), 5)
+        pygame.draw.line(screen, (0, 0, 0), (SCREEN_WIDTH / 2 - 50, 100), (SCREEN_WIDTH / 2 + 50, 100), 5)
+        pygame.draw.line(screen, (0, 0, 0), (SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT-100), (SCREEN_WIDTH / 2 + 50, SCREEN_HEIGHT-100), 5)
+        pygame.draw.line(screen, (0, 0, 0), (SCREEN_WIDTH / 2 - 25, SCREEN_HEIGHT/2), (SCREEN_WIDTH / 2 + 25, SCREEN_HEIGHT/2), 5)
+        # draw p1
+        # draw p2
+        p1_y = int(self.players[0].get_progress() * (SCREEN_HEIGHT - 200)) + 75
+        p2_y = int(self.players[1].get_progress() * (SCREEN_HEIGHT - 200)) + 75   # This math is stupid
+        pygame.draw.circle(screen, self.players[0].world.player_character.character.color, (int(SCREEN_WIDTH/2 - 15), p1_y), 8, 6)
+        pygame.draw.circle(screen, self.players[1].world.player_character.character.color, (int(SCREEN_WIDTH/2 + 15), p2_y), 8, 6)
 
     def draw_sprites(self):
         self.draw_level_sprites()
@@ -60,6 +69,8 @@ class GameContext:
                 if player.world.update(x_vel, y_vel):
                     self.victory = True  # mark game finish because
                 player.world.draw(self.screen)
+
+            self.draw_hud(self.screen)
 
             if self.victory:
                 pass
