@@ -49,6 +49,7 @@ class World:
             if self.level.y + self.player_character.y_speed >= 0:
                 # self.y = 0
                 self.level.update(addtl_x=0, addtl_y=0)
+                self.level.y = 0
                 self.player_character.y -= self.player_character.y_speed
             else:
                 # self.y += self.player_character.y_speed
