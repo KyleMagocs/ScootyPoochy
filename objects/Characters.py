@@ -3,8 +3,9 @@ import os
 import pygame
 
 from colors import *
+from utils.sprite_utils import rot_center
 from vars import IMAGES_PATH
-
+import random
 ACCEL_COEF = 1
 
 def get_all_characters():
@@ -17,7 +18,8 @@ class PoopTrail(pygame.sprite.Sprite):
         self.y = y
         _sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, 'objects', image_path)).convert()
         _sprite.set_colorkey((255, 0, 255), pygame.RLEACCEL)
-        self.image = _sprite
+        _image = rot_center(_sprite, random.randint(0, 360))
+        self.image = _image
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y
