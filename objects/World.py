@@ -1,6 +1,7 @@
 import pygame
 
 import vars
+from objects.Characters import PoopTrail
 from sprites.PlayerCharacter import PlayerCharacter
 import math
 
@@ -21,7 +22,7 @@ class World:
         self.player_group = pygame.sprite.Group(self.player_character)
         self.player_character.eff_y = 0 - self.level.height
 
-        self.poop_group = pygame.sprite.Group()
+        self.poops = pygame.sprite.Group()
 
         # self.y = 0
 
@@ -52,11 +53,15 @@ class World:
             else:
                 # self.y += self.player_character.y_speed
                 self.level.update(addtl_x=0, addtl_y=self.player_character.y_speed)
+                for poop in self.poops:
+                    poop.rect.y += self.player_character.y_speed
+                    if poop.rect.y > vars.SCREEN_HEIGHT:
+                        self.poops.remove(poop)
             self.player_character.eff_y += self.player_character.y_speed
         self.player_character.distance_travelled += math.sqrt(x_vel*x_vel+y_vel*y_vel)
-        if self.player_character.distance_travelled > 100:
+        if self.player_character.distance_travelled > 15:
             self.player_character.distance_travelled = 0
-            self.player_character.spawn_poop()
+            self.spawn_poop()
 
         # check collisions
         col = pygame.sprite.groupcollide(self.level.objects, self.player_group, dokilla=False, dokillb=False)
@@ -68,7 +73,7 @@ class World:
         return False
 
     def check_victory(self):
-        if self.player_character.eff_y > -100:
+        if self.player_character.eff_y > -180:
             return True
 
     def draw_win_text(self, screen):
@@ -78,15 +83,18 @@ class World:
         label = font.render('FINISH !', 1, (255, 255, 255))
         screen.blit(label, (self.x_offset + self.width / 4 + 2, vars.SCREEN_HEIGHT / 2 - 10 + 2))
 
-    def add_poop(self):
-        pass
+    def spawn_poop(self):
+        new_poop = PoopTrail('poop_temp.png', self.player_character.x + self.player_character.character.width / 2,
+                             self.player_character.y + self.player_character.character.width / 2)
+        self.poops.add(new_poop)
 
     def draw(self, screen):
         self.level.draw(screen)
+        self.poops.draw(screen)
         self.player_character.draw(screen)
         if self.finish:
             self.draw_win_text(screen)
 
         font = pygame.font.SysFont('Impact', 14)
-        label = font.render(str(self.player_character.distance_travelled), 1, (255, 255, 255))
-        screen.blit(label, (self.x_offset + self.width / 4 + 2, vars.SCREEN_HEIGHT / 2 - 10 + 2))
+        # label = font.render(str(self.player_character.distance_travelled), 1, (255, 255, 255))
+        # screen.blit(label, (self.x_offset + self.width / 4 + 2, vars.SCREEN_HEIGHT / 2 - 10 + 2))
