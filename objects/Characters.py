@@ -40,10 +40,30 @@ class PoopTrail(pygame.sprite.Sprite):
         self.rect.y = self.y
 
 
-class NortPoop(PoopTrail):
+class NortPoop(pygame.sprite.Sprite):
     def __init__(self, character, x, y, angle):
-        super().__init__(character, x, y)
+        super().__init__()
+        self.x = x
+        self.y = y
+        _sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, 'objects',
+                                                          character.poop_paths[random.randint(0, len(
+                                                              character.poop_paths) - 1)])).convert()
+        _sprite.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+
+        self.image = _sprite
+        self.rect = self.image.get_rect()
+        self.rect.x = self.x
+        self.rect.y = self.y
         self.rotate_image(angle)
+
+    def rotate_image(self, angle=random.randint(0, 360)):
+        self.image = rot_center(self.image, angle)
+
+    def update(self, addtl_x, addtl_y):
+        self.x += addtl_x
+        self.y += addtl_y
+        self.rect.x = self.x
+        self.rect.y = self.y
 
 
 class CharacterBase:
