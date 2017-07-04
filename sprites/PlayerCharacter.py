@@ -39,7 +39,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.x += self.x_speed
         self.rect.x = self.x
         self.rect.y = self.y
-        if self.distance_travelled > 15:
+        if self.distance_travelled > self.character.poop_factor:
             self.distance_travelled = 0
             self.spawn_poop()
 

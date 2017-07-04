@@ -110,6 +110,7 @@ class TestCharacter(CharacterBase):
     max_speed = .75 * 6
     handling = .9
     acceleration = .4
+    poop_factor = 50
     width = 60
     height = 60
     color = red
@@ -132,6 +133,7 @@ class Doge(CharacterBase):
     width = 60
     height = 60
     handling = .95
+    poop_factor = 45
     color = blue
     name = 'DOGE'
     attributes = {
@@ -148,10 +150,9 @@ class Nort(CharacterBase):
     sprite_path = 'nort_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
     portrait_path = 'nort_portrait_temp.png'
     poop_paths = ['nort_poop_temp.png',]
-    # for nort's poop to work the way I want, characters need to spawn poop,
-    # not the world
     max_speed = .7 * 6
     acceleration = .35
+    poop_factor = 15
     width = 60
     height = 60
     handling = .95
@@ -159,7 +160,7 @@ class Nort(CharacterBase):
     name = 'NORT'
     attributes = {
         '+ Laser poops',
-        '+ Futuristic'
+        '+ Futuristic',
         '- bad handling'
     }
 
@@ -180,6 +181,7 @@ class Carlos(CharacterBase):
     width = 30
     height = 30
     handling = .8
+    poop_factor = 30
     color = green
     name = 'Chichi'
     attributes = {
