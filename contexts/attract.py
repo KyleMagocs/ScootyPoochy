@@ -1,7 +1,6 @@
 import pygame
 from vars import fps
-
-TOTAL_WAIT = 5
+TOTAL_WAIT = 3
 
 
 class AttractContext:
@@ -11,7 +10,6 @@ class AttractContext:
         self.timer = 0
 
     def display_loop(self):
-        # movie = pygame.movie.Movie('video/attractive.MOV')
         while True:
             self.timer += 1
             if self.timer > TOTAL_WAIT * fps:
@@ -20,6 +18,8 @@ class AttractContext:
             if keystate:
                 if self.parse_keys(keystate):
                     return 1
+
+
 
             self.screen.fill((0, 0, 0))
             font = pygame.font.SysFont('Comic Sans MS', 15)

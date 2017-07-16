@@ -1,6 +1,8 @@
 import random
-
 import pygame
+import math
+import vars
+
 
 
 class Dummy:
@@ -61,3 +63,16 @@ class SprintDummy(Dummy):
             if self.toggleCount >= 60:
                 self.toggle = not self.toggle
                 self.toggleCount = 0
+
+
+class SinDummy(Dummy):
+    def __init__(self):
+        super().__init__()
+        self.counter = 0
+
+    def read(self):
+        y = 50
+        x = math.cos(vars.radians_factor*self.counter) * 50
+        self.counter = (self.counter + 1) % 360
+
+        return x, y

@@ -1,5 +1,5 @@
 from objects import Characters
-from controller_interface.dummy import Dummy, SprintDummy
+from controller_interface.dummy import Dummy, SprintDummy, SinDummy
 import math
 
 from vars import SCREEN_HEIGHT
@@ -22,8 +22,8 @@ class Player:
 
     def set_controls(self, control_type):
         if control_type == DUMMY:
-            self.control_one = SprintDummy()
-            self.control_two = SprintDummy()
+            self.control_one = SinDummy()
+            self.control_two = SinDummy()
         elif control_type == TRACKBALL:
             try:
                 from controller_interface.trackball import Trackball
