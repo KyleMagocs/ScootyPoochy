@@ -25,7 +25,7 @@ class GameContext:
         for i in range(0, len(character_list)):
             player = Player(i, i)
             player.world = World(width=(SCREEN_WIDTH / self.num_players), x_offset=i, y_offset=SCREEN_HEIGHT+10, level=levels[i])
-            player.world.player_character.y = SCREEN_HEIGHT - 150
+            player.world.player_character.y = SCREEN_HEIGHT - 300
             player.world.player_character.set_character(character_list[i])
             self.players.append(player)
 
@@ -60,6 +60,9 @@ class GameContext:
             pygame.quit()
             quit()
 
+    def is_game_complete(self):
+        return len([x for x in self.players if x.world.finish is True]) == len(self.players)
+
     def run_game(self):
         clock = pygame.time.Clock()
         while True:
@@ -72,8 +75,18 @@ class GameContext:
 
             self.draw_hud(self.screen)
 
-            if self.victory:
-                pass
+            if self.is_game_complete():
+                return [{'time': 200,
+                         'break': 400,
+                         'poop': 300,
+                         'total': 900,
+                         'color': self.players[0].world.player_character.character.color},
+                        {'time': 300,
+                         'break': 300,
+                         'poop': 200,
+                         'total': 800,
+                         'color': self.players[1].world.player_character.character.color}
+                        ]
                 # TODO:  FANCY FINISH ANIMATION
                 # TODO:  PROBABLY A TIMER TO WAIT FOR IT TO FINISH, SO LIKE 10 * FPS frames?
                 # return self.victory
