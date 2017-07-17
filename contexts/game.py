@@ -18,6 +18,8 @@ class GameContext:
         self.num_players = len(character_list)
         self.screen = screen
         self.victory = False
+
+        self.finish_timer = 0
         # self.objects = pygame.sprite.Group()  # hold level objects
 
         self.players = []
@@ -76,6 +78,9 @@ class GameContext:
             self.draw_hud(self.screen)
 
             if self.is_game_complete():
+                self.finish_timer += 1
+
+            if self.finish_timer > 90:
                 return [{'time': 200,
                          'break': 400,
                          'poop': 300,

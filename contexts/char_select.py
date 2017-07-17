@@ -26,7 +26,7 @@ class CharacterSelectContext:
 
     def check_events(self):
         for event in pygame.event.get():
-            if event.type == pygame.KEYUP:
+            if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_w:
                     self.left_wheel.update_angle(-1)
                 if event.key == pygame.K_s:

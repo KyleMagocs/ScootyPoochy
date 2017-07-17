@@ -1,3 +1,5 @@
+import pygame
+
 from contexts.char_select import CharacterSelectContext
 from contexts.attract import AttractContext
 from contexts.game import GameContext
@@ -25,7 +27,7 @@ class GlobalContext:
                         break
                     attract = AttractContext(self.screen)
                     attract.display_loop()
-
+                pygame.event.clear()
                 select = CharacterSelectContext(self.screen)
                 characters = select.main_loop()
 

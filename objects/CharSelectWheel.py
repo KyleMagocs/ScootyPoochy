@@ -98,7 +98,8 @@ class CharacterWheel:
 
     def spawn_or_confirm(self):
         if self.spawned:
-            self.confirm_character()
+            if not self.moving:
+                self.confirm_character()
         else:
             self.spawning = True
             color = self.get_selected_character().color
@@ -109,17 +110,17 @@ class CharacterWheel:
             self.characters[self.selected_character_index].selected = True
             name = self.get_selected_character().name
             stats = self.get_selected_character().attributes
-            font = pygame.font.SysFont('Comic Sans MS', 15)
+            font = pygame.font.SysFont('Comic Sans MS', 25)
             label = font.render(name, 1, self.get_selected_character().color)
             screen.blit(label, (self.x + (200*self.factor), 600))
             stat_y = 620
             for stat in stats:
                 label = font.render(stat, 1, self.get_selected_character().color)
-                screen.blit(label, (self.x + (200 * self.factor) - 75, stat_y))
+                screen.blit(label, (self.x + (250 * self.factor) - 100, stat_y))
                 stat_y += 20
 
             label = font.render('PRESS BUTTON TO CONFIRM', 1, (200, 200, 200))
-            screen.blit(label, (self.x + (200 * self.factor) - 75, stat_y+20))
+            screen.blit(label, (self.x + (300 * self.factor) - 175, stat_y+20))
             stat_y += 20
 
     def draw_circles(self, screen):

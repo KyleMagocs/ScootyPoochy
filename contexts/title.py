@@ -1,4 +1,7 @@
 import pygame
+
+import colors
+from utils.hollow import textHollow
 from vars import fps
 
 TOTAL_WAIT = 5
@@ -30,8 +33,10 @@ class TitleContext:
                 label = font.render('TITLE! {0:.2f}'.format(self.timer/fps), 1, (255, 255, 255))
             self.screen.blit(label, (200, 150))
 
-            label = font2.render('SUPER POOCH SCOOT !!'.format(self.timer / fps), 1, (255, 0, 255))
-            self.screen.blit(label, (375, 250))
+            bigfont = pygame.font.Font(None, 90)
+            title_text = textHollow(font2, 'SUPER POOCH SCOOT !!', colors.blue)
+            # label = font2.render('SUPER POOCH SCOOT !!'.format(self.timer / fps), 1, (255, 0, 255))
+            self.screen.blit(title_text, (300, 250))
 
             pygame.display.flip()
 
@@ -42,5 +47,7 @@ class TitleContext:
         if keys[pygame.K_RETURN]:
             pygame.event.clear()
             return True
+        if keys[pygame.K_ESCAPE]:
+            pygame.quit()
         else:
             return False

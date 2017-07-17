@@ -71,7 +71,7 @@ class World:
         return False
 
     def check_victory(self):
-        if self.player_character.eff_y > -180:
+        if self.player_character.eff_y > -230:
             return True
 
     def draw_win_text(self, screen):
