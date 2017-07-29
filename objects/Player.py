@@ -30,8 +30,8 @@ class Player:
                 self.control_one = Trackball(53769, 5506, self.player_id*2)
                 self.control_two = Trackball(53769, 5506, (self.player_id*2) + 1)
             except:
-                self.control_one = Dummy()  # TODO:  Fallback to keyboard?
-                self.control_two = Dummy()
+                self.control_one = SinDummy()  # TODO:  Fallback to keyboard?
+                self.control_two = SinDummy()
         else:
             raise Exception('DIDNT GET AN INPUT?!?!?')
 

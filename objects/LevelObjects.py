@@ -7,7 +7,7 @@ import vars
 
 class LevelObject(pygame.sprite.Sprite):
     breakable = 0  # 1 for breakable objects
-    broken = 0  # 1 to trigger broken state
+    broken = 0  # 1 = breaking, 2 = broken
     passable = 1 #
     image_path = None
 
@@ -35,8 +35,11 @@ class Lamp(LevelObject):
     broken = None
     score = 10
 
-    image_path = 'objects/lamp.png'
+    image_rects = (
+        (1, 2, 3, 4),
+    )
 
+    image_path = 'objects/lamp.png'
     def __init__(self, init_pos):
         super().__init__()
         self.image = self.load_sprite()
@@ -45,6 +48,14 @@ class Lamp(LevelObject):
         self.rect.width = 30
         self.x = init_pos[0]
         self.y = init_pos[1]
+        self.images = self.load_sprite_sheet()
+        self.image_index = 0
+
+    def load_sprite_sheet(self):
+        _images = []
+        for x1, y1, x2, y2 in self.image_rects:
+            _images.append(None)  # TODO:  Spritesheet
+        return _images
 
     def load_sprite(self):
         _image = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
@@ -56,6 +67,12 @@ class Lamp(LevelObject):
         self.y += addtl_y
         self.rect.x = self.x
         self.rect.y = self.y
+        if self.broken == 1:
+            pass
+            # self.image = self.images[self.image_index]
+            # self.image_index += 1
+        if self.image_index > len(self.images):
+            self.broken = 2
 
     def get_rect(self):
         pass
