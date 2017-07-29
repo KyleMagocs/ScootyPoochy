@@ -13,8 +13,8 @@ import pygame
 class spritesheet(object):
     def __init__(self, filename):
         try:
-            self.sheet = pygame.image.load(filename).convert()
-        except:
+            self.sheet = pygame.image.load_extended(filename).convert()
+        except Exception as e:
             print('Unable to load spritesheet image:', filename)
             raise Exception('COULDn"T LOAD')
     # Load a specific image from a specific rectangle

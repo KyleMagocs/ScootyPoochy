@@ -106,7 +106,7 @@ class GameContext:
                 # TODO:  PROBABLY A TIMER TO WAIT FOR IT TO FINISH, SO LIKE 10 * FPS frames?
                 # return self.victory
 
-            if self.start_timer < int(fps * 1.5) and len(self.countdown) > 0:
+            if self.start_timer < int(fps) and len(self.countdown) > 0:
                 self.start_timer += 1
             else:
                 if len(self.countdown) > 0:

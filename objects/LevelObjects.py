@@ -1,8 +1,7 @@
 import os
-
 import pygame
-
 import vars
+from utils.spritesheet import spritesheet
 
 
 class LevelObject(pygame.sprite.Sprite):
@@ -20,7 +19,7 @@ class LevelObject(pygame.sprite.Sprite):
     def get_wrecked(self):
         if self.breakable and not self.broken:
             self.broken = 1
-            self.image = pygame.transform.rotate(self.image, -90)
+            # self.image = pygame.transform.rotate(self.image, -90)
 
     def draw(self, screen):
         if self.rect.y + self.rect.height < 0 or self.rect.y - self.image.get_height() > vars.SCREEN_HEIGHT:
@@ -36,10 +35,15 @@ class Lamp(LevelObject):
     score = 10
 
     image_rects = (
-        (1, 2, 3, 4),
+        (0, 0, 30, 100),
+        (31, 0, 88, 100),
+        (90, 0, 178, 100),
+        (179, 0, 280, 100),
     )
 
     image_path = 'objects/lamp.png'
+    sheet_path = 'objects/lampsheet.png'
+
     def __init__(self, init_pos):
         super().__init__()
         self.image = self.load_sprite()
@@ -53,8 +57,11 @@ class Lamp(LevelObject):
 
     def load_sprite_sheet(self):
         _images = []
+        sheet = spritesheet(os.path.join(vars.IMAGES_PATH, self.sheet_path))
         for x1, y1, x2, y2 in self.image_rects:
-            _images.append(None)  # TODO:  Spritesheet
+            _images.append(sheet.image_at((x1, y1, x2, y2), (255, 0, 255)))
+            _images.append(sheet.image_at((x1, y1, x2, y2), (255, 0, 255)))
+            _images.append(sheet.image_at((x1, y1, x2, y2), (255, 0, 255)))
         return _images
 
     def load_sprite(self):
@@ -67,12 +74,11 @@ class Lamp(LevelObject):
         self.y += addtl_y
         self.rect.x = self.x
         self.rect.y = self.y
-        if self.broken == 1:
-            pass
-            # self.image = self.images[self.image_index]
-            # self.image_index += 1
-        if self.image_index > len(self.images):
+        if self.image_index >= len(self.images):
             self.broken = 2
+        if self.broken == 1:
+            self.image = self.images[self.image_index]
+            self.image_index += 1
 
     def get_rect(self):
         pass
