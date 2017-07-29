@@ -36,9 +36,9 @@ class Lamp(LevelObject):
 
     image_rects = (
         (0, 0, 30, 100),
-        (31, 0, 88, 100),
-        (90, 0, 178, 100),
-        (179, 0, 280, 100),
+        (31, 0, 58, 100),
+        (90, 0, 88, 100),
+        (179, 0, 100, 100),
     )
 
     image_path = 'objects/lamp.png'
@@ -51,7 +51,10 @@ class Lamp(LevelObject):
         self.rect.height = 25
         self.rect.width = 30
         self.x = init_pos[0]
+        self.rect.x = init_pos[0]
         self.y = init_pos[1]
+        self.rect.y = init_pos[1]
+
         self.images = self.load_sprite_sheet()
         self.image_index = 0
 
