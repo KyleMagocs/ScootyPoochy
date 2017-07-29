@@ -1,9 +1,13 @@
 import pygame
 
+import colors
 import vars
 from objects.Characters import PoopTrail
 from sprites.PlayerCharacter import PlayerCharacter
 import math
+
+from utils.hollow import textOutline
+
 
 class World:
     def __init__(self, width, x_offset, y_offset, level):
@@ -18,7 +22,8 @@ class World:
         self.level.y = 0 - self.level.height + y_offset
         self.level.update_objects(self.x_offset)
 
-        self.player_character = PlayerCharacter(init_x=self.x_offset + self.width / 2, init_y=y_offset)  # TODO:  This math is bad
+        self.player_character = PlayerCharacter(init_x=self.x_offset + self.width / 2,
+                                                init_y=y_offset)  # TODO:  This math is bad
         self.player_group = pygame.sprite.Group(self.player_character)
         self.player_character.eff_y = 0 - self.level.height
 
@@ -59,7 +64,7 @@ class World:
                     if poop.rect.y > vars.SCREEN_HEIGHT or poop.rect.y < 0:
                         self.poops.remove(poop)
             self.player_character.eff_y += self.player_character.y_speed
-        self.player_character.distance_travelled += math.sqrt(x_vel*x_vel+y_vel*y_vel)
+        self.player_character.distance_travelled += math.sqrt(x_vel * x_vel + y_vel * y_vel)
 
         # check collisions
         col = pygame.sprite.groupcollide(self.level.objects, self.player_group, dokilla=False, dokillb=False)
@@ -75,11 +80,11 @@ class World:
             return True
 
     def draw_win_text(self, screen):
-        font = pygame.font.SysFont('Impact', 48)
-        label = font.render('FINISH !', 1, (0, 0, 0))
-        screen.blit(label, (self.x_offset + self.width / 4, vars.SCREEN_HEIGHT/2-10))
-        label = font.render('FINISH !', 1, (255, 255, 255))
-        screen.blit(label, (self.x_offset + self.width / 4 + 2, vars.SCREEN_HEIGHT / 2 - 10 + 2))
+        font = pygame.font.SysFont('Impact', 70)
+        text = textOutline(font, 'FINISH !', self.player_character.character.color,
+                           colors.black)
+        text.get_width()
+        screen.blit(text, (self.x_offset + self.width / 2 - text.get_width() / 2, vars.SCREEN_HEIGHT / 2 - 10))
 
     def draw(self, screen):
         self.level.draw(screen)
@@ -95,3 +100,8 @@ class World:
         font = pygame.font.SysFont('Impact', 14)
         # label = font.render(str(self.player_character.distance_travelled), 1, (255, 255, 255))
         # screen.blit(label, (self.x_offset + self.width / 4 + 2, vars.SCREEN_HEIGHT / 2 - 10 + 2))
+
+    def draw_countdown(self, screen, text, size):
+        font2 = pygame.font.SysFont('Impact', size)
+        label = textOutline(font2, text, self.player_character.character.color, colors.black)
+        screen.blit(label, (self.x_offset + self.width / 2 - label.get_width() / 2, vars.SCREEN_HEIGHT / 2 - label.get_height()/2))

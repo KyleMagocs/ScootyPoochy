@@ -33,9 +33,9 @@ class TitleContext:
                 label = font.render('TITLE! {0:.2f}'.format(self.timer/fps), 1, (255, 255, 255))
             self.screen.blit(label, (200, 150))
 
-            bigfont = pygame.font.Font(None, 90)
-            title_text = textHollow(font2, 'SUPER POOCH SCOOT !!', colors.blue)
             # label = font2.render('SUPER POOCH SCOOT !!'.format(self.timer / fps), 1, (255, 0, 255))
+
+            title_text = textHollow(font2, 'SUPER POOCH SCOOT !!', colors.blue)
             self.screen.blit(title_text, (300, 250))
 
             pygame.display.flip()

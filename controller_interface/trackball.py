@@ -41,6 +41,8 @@ class Trackball:
         return rtn
 
 # https://www.orangecoat.com/how-to/read-and-decode-data-from-your-mouse-using-this-pyusb-hack
+#  You will want this later:    https://github.com/walac/pyusb/issues/101
+#  You will probably also want this:    https://www.orangecoat.com/how-to/use-pyusb-to-find-vendor-and-product-ids-for-usb-devices
 def raw_to_x_y(data_array):
     if data_array[2] == 0 and data_array[1] != 0: # right
         x_vel = data_array[1] * -1
