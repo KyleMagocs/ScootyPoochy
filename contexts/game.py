@@ -7,7 +7,7 @@ from objects.World import World
 from utils.hollow import textHollow, textOutline
 
 from vars import SCREEN_WIDTH, SCREEN_HEIGHT
-from vars import fps
+from vars import fps, skip_countdown
 
 
 class GameContext:
@@ -75,15 +75,15 @@ class GameContext:
             self.screen.fill((255, 255, 255))
             for player in self.players:  # should iterate on Players, who have Worlds
                 x_vel, y_vel = 0, 0
-                if len(self.countdown) <= 1:
+                if len(self.countdown) <= 1 or skip_countdown:
                     x_vel, y_vel = player.handle_input()
                 if player.world.update(x_vel, y_vel):
                     self.victory = True  # mark game finish because
 
                 player.world.draw(self.screen)
-
-                if len(self.countdown) > 0:
-                    player.world.draw_countdown(self.screen, self.countdown[0], self.start_timer*2)
+                if not skip_countdown:
+                    if len(self.countdown) > 0:
+                        player.world.draw_countdown(self.screen, self.countdown[0], self.start_timer*3)
 
             self.draw_hud(self.screen)
 
@@ -106,13 +106,14 @@ class GameContext:
                 # TODO:  PROBABLY A TIMER TO WAIT FOR IT TO FINISH, SO LIKE 10 * FPS frames?
                 # return self.victory
 
-            if self.start_timer < int(fps) and len(self.countdown) > 0:
-                self.start_timer += 1
-            else:
-                if len(self.countdown) > 0:
-                    self.countdown.remove(self.countdown[0])
+            if not skip_countdown:
+                if self.start_timer < int(fps) and len(self.countdown) > 0:
+                    self.start_timer += 1
+                else:
+                    if len(self.countdown) > 0:
+                        self.countdown.remove(self.countdown[0])
 
-                self.start_timer = 0
+                    self.start_timer = 0
 
             self.check_keys()
 

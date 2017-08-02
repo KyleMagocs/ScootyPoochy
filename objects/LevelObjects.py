@@ -58,6 +58,7 @@ class Lamp(LevelObject):
         self.images = self.load_sprite_sheet()
         self.image_index = 0
 
+
     def load_sprite_sheet(self):
         _images = []
         sheet = spritesheet(os.path.join(vars.IMAGES_PATH, self.sheet_path))
@@ -115,4 +116,3 @@ class Couch(LevelObject):
 
     def get_rect(self):
         pass
-

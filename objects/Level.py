@@ -2,6 +2,7 @@ import pygame
 
 from objects.LevelObjects import Lamp, Couch
 from objects.Theme import TempTheme
+from objects.Wall import Wall
 
 
 class Level:
@@ -13,17 +14,21 @@ class Level:
     def __init__(self):
         self.theme = None
         self.objects = pygame.sprite.Group()
+        self.walls = pygame.sprite.Group()
         self.y = 0
         self.x = 0
 
     def update(self, addtl_x, addtl_y):
         self.objects.update(addtl_x, addtl_y)
+        self.walls.update(addtl_x, addtl_y)
         self.x += addtl_x
         self.y += addtl_y
 
     def update_objects(self, x_offset):
         for object in self.objects.sprites():
             object.x += x_offset
+        for wall in self.walls.sprites():
+            wall.update(x_offset, 0)
 
     def draw(self, screen):
         screen.blit(self.theme.background_sprite, (self.x, self.y))
@@ -37,7 +42,7 @@ class TempLevel(Level):
 
         lamp_coords = [
             (200,200),
-            (400,-100),
+            (510,-60),
             (150,-250),
             (300,-400),
             (200,-550),
@@ -49,6 +54,14 @@ class TempLevel(Level):
             _lamp = Lamp((x, y,))
             self.objects.add(_lamp)  # TODO:  Yank later
 
+        _wall = Wall(0, -200, 75)
+        self.walls.add(_wall)
+
+        _wall = Wall(0, -1200, 300)
+        self.walls.add(_wall)
+
+        _wall = Wall(0, -1700, 150)
+        self.walls.add(_wall)
 
         _couch = Couch((480, -50))
         self.objects.add(_couch)  # TODO:  Yank later
