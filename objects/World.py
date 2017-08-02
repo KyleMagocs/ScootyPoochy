@@ -45,6 +45,8 @@ class World:
         self.player_character.y_speed = (self.player_character.y_speed + y_vel) / self.level.theme.friction
         self.player_character.update()
 
+        movepoops = 0
+
         if self.check_victory():
             self.player_character.y -= 10
             self.finish = True
@@ -65,10 +67,8 @@ class World:
             else:
                 # self.y += self.player_character.y_speed
                 self.level.update(addtl_x=0, addtl_y=self.player_character.y_speed)
-                for poop in self.player_character.poops:
-                    poop.update(0, self.player_character.y_speed)
-                    if poop.rect.y > vars.SCREEN_HEIGHT or poop.rect.y < 0:
-                        self.poops.remove(poop)
+                movepoops = self.player_character.y_speed
+
             self.player_character.eff_y += self.player_character.y_speed
         self.player_character.distance_travelled += math.sqrt(x_vel * x_vel + y_vel * y_vel)
 
@@ -80,6 +80,7 @@ class World:
 
                 # check object collisions
 
+
         walls = pygame.sprite.groupcollide(pygame.sprite.Group([x.get_collide_walls() for x in self.level.walls]), self.player_group, dokilla=False, dokillb=False)
         for wall in walls:
             old_rect = wall.old_rect
@@ -88,12 +89,17 @@ class World:
             delta_x, delta_y = self.get_conform_deltas(char_rect, old_rect, new_rect)
             self.player_character.eff_y -= delta_y
             self.level.update(addtl_x=0, addtl_y=0 - delta_y)
-            for poop in self.player_character.poops:
-                poop.update(0, 0 - delta_y)  # todo:  the poop kinda vibrates when you walk it back ...
+            movepoops -= delta_y
 
             delta_x, delta_y = self.get_conform_deltas(wall.rect, old_player_rect, char_rect)
             self.player_character.x -= delta_x
             self.player_character.rect.x -= delta_x
+
+        if movepoops > 1 or movepoops < -1:
+            for poop in self.player_character.poops:
+                poop.update(0, movepoops)
+                if poop.rect.y > vars.SCREEN_HEIGHT or poop.rect.y < 0:
+                    self.poops.remove(poop)
 
         return False
 
