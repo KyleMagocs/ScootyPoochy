@@ -1,13 +1,13 @@
 import copy
+import math
+
 import pygame
 
 import colors
 import vars
-from objects.Characters import PoopTrail
 from sprites.PlayerCharacter import PlayerCharacter
-import math
-
 from utils.hollow import textOutline
+from utils.sprite_utils import get_conform_deltas
 
 
 class World:
@@ -86,36 +86,22 @@ class World:
             old_rect = wall.old_rect
             new_rect = wall.rect
             char_rect = self.player_character.rect
-            delta_x, delta_y = self.get_conform_deltas(char_rect, old_rect, new_rect)
+            delta_x, delta_y = get_conform_deltas(char_rect, old_rect, new_rect)
             self.player_character.eff_y -= delta_y
             self.level.update(addtl_x=0, addtl_y=0 - delta_y)
             movepoops -= delta_y
 
-            delta_x, delta_y = self.get_conform_deltas(wall.rect, old_player_rect, char_rect)
+            delta_x, delta_y = get_conform_deltas(wall.rect, old_player_rect, char_rect)
             self.player_character.x -= delta_x
             self.player_character.rect.x -= delta_x
 
-        if movepoops > 1 or movepoops < -1:
+        if math.fabs(movepoops) > 1:
             for poop in self.player_character.poops:
                 poop.update(0, movepoops)
                 if poop.rect.y > vars.SCREEN_HEIGHT or poop.rect.y < 0:
                     self.poops.remove(poop)
 
         return False
-
-    def get_conform_deltas(self, obstacle, old, new):
-        delta_x = 0
-        delta_y = 0
-        if old.right <= obstacle.left < new.right:
-            delta_x = new.right - obstacle.left
-        if old.left >= obstacle.right > new.left:
-            delta_x = new.left - obstacle.right
-        if old.bottom <= obstacle.top < new.bottom:
-            delta_y = new.bottom - obstacle.top
-        if old.top >= obstacle.bottom > new.top:
-            delta_y = new.top - obstacle.bottom
-
-        return delta_x, delta_y
 
     def check_victory(self):
         if self.player_character.eff_y > -230:
