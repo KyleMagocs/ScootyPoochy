@@ -17,6 +17,7 @@ class LevelObject(pygame.sprite.Sprite):
         self.points = 0
         self.rect = None
         self.points_delta = 0
+        self.image = None
 
     def get_wrecked(self):
         if self.breakable and not self.broken:
@@ -31,7 +32,8 @@ class LevelObject(pygame.sprite.Sprite):
         screen.blit(self.image, (self.rect.x, self.rect.y - self.image.get_height() + self.rect.height))
         if vars.draw_rects:
             pygame.draw.rect(screen, (255, 255, 255), self.rect, 1)   #
-        if self.points_delta > 0 and self.points_delta < 100:
+
+        if 0 < self.points_delta < 100:
             font = pygame.font.SysFont('Impact', 12)
             label = font.render(str(self.points), 1, (255, 255, 255))
             screen.blit(label, (self.rect.x, self.rect.y - self.points_delta))
@@ -66,7 +68,6 @@ class Lamp(LevelObject):
 
         self.images = self.load_sprite_sheet()
         self.image_index = 0
-
 
     def load_sprite_sheet(self):
         _images = []
