@@ -74,9 +74,11 @@ class GameContext:
         while True:
             self.screen.fill((255, 255, 255))
             for player in self.players:  # should iterate on Players, who have Worlds
-                x_vel, y_vel = 0, 0
+                left, right = 0, 0
                 if len(self.countdown) <= 1 or skip_countdown:
-                    x_vel, y_vel = player.handle_input()
+                    left, right = player.read_input()
+                player.world.player_character.update_limbs(left, right)
+                x_vel, y_vel = player.get_velocity(left, right)
                 if player.world.update(x_vel, y_vel):
                     self.victory = True  # mark game finish because
 

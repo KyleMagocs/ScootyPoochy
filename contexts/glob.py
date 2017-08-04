@@ -35,7 +35,7 @@ class GlobalContext:
                 theme = theme_select.main_loop()
                 # TODO:  Build level here
             else:
-                characters = [TestCharacter(), Doge()]
+                characters = [Doge(), Doge()]
             levels = [TempLevel(), TempLevel()]
             game = GameContext(self.screen, characters, levels)
             game_data = game.run_game()

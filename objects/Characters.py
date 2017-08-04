@@ -4,8 +4,10 @@ import pygame
 
 from colors import *
 from utils.sprite_utils import rot_center
+from utils.spritesheet import spritesheet
 from vars import IMAGES_PATH
 import random
+import vars
 
 ACCEL_COEF = 1
 
@@ -103,6 +105,7 @@ class CharacterBase:
         new_poop = PoopTrail(self, x + self.width / 2, y + self.width / 2)
         return new_poop
 
+
 class TestCharacter(CharacterBase):
     sprite_path = 'TEMPDOG_sprite_temp.png'
     portrait_path = 'TEMPDOG_PORTRAIT.png'
@@ -127,6 +130,13 @@ class TestCharacter(CharacterBase):
 class Doge(CharacterBase):
     sprite_path = 'DOGE_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
     portrait_path = 'DOGE_portrait_temp.png'
+
+    head_path = 'doge_temp/head.png'
+    larm_path = 'doge_temp/leftarm.png'
+    rarm_path = 'doge_temp/rightarm.png'
+    tail_path = 'doge_temp/tail.png'
+    body_path = 'doge_temp/body.png'
+
     poop_paths = ['poop_temp_2.png', 'poop_temp_3.png']
     max_speed = .7 * 6
     acceleration = .35
@@ -144,6 +154,9 @@ class Doge(CharacterBase):
 
     def __init__(self):
         CharacterBase.__init__(self)
+        self
+
+
 
 
 class Nort(CharacterBase):

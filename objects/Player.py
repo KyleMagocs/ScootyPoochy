@@ -40,17 +40,17 @@ class Player:
         right = self.control_two.read()
         # TODO:  BUTTONS
 
-        return {'left': left, 'right': right}
+        return left, right
 
     def get_progress(self):
         return math.fabs((self.world.player_character.eff_y) / self.world.level.height)
 
     def handle_input(self):
-        control_input = self.read_input()
-        left = control_input['left']
-        right = control_input['right']
+        left, right = self.read_input()
 
+        return self.get_velocity(left, right)
+
+    def get_velocity(self, left, right):
         addtl_y_vel = (left[1] / 10 + right[1] / 10) / 2 * Characters.ACCEL_COEF
         addtl_x_vel = ((left[0] / 10 - 10) + (right[0] / 10 + 10)) / 2 * Characters.ACCEL_COEF
-
         return addtl_x_vel, addtl_y_vel

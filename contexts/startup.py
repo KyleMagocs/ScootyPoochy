@@ -3,7 +3,7 @@ import pygame
 from objects.Player import Player
 from vars import fps
 
-TOTAL_WAIT = 2
+TOTAL_WAIT = 1
 
 
 class StartupContext:
