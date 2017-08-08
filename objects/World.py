@@ -43,7 +43,7 @@ class World:
 
         self.player_character.x_speed = (self.player_character.x_speed - x_vel) / self.level.theme.friction
         self.player_character.y_speed = (self.player_character.y_speed + y_vel) / self.level.theme.friction
-        self.player_character.update()
+
 
         movepoops = 0
 
@@ -70,7 +70,8 @@ class World:
                 movepoops = self.player_character.y_speed
 
             self.player_character.eff_y += self.player_character.y_speed
-        self.player_character.distance_travelled += math.sqrt(x_vel * x_vel + y_vel * y_vel)
+        if self.player_character.jump_state == 0:
+            self.player_character.distance_travelled += math.sqrt(x_vel * x_vel + y_vel * y_vel)
 
         # check object collisions
         col = pygame.sprite.groupcollide(self.level.objects, self.player_group, dokilla=False, dokillb=False)
@@ -78,8 +79,7 @@ class World:
             if sprite.breakable and sprite.get_wrecked():
                 self.score += sprite.score
 
-                # check object collisions
-
+        # TODO:  Combine this with passable non-breakable object colissions
         walls = pygame.sprite.groupcollide(pygame.sprite.Group([x.get_collide_walls() for x in self.level.walls]), self.player_group, dokilla=False, dokillb=False)
         for wall in walls:
             old_rect = wall.old_rect
@@ -93,12 +93,16 @@ class World:
             delta_x, delta_y = get_conform_deltas(wall.rect, old_player_rect, char_rect)
             self.player_character.x -= delta_x
             self.player_character.rect.x -= delta_x
+            if self.player_character.jump_state == 0:
+                self.player_character.distance_travelled -= math.sqrt(delta_x*delta_x + delta_y*delta_y)
 
         if math.fabs(movepoops) > 1:
             for poop in self.player_character.poops:
                 poop.update(0, movepoops)
                 if poop.rect.y > vars.SCREEN_HEIGHT or poop.rect.y < 0:
                     self.poops.remove(poop)
+
+        self.player_character.update()
 
         return False
 
