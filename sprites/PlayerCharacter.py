@@ -20,6 +20,8 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.eff_y = 0  # used for tracking effective y (because real y is static)
         self.x_speed = 0
         self.y_speed = 0
+        self.z = 1
+        self.z_speed = 0
 
         self.poops = pygame.sprite.Group()
 
@@ -60,6 +62,11 @@ class PlayerCharacter(pygame.sprite.Sprite):
 
         self.cur_sprite = self.orig_sprite
         # self.rect = self.orig_sprite.get_rect()
+
+    def jump(self):
+        if self.jump_state == 0:
+            self.jump_state = 1
+            self.z_speed = .15
 
     def update_limbs(self, left, right):
         try:
@@ -103,12 +110,19 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.x += self.x_speed
         self.rect.x = self.x
         self.rect.y = self.y
+        self.z += self.z_speed
+        self.z_speed -= 0.02
+        if self.z < 1:
+            self.z = 1
+            self.z_speed = 0
+            self.jump_state = 0
         if self.distance_travelled > self.character.poop_factor:
             self.distance_travelled = 0
             self.spawn_poop()
 
     def draw(self, screen):
         self.cur_sprite = self.generate_new_sprite()
+        self.cur_sprite = pygame.transform.scale(self.cur_sprite, (int(self.character.width*self.z), int(self.character.height*self.z)))
         _image = rot_center(self.cur_sprite, self.angle)
         _rect = _image.get_rect()
         _rect.x = self.x

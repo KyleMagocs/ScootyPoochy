@@ -54,17 +54,22 @@ class GameContext:
         pygame.draw.circle(screen, self.players[0].world.player_character.character.color, (int(SCREEN_WIDTH/2 - 15), p1_y), 8, 6)
         pygame.draw.circle(screen, self.players[1].world.player_character.character.color, (int(SCREEN_WIDTH/2 + 15), p2_y), 8, 6)
 
-    def draw_sprites(self):
-        self.draw_level_sprites()
-    #
-    # def draw_level_sprites(self):
-    #     pass  # TODO:  world object should do this?
+    # def draw_sprites(self):
+    #     self.draw_level_sprites()
+    # #
+    # # def draw_level_sprites(self):
+    # #     pass  # TODO:  world object should do this?
 
     def check_keys(self):
-        keystate = pygame.key.get_pressed()
-        if keystate[pygame.K_ESCAPE]:
-            pygame.quit()
-            quit()
+        for event in pygame.event.get():
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_SPACE:
+                    self.players[0].world.player_character.jump()
+                if event.key == pygame.K_RETURN:
+                    self.players[1].world.player_character.jump()
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    quit()
 
     def is_game_complete(self):
         return len([x for x in self.players if x.world.finish is True]) == len(self.players)

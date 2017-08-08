@@ -19,6 +19,9 @@ class GlobalContext:
 
     def main_loop(self):
         while True:
+            p1 = Player(0,0)
+            p2 = Player(1,1)
+
             player_array = []
             if not skip_intro:
                 while True:
@@ -28,7 +31,7 @@ class GlobalContext:
                     attract = AttractContext(self.screen)
                     attract.display_loop()
                 pygame.event.clear()
-                select = CharacterSelectContext(self.screen)
+                select = CharacterSelectContext(self.screen, p1, p2)
                 characters = select.main_loop()
 
                 theme_select = LevelSelectContext(self.screen)

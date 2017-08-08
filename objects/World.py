@@ -80,7 +80,6 @@ class World:
 
                 # check object collisions
 
-
         walls = pygame.sprite.groupcollide(pygame.sprite.Group([x.get_collide_walls() for x in self.level.walls]), self.player_group, dokilla=False, dokillb=False)
         for wall in walls:
             old_rect = wall.old_rect
@@ -134,8 +133,8 @@ class World:
             self.draw_win_text(screen)
 
         font = pygame.font.SysFont('Impact', 14)
-        # label = font.render(str(self.player_character.distance_travelled), 1, (255, 255, 255))
-        # screen.blit(label, (self.x_offset + self.width / 4 + 2, vars.SCREEN_HEIGHT / 2 - 10 + 2))
+        label = font.render(str(self.player_character.z), 1, (255, 255, 255))
+        screen.blit(label, (self.x_offset + self.width / 4 + 2, vars.SCREEN_HEIGHT / 2 - 10 + 2))
 
     def draw_countdown(self, screen, text, size):
         font2 = pygame.font.SysFont('Impact', size)
