@@ -22,6 +22,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.y_speed = 0
         self.z = 1
         self.z_speed = 0
+        self.min_z = 1
 
         self.poops = pygame.sprite.Group()
 
@@ -71,10 +72,10 @@ class PlayerCharacter(pygame.sprite.Sprite):
     def update_limbs(self, left, right):
         try:
             head_inc = 0
-            if left[0] + left[1] > 40:
+            if math.fabs(left[0]) + math.fabs(left[1]) > 20:
                 head_inc = 1
                 self.left_index = ((self.left_index + 1) % len(self.larm_images))
-            if right[0] + right[1] > 40:
+            if math.fabs(right[0]) + math.fabs(right[1]) > 20:
                 head_inc = 1
                 self.right_index = ((self.right_index + 1) % len(self.rarm_images))
             self.tail_index = ((self.tail_index + 1) % len(self.tail_images))
@@ -110,15 +111,21 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.x += self.x_speed
         self.rect.x = self.x
         self.rect.y = self.y
+        if self.distance_travelled > self.character.poop_factor:
+            self.distance_travelled = 0
+            self.spawn_poop()
+
+    def update_z(self):
         self.z += self.z_speed
         self.z_speed -= 0.02
         if self.z < 1:
             self.z = 1
             self.z_speed = 0
             self.jump_state = 0
-        if self.distance_travelled > self.character.poop_factor:
-            self.distance_travelled = 0
-            self.spawn_poop()
+        if self.z < self.min_z:
+            self.z = self.min_z
+            self.z_speed = 0
+            self.jump_state = 0
 
     def draw(self, screen):
         self.cur_sprite = self.generate_new_sprite()
@@ -142,4 +149,4 @@ class PlayerCharacter(pygame.sprite.Sprite):
         return _rect
 
     def spawn_poop(self):
-        self.poops.add(self.character.get_a_poop(self.x, self.y, self.angle))
+        self.poops.add(self.character.get_a_poop(self.x, self.y, self.z, self.angle))

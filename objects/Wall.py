@@ -1,7 +1,9 @@
-import vars
 import os
 
 import pygame
+
+import vars
+from objects.CollideObject import collide_object
 
 
 class Wall(pygame.sprite.Sprite):
@@ -44,8 +46,8 @@ class Wall(pygame.sprite.Sprite):
 
     def draw_part_one(self, screen):
         screen.blit(self.left_side, (self.x, self.y))
-        self.left_wall.draw(screen, self.left_side.get_width(), self.top.get_height())
-        self.right_wall.draw(screen, self.left_side.get_width(), self.left_wall.image.get_width(), self.top.get_height())
+        self.left_wall.draw(screen)
+        self.right_wall.draw(screen)
         screen.blit(self.right_side, (self.x + self.left_side.get_width() + self.left_wall.image.get_width() + self.right_wall.image.get_width(), self.y))
 
     def draw_part_two(self, screen):
@@ -56,73 +58,24 @@ class Wall(pygame.sprite.Sprite):
         self.y += addtl_y
         self.left_wall.update(addtl_x, addtl_y)
         self.right_wall.update(addtl_x, addtl_y)
-        # self.left_wall.rect.x = self.x
-        # self.left_wall.rect.y = self.y
-        # self.right_wall.rect.x = self.x
-        # self.right_wall.rect.y = self.y
 
     def get_collide_walls(self):
         return [self.left_wall, self.right_wall]
 
 
-class left_wall(pygame.sprite.Sprite):
-    def __init__(self, image, x, y):
-        super().__init__()
-        self.image = image
-        self.x = x
-        self.y = y
-        self.old_rect = self.get_rect()
-
-    def update(self, addtl_x, addtl_y):
-        self.old_rect = self.get_rect()
-        self.x += addtl_x
-        self.y += addtl_y
-
-    def draw(self, screen, left_side_width, top_height):
-        self.old_rect = self.get_rect()
-
-        screen.blit(self.image, (self.x , self.y))
-        if vars.draw_rects:
-            pygame.draw.rect(screen, (0, 0, 255), self.rect, 1)
-
+class left_wall(collide_object):
     def get_rect(self):
-        _rect = self.image.subsurface((0, 0, self.image.get_width()-47, self.image.get_height()/2)).get_rect()
+        _rect = self.image.subsurface((0, 0, self.image.get_width()-47, self.image.get_height()/1.2)).get_rect()
         _rect.x += self.x
-        _rect.y += self.y + self.image.get_height()/2 - 10
+        _rect.y += self.y
         return _rect
 
-    @property
-    def rect(self):
-        return self.get_rect()
 
-class right_wall(pygame.sprite.Sprite):
-    def __init__(self, image, x, y):
-        super().__init__()
-        self.x = x
-        self.y = y
-        self.image = image
-        self.old_rect = self.get_rect()
-
-    def update(self, addtl_x, addtl_y):
-        self.old_rect = self.get_rect()
-        self.x += addtl_x
-        self.y += addtl_y
-
-    def draw(self, screen, left_side_width, left_wall_width, top_height):
-        self.old_rect = self.get_rect()
-        screen.blit(self.image, (self.x, self.y))
-        if vars.draw_rects:
-            pygame.draw.rect(screen, (0, 255, 255), self.rect, 1)
-
+class right_wall(collide_object):
     def get_rect(self):
-        _flip = pygame.transform.flip(self.image, True, False)
-        _new = self.image.subsurface((0, 0, self.image.get_width() - 42, self.image.get_height()/2))
+        _new = self.image.subsurface((0, 0, self.image.get_width() - 42, self.image.get_height()/1.2))
         _reflip = pygame.transform.flip(_new, True, False)
         _rect = _reflip.get_rect()
         _rect.x += self.x + 49
-        _rect.y += self.y + self.image.get_height()/2 - 10
+        _rect.y += self.y
         return _rect
-
-    @property
-    def rect(self):
-        return self.get_rect()

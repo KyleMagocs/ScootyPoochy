@@ -1,6 +1,7 @@
 import os
 import pygame
 import vars
+from objects.CollideObject import collide_object
 from utils.spritesheet import spritesheet
 
 
@@ -9,6 +10,7 @@ class LevelObject(pygame.sprite.Sprite):
     broken = 0  # 1 = breaking, 2 = broken
     passable = 1 #
     image_path = None
+    height = 1
 
     def __init__(self):
         super().__init__()
@@ -27,14 +29,14 @@ class LevelObject(pygame.sprite.Sprite):
             # self.image = pygame.transform.rotate(self.image, -90)
 
     def draw(self, screen):
-        if self.rect.y + self.rect.height < 0 or self.rect.y - self.image.get_height() > vars.SCREEN_HEIGHT:
-            return
+        # if self.rect.bottom < 0 or self.rect.top > vars.SCREEN_HEIGHT:
+        #     return
         screen.blit(self.image, (self.rect.x, self.rect.y - self.image.get_height() + self.rect.height))
         if vars.draw_rects:
             pygame.draw.rect(screen, (255, 255, 255), self.rect, 1)   #
 
         if 0 < self.points_delta < 100:
-            font = pygame.font.SysFont('Impact', 12)
+            font = pygame.font.SysFont('Impact', 16)
             label = font.render(str(self.points), 1, (255, 255, 255))
             screen.blit(label, (self.rect.x, self.rect.y - self.points_delta))
             self.points_delta += 5
@@ -98,31 +100,28 @@ class Lamp(LevelObject):
         pass
 
 
-class Couch(LevelObject):
+class Couch(LevelObject, collide_object):
     breakable = 0
     score = 10
-
     image_path = 'objects/couch.png'
 
     def __init__(self, init_pos):
-        super().__init__()
         self.image = self.load_sprite()
-        self.rect = self.image.get_rect()
-        self.rect.height = 275
-        self.rect.width = 75
-        self.x = init_pos[0]
-        self.y = init_pos[1]
+        LevelObject().__init__()
+        collide_object.__init__(self, self.image, init_pos[0], init_pos[1])
+        self.height = 1.2
+        self.z = 1.2
 
     def load_sprite(self):
         _image = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
         _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
         return _image
 
-    def update(self, addtl_x, addtl_y):
-        self.x += addtl_x
-        self.y += addtl_y
-        self.rect.x = self.x
-        self.rect.y = self.y
+    def draw(self, screen):
+        collide_object.draw(self, screen)
 
     def get_rect(self):
-        pass
+        _rect = self.image.subsurface((0, 0, self.image.get_width(), self.image.get_height()-10)).get_rect()
+        _rect.x += self.x
+        _rect.y += self.y
+        return _rect

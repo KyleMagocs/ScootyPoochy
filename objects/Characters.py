@@ -17,10 +17,11 @@ def get_all_characters():
 
 
 class PoopTrail(pygame.sprite.Sprite):
-    def __init__(self, character, x, y):
+    def __init__(self, character, x, y, z):
         super().__init__()
         self.x = x
         self.y = y
+        self.z = z
         _sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, 'objects',
                                                           character.poop_paths[random.randint(0, len(
                                                               character.poop_paths) - 1)])).convert()
@@ -43,10 +44,11 @@ class PoopTrail(pygame.sprite.Sprite):
 
 
 class NortPoop(pygame.sprite.Sprite):
-    def __init__(self, character, x, y, angle):
+    def __init__(self, character, x, y, z, angle):
         super().__init__()
         self.x = x
         self.y = y
+        self.z = z
         _sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, 'objects',
                                                           character.poop_paths[random.randint(0, len(
                                                               character.poop_paths) - 1)])).convert()
@@ -101,8 +103,8 @@ class CharacterBase:
             _portrait.set_colorkey((255, 0, 255), pygame.RLEACCEL)
             self.portrait = _portrait
 
-    def get_a_poop(self, x, y, angle):
-        new_poop = PoopTrail(self, x + self.width / 2, y + self.width / 2)
+    def get_a_poop(self, x, y, z, angle):
+        new_poop = PoopTrail(self, x + self.width / 2, y + self.width / 2, z)
         return new_poop
 
 
@@ -143,7 +145,7 @@ class Doge(CharacterBase):
     width = 60
     height = 60
     handling = .95
-    poop_factor = 45
+    poop_factor = 30
     color = blue
     name = 'DOGE'
     attributes = {

@@ -63,5 +63,5 @@ class TempLevel(Level):
         _wall = Wall(0, -1700, 150)
         self.walls.add(_wall)
 
-        _couch = Couch((480, -50))
+        _couch = Couch((450, -50))
         self.objects.add(_couch)  # TODO:  Yank later

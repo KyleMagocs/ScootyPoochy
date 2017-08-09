@@ -71,7 +71,7 @@ class SinDummy(Dummy):
         self.counter = 0
 
     def read(self):
-        y = 100
+        y = 75
         x = math.cos(vars.radians_factor*self.counter) * 50
         self.counter = (self.counter + 1) % 360
 
