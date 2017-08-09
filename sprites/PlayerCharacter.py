@@ -6,7 +6,7 @@ import pygame
 from objects.Characters import PoopTrail, Nort
 from utils.sprite_utils import rot_center
 from utils.spritesheet import spritesheet
-from vars import show_velocity, draw_rects, SCREEN_HEIGHT, IMAGES_PATH
+from vars import show_velocity, draw_rects, SCREEN_HEIGHT, IMAGES_PATH, radians_factor
 import colors
 
 
@@ -68,6 +68,8 @@ class PlayerCharacter(pygame.sprite.Sprite):
         if self.jump_state == 0:
             self.jump_state = 1
             self.z_speed = .15
+            self.x_speed -= 2 * math.sin(self.angle * radians_factor)
+            self.y_speed += 2 * math.cos(self.angle * radians_factor)
 
     def update_limbs(self, left, right):
         try:
