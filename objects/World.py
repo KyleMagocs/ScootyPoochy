@@ -143,9 +143,9 @@ class World:
         if self.finish:
             self.draw_win_text(screen)
 
-        font = pygame.font.SysFont('Impact', 14)
-        label = font.render(str(self.player_character.z), 1, (0, 255, 255))
-        screen.blit(label, (self.x_offset + self.width / 4 + 2, vars.SCREEN_HEIGHT / 2 - 10 + 2))
+        # font = pygame.font.SysFont('Impact', 14)
+        # label = font.render(str(self.player_character.z), 1, (0, 255, 255))
+        # screen.blit(label, (self.x_offset + self.width / 4 + 2, vars.SCREEN_HEIGHT / 2 - 10 + 2))
 
     def draw_countdown(self, screen, text, size):
         font2 = pygame.font.SysFont('Impact', size)

@@ -95,14 +95,13 @@ class PlayerCharacter(pygame.sprite.Sprite):
             _im = self.orig_sprite
         return _im
 
-
     def load_sprite_sheet(self, sheet_path, width, height, num):
         _images = []
         sheet = spritesheet(os.path.join(IMAGES_PATH, 'characters', sheet_path))
         for x in range(0,width*num,width):
-            _images.append(sheet.image_at((x, 0, x+width, height), (255, 0, 255)))
-            _images.append(sheet.image_at((x, 0, x+width, height), (255, 0, 255)))
-            _images.append(sheet.image_at((x, 0, x+width, height), (255, 0, 255)))
+            _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
+            _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
+            _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
         return _images
 
     def update(self):
