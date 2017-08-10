@@ -79,8 +79,10 @@ class GameContext:
         while True:
             self.screen.fill((255, 255, 255))
             for player in self.players:  # should iterate on Players, who have Worlds
-                left, right = 0, 0
+                left, right = (0, 0), (0, 0)
                 if len(self.countdown) <= 1 or skip_countdown:
+                    if not self.is_game_complete():
+                        player.world.start_timer()
                     left, right = player.read_input()
                 player.world.player_character.update_limbs(left, right)
                 x_vel, y_vel = player.get_velocity(left, right)
@@ -98,20 +100,10 @@ class GameContext:
                 self.finish_timer += 1
 
             if self.finish_timer > 90:
-                return [{'time': 200,
-                         'break': 400,
-                         'poop': 300,
-                         'total': 900,
-                         'color': self.players[0].world.player_character.character.color},
-                        {'time': 300,
-                         'break': 300,
-                         'poop': 200,
-                         'total': 800,
-                         'color': self.players[1].world.player_character.character.color}
+                return [self.players[0].world.get_score(),
+                        self.players[1].world.get_score()
                         ]
                 # TODO:  FANCY FINISH ANIMATION
-                # TODO:  PROBABLY A TIMER TO WAIT FOR IT TO FINISH, SO LIKE 10 * FPS frames?
-                # return self.victory
 
             if not skip_countdown:
                 if self.start_timer < int(fps) and len(self.countdown) > 0:

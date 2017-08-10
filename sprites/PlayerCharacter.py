@@ -25,6 +25,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.min_z = 1
 
         self.poops = pygame.sprite.Group()
+        self.poop_score = 0
 
         self.distance_travelled = 0
 
@@ -151,3 +152,4 @@ class PlayerCharacter(pygame.sprite.Sprite):
 
     def spawn_poop(self):
         self.poops.add(self.character.get_a_poop(self.x, self.y, self.z, self.angle))
+        self.poop_score += self.character.poop_factor

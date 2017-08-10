@@ -26,6 +26,7 @@ class LevelObject(pygame.sprite.Sprite):
             self.points_delta = 5
             # TODO: PLAY BROKEN NOISE
             # self.image = pygame.transform.rotate(self.image, -90)
+            return True
 
     def draw(self, screen):
         # if self.rect.bottom < 0 or self.rect.top > vars.SCREEN_HEIGHT:

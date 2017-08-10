@@ -66,11 +66,11 @@ class TempLevel(Level):
         _couch = Couch((475, -30))
         self.objects.add(_couch)  # TODO:  Yank later
 
-        _table = Table((250, 0))
+        _table = Table((100, 0))
         self.objects.add(_table)  # TODO:  Yank later
 
         _vase = Vase((300, 300,))
         self.objects.add(_vase)
 
-        _vase2 = Vase((325, 75,))
+        _vase2 = Vase((175, 75,))
         self.objects.add(_vase2)

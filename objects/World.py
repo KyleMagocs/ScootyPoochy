@@ -30,10 +30,18 @@ class World:
 
         self.poops = pygame.sprite.Group()
 
+        self.timer_enabled = 0
+        self.timer = 0
+        self.final_timer = float('inf')
+
         # self.y = 0
 
     def update(self, x_vel, y_vel):
-        old_player_rect = copy.deepcopy(self.player_character.rect)  # TODO:  Should really just identify the new rect beforehand and do this whole function backwards
+        if self.timer_enabled:
+            self.timer += 1
+
+        old_player_rect = copy.deepcopy(
+            self.player_character.rect)  # TODO:  Should really just identify the new rect beforehand and do this whole function backwards
 
         if self.player_character.jump_state == 0:
             self.player_character.x_speed = (self.player_character.x_speed - x_vel) / self.level.theme.friction
@@ -42,6 +50,7 @@ class World:
         movepoops = 0
 
         if self.check_victory():
+            self.final_timer = min(self.final_timer, self.timer)
             self.player_character.y -= 10
             self.finish = True
         else:
@@ -68,11 +77,13 @@ class World:
         col = pygame.sprite.groupcollide(self.level.objects, self.player_group, dokilla=False, dokillb=False)
         for sprite in col:
             if sprite.breakable and sprite.get_wrecked():
-                self.break_score += sprite.score
+                self.break_score += sprite.points
 
         # TODO:  Combine this with passable non-breakable object colissions
-        collide_objects = [x.get_collide_walls() for x in self.level.walls] + [x for x in self.level.objects if x.height > 1]
-        walls = pygame.sprite.groupcollide(pygame.sprite.Group(collide_objects), self.player_group, dokilla=False, dokillb=False)
+        collide_objects = [x.get_collide_walls() for x in self.level.walls] + [x for x in self.level.objects if
+                                                                               x.height > 1]
+        walls = pygame.sprite.groupcollide(pygame.sprite.Group(collide_objects), self.player_group, dokilla=False,
+                                           dokillb=False)
         _min_z = None
         for wall in walls:
             if wall.height <= self.player_character.z:
@@ -95,8 +106,7 @@ class World:
                 self.player_character.x -= delta_x
                 self.player_character.rect.x -= delta_x
 
-                self.player_character.distance_travelled -= math.sqrt(delta_x*delta_x + delta_y*delta_y)
-
+                self.player_character.distance_travelled -= math.sqrt(delta_x * delta_x + delta_y * delta_y)
 
         if math.fabs(movepoops) > 1:
             for poop in self.player_character.poops:
@@ -143,11 +153,20 @@ class World:
         if self.finish:
             self.draw_win_text(screen)
 
-        # font = pygame.font.SysFont('Impact', 14)
-        # label = font.render(str(self.player_character.z), 1, (0, 255, 255))
-        # screen.blit(label, (self.x_offset + self.width / 4 + 2, vars.SCREEN_HEIGHT / 2 - 10 + 2))
+            # font = pygame.font.SysFont('Impact', 14)
+            # label = font.render(str(self.player_character.z), 1, (0, 255, 255))
+            # screen.blit(label, (self.x_offset + self.width / 4 + 2, vars.SCREEN_HEIGHT / 2 - 10 + 2))
+
+    def start_timer(self):
+        self.timer_enabled = 1
 
     def draw_countdown(self, screen, text, size):
         font2 = pygame.font.SysFont('Impact', size)
         label = textOutline(font2, text, self.player_character.character.color, colors.black)
-        screen.blit(label, (self.x_offset + self.width / 2 - label.get_width() / 2, vars.SCREEN_HEIGHT / 2 - label.get_height()/2))
+        screen.blit(label, (self.x_offset + self.width / 2 - label.get_width() / 2, vars.SCREEN_HEIGHT / 2 - label.get_height() / 2))
+
+    def get_score(self):
+        return {'time': max(2000-self.final_timer, 0),
+                'break': self.break_score, # todo:  maybe return a list of objects instead and then you can do something neat there?
+                'poop': self.player_character.poop_score,
+                'color': self.player_character.character.color}
