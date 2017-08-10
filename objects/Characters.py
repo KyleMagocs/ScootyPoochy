@@ -42,6 +42,9 @@ class PoopTrail(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
+    def draw(self, screen, x_offset, y_offset):
+        screen.blit(self.image, (self.rect.x + x_offset, self.rect.y + y_offset))
+
 
 class NortPoop(pygame.sprite.Sprite):
     def __init__(self, character, x, y, z, angle):

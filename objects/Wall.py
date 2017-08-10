@@ -40,24 +40,25 @@ class Wall(pygame.sprite.Sprite):
 
         self.rect = self.top.get_rect()
 
-    def draw(self, screen):
-        self.draw_part_one(screen)
-        self.draw_part_two(screen)
+    def draw(self, screen, x_offset, y_offset):
+        self.draw_part_one(screen, x_offset, y_offset)
+        self.draw_part_two(screen, x_offset, y_offset)
 
-    def draw_part_one(self, screen):
-        screen.blit(self.left_side, (self.x, self.y))
-        self.left_wall.draw(screen)
-        self.right_wall.draw(screen)
-        screen.blit(self.right_side, (self.x + self.left_side.get_width() + self.left_wall.image.get_width() + self.right_wall.image.get_width(), self.y))
+    def draw_part_one(self, screen, x_offset, y_offset):
+        screen.blit(self.left_side, (self.x + x_offset, self.y + y_offset))
+        self.left_wall.draw(screen, x_offset, y_offset)
+        self.right_wall.draw(screen, x_offset, y_offset)
+        screen.blit(self.right_side, (self.x + x_offset + self.left_side.get_width() + self.left_wall.image.get_width() + self.right_wall.image.get_width(), self.y + y_offset))
 
-    def draw_part_two(self, screen):
-        screen.blit(self.top, (self.x + self.left_side.get_width(), self.y))
+    def draw_part_two(self, screen, x_offset, y_offset):
+        screen.blit(self.top, (self.x + x_offset + self.left_side.get_width(), self.y + y_offset))
 
     def update(self, addtl_x, addtl_y):
-        self.x += addtl_x
-        self.y += addtl_y
-        self.left_wall.update(addtl_x, addtl_y)
-        self.right_wall.update(addtl_x, addtl_y)
+        pass
+        # self.x += addtl_x
+        # self.y += addtl_y
+        # self.left_wall.update(addtl_x, addtl_y)
+        # self.right_wall.update(addtl_x, addtl_y)
 
     def get_collide_walls(self):
         return [self.left_wall, self.right_wall]

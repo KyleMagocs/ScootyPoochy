@@ -28,17 +28,20 @@ class LevelObject(pygame.sprite.Sprite):
             # self.image = pygame.transform.rotate(self.image, -90)
             return True
 
-    def draw(self, screen):
+    def draw(self, screen, x_offset, y_offset):
         # if self.rect.bottom < 0 or self.rect.top > vars.SCREEN_HEIGHT:
         #     return
-        screen.blit(self.image, (self.rect.x, self.rect.y - self.image.get_height() + self.rect.height))
+        screen.blit(self.image, (self.rect.x + x_offset, self.rect.y - self.image.get_height() + self.rect.height + y_offset))
         if vars.draw_rects:
-            pygame.draw.rect(screen, (255, 255, 255), self.rect, 1)   #
+            _rect = self.rect
+            _rect.x += x_offset
+            _rect.y += y_offset
+            pygame.draw.rect(screen, (255, 255, 255), _rect, 1)
 
         if 0 < self.points_delta < 100:
             font = pygame.font.SysFont('Impact', 16)
             label = font.render(str(self.points), 1, (255, 255, 255))
-            screen.blit(label, (self.rect.x, self.rect.y - self.points_delta))
+            screen.blit(label, (self.rect.x + x_offset, self.rect.y - self.points_delta + y_offset))
             self.points_delta += 5
 
     @property
@@ -91,10 +94,10 @@ class Lamp(LevelObject):
         return _image
 
     def update(self, addtl_x, addtl_y):
-        self.x += addtl_x
-        self.y += addtl_y
-        self.rect.x = self.x
-        self.rect.y = self.y
+        # self.x += addtl_x
+        # self.y += addtl_y
+        # self.rect.x = self.x
+        # self.rect.y = self.y
         if self.image_index >= len(self.images):
             self.broken = 2
         if self.broken == 1:
@@ -138,8 +141,8 @@ class Vase(LevelObject):
     #     return _image
 
     def update(self, addtl_x, addtl_y):
-        self.x += addtl_x
-        self.y += addtl_y
+        # self.x += addtl_x
+        # self.y += addtl_y
 
         if self.image_index >= len(self.images):
             self.broken = 2
@@ -175,8 +178,8 @@ class Couch(LevelObject, collide_object):
         _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
         return _image
 
-    def draw(self, screen):
-        collide_object.draw(self, screen)
+    def draw(self, screen, x_offset, y_offset):
+        collide_object.draw(self, screen, x_offset, y_offset)
 
     def get_rect(self):
         _rect = self.image.subsurface((0, 0, self.image.get_width(), self.image.get_height()-10)).get_rect()
@@ -201,8 +204,8 @@ class Table(LevelObject, collide_object):
         _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
         return _image
 
-    def draw(self, screen):
-        collide_object.draw(self, screen)
+    def draw(self, screen, x_offset, y_offset):
+        collide_object.draw(self, screen, x_offset, y_offset)
 
     def get_rect(self):
         _rect = self.image.subsurface((0, 0, self.image.get_width(), self.image.get_height()-10)).get_rect()

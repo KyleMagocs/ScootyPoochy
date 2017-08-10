@@ -8,6 +8,7 @@ from utils.hollow import textHollow, textOutline
 
 from vars import SCREEN_WIDTH, SCREEN_HEIGHT
 from vars import fps, skip_countdown
+from vars import PLAYER_START_Y
 
 
 class GameContext:
@@ -31,7 +32,7 @@ class GameContext:
         for i in range(0, len(character_list)):
             player = Player(i, i)
             player.world = World(width=(SCREEN_WIDTH / self.num_players), x_offset=i, y_offset=SCREEN_HEIGHT+10, level=levels[i])
-            player.world.player_character.y = SCREEN_HEIGHT - 300
+            player.world.player_character.y = levels[i].height - PLAYER_START_Y
             player.world.player_character.set_character(character_list[i])
             self.players.append(player)
 
