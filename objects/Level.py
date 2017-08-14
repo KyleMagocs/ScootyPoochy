@@ -30,8 +30,8 @@ class Level:
         for wall in self.walls.sprites():
             wall.update(x_offset, 0)
 
-    def draw(self, screen):
-        screen.blit(self.theme.background_sprite, (self.x, self.y))
+    def draw(self, screen, x_offset, y_offset):
+        screen.blit(self.theme.background_sprite, (self.x + x_offset, self.y + y_offset))
 
 class TempLevel(Level):
     def __init__(self):
@@ -54,23 +54,23 @@ class TempLevel(Level):
             _lamp = Lamp((x, y,))
             self.objects.add(_lamp)  # TODO:  Yank later
 
-        _wall = Wall(0, -200, 75)
+        _wall = Wall(0, 2400, 75)
         self.walls.add(_wall)
 
-        _wall = Wall(0, -1200, 300)
+        _wall = Wall(0, 1400, 300)
         self.walls.add(_wall)
 
-        _wall = Wall(0, -1700, 150)
+        _wall = Wall(0, 900, 150)
         self.walls.add(_wall)
 
-        _couch = Couch((475, -30))
+        _couch = Couch((475, 2570))
         self.objects.add(_couch)  # TODO:  Yank later
 
-        _table = Table((100, 0))
+        _table = Table((100, 2600))
         self.objects.add(_table)  # TODO:  Yank later
 
-        _vase = Vase((300, 300,))
+        _vase = Vase((300, 2900,))
         self.objects.add(_vase)
 
-        _vase2 = Vase((175, 75,))
+        _vase2 = Vase((175, 2775,))
         self.objects.add(_vase2)
