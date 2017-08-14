@@ -3,7 +3,7 @@ from controller_interface.dummy import Dummy, SprintDummy, SinDummy
 import math
 
 from vars import SCREEN_HEIGHT
-
+import vars
 DUMMY = 1
 TRACKBALL = 0
 KEYBOARD = 2
@@ -43,7 +43,7 @@ class Player:
         return left, right
 
     def get_progress(self):
-        return math.fabs((self.world.player_character.eff_y) / self.world.level.height)
+        return math.fabs(max((self.world.player_character.y + vars.PLAYER_START_Y), 0) / (self.world.level.height))
 
     def handle_input(self):
         left, right = self.read_input()

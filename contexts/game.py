@@ -50,16 +50,10 @@ class GameContext:
         pygame.draw.line(screen, (0, 0, 0), (SCREEN_WIDTH / 2 - 25, SCREEN_HEIGHT/2), (SCREEN_WIDTH / 2 + 25, SCREEN_HEIGHT/2), 5)
         # draw p1
         # draw p2
-        p1_y = int(self.players[0].get_progress() * (SCREEN_HEIGHT - 200)) + 75
-        p2_y = int(self.players[1].get_progress() * (SCREEN_HEIGHT - 200)) + 75   # This math is stupid
-        pygame.draw.circle(screen, self.players[0].world.player_character.character.color, (int(SCREEN_WIDTH/2 - 15), p1_y), 8, 6)
-        pygame.draw.circle(screen, self.players[1].world.player_character.character.color, (int(SCREEN_WIDTH/2 + 15), p2_y), 8, 6)
-
-    # def draw_sprites(self):
-    #     self.draw_level_sprites()
-    # #
-    # # def draw_level_sprites(self):
-    # #     pass  # TODO:  world object should do this?
+        p1_y = int(self.players[0].get_progress() * (SCREEN_HEIGHT - 210))
+        p2_y = int(self.players[1].get_progress() * (SCREEN_HEIGHT - 210))
+        pygame.draw.circle(screen, self.players[0].world.player_character.character.color, (int(SCREEN_WIDTH/2 - 15), p1_y + 105), 8, 6)
+        pygame.draw.circle(screen, self.players[1].world.player_character.character.color, (int(SCREEN_WIDTH/2 + 15), p2_y + 105), 8, 6)
 
     def check_keys(self):
         for event in pygame.event.get():

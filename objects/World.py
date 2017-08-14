@@ -52,8 +52,9 @@ class World:
 
         if self.check_victory():
             self.final_timer = min(self.final_timer, self.timer)
-            # self.player_character.y -= 10
+            self.player_character.y -= 5
             self.finish = True
+            return
         else:
             pass
             # TODO:  REPLACE THIS WITH RECT COLLISION
@@ -100,28 +101,13 @@ class World:
                     _min_z = wall.height
                 _min_z = min(_min_z, wall.height)
             else:
-                # pass
-                old_rect = wall.old_rect
-                new_rect = wall.rect
                 char_rect = self.player_character.rect
-
-                delta_x, delta_y = get_conform_deltas(char_rect, old_rect, new_rect)
-                self.player_character.eff_y -= delta_y
-                self.level.update(addtl_x=0, addtl_y=0)
-                # movepoops -= delta_y
-
                 delta_x, delta_y = get_conform_deltas(wall.rect, old_player_rect, char_rect)
 
                 self.player_character.x -= delta_x
                 self.player_character.y -= delta_y
 
                 self.player_character.distance_travelled -= math.sqrt(delta_x * delta_x + delta_y * delta_y)
-
-        # if math.fabs(movepoops) > 1:
-        #     for poop in self.player_character.poops:
-        #         poop.update(0, movepoops)
-        #         if poop.rect.y > vars.SCREEN_HEIGHT or poop.rect.y < 0:
-        #             self.poops.remove(poop)
 
         if _min_z is not None:
             self.player_character.min_z = _min_z
@@ -133,9 +119,8 @@ class World:
         return False
 
     def check_victory(self):
-        return False
-        # if self.player_character.eff_y > -230:
-        #     return True
+        if self.player_character.y < 50:
+             return True
 
     def draw_win_text(self, screen):
         font = pygame.font.SysFont('Impact', 70)
@@ -146,7 +131,12 @@ class World:
 
     def draw(self, screen):
         x_offset = self.x_offset
-        y_offset = (self.level.height - self.player_character.y) - self.level.height + (vars.SCREEN_HEIGHT - vars.PLAYER_START_Y)
+        if self.player_character.y > vars.SCREEN_HEIGHT - vars.PLAYER_START_Y:
+            y_offset = (0 - self.player_character.y) + (vars.SCREEN_HEIGHT - vars.PLAYER_START_Y)
+            player_y_offset = 0
+        else:
+            y_offset = 0
+            player_y_offset = self.player_character.y - (vars.SCREEN_HEIGHT - vars.PLAYER_START_Y)
         self.level.draw(screen, x_offset, y_offset)
 
         for sprite in [x for x in self.level.walls]:
@@ -157,7 +147,7 @@ class World:
         for poop in self.player_character.poops:
             poop.draw(screen, x_offset, y_offset)
 
-        self.player_character.draw(screen, x_offset, 0)
+        self.player_character.draw(screen, x_offset, player_y_offset)
 
         for sprite in [x for x in self.level.walls]:
             sprite.draw_part_two(screen, x_offset, y_offset)
