@@ -31,10 +31,15 @@ class GameContext:
 
         for i in range(0, len(character_list)):
             player = Player(i, i)
-            player.world = World(width=(SCREEN_WIDTH / self.num_players), x_offset=i, y_offset=SCREEN_HEIGHT+10, level=levels[i])
-            player.world.player_character.y = levels[i].height - PLAYER_START_Y
-            player.world.player_character.set_character(character_list[i])
             self.players.append(player)
+
+        self.world = World(width=(SCREEN_WIDTH / self.num_players), y_offset=SCREEN_HEIGHT+10, level=levels[0])
+
+        self.world.player_one.y = levels[0].height - PLAYER_START_Y
+        self.world.player_one.set_character(character_list[0])
+
+        self.world.player_two.y = levels[0].height - PLAYER_START_Y
+        self.world.player_two.set_character(character_list[0])
 
         # self.players_group = pygame.sprite.Group()
 
@@ -50,10 +55,12 @@ class GameContext:
         pygame.draw.line(screen, (0, 0, 0), (SCREEN_WIDTH / 2 - 25, SCREEN_HEIGHT/2), (SCREEN_WIDTH / 2 + 25, SCREEN_HEIGHT/2), 5)
         # draw p1
         # draw p2
-        p1_y = int(self.players[0].get_progress() * (SCREEN_HEIGHT - 210))
-        p2_y = int(self.players[1].get_progress() * (SCREEN_HEIGHT - 210))
-        pygame.draw.circle(screen, self.players[0].world.player_character.character.color, (int(SCREEN_WIDTH/2 - 15), p1_y + 105), 8, 6)
-        pygame.draw.circle(screen, self.players[1].world.player_character.character.color, (int(SCREEN_WIDTH/2 + 15), p2_y + 105), 8, 6)
+        _prog = self.world.get_progress()
+        p1_y = int(_prog[0] * (SCREEN_HEIGHT - 210))
+        p2_y = int(_prog[1] * (SCREEN_HEIGHT - 210))
+
+        pygame.draw.circle(screen, self.world.player_one.character.color, (int(SCREEN_WIDTH/2 - 15), p1_y + 105), 8, 6)
+        pygame.draw.circle(screen, self.world.player_two.character.color, (int(SCREEN_WIDTH/2 + 15), p2_y + 105), 8, 6)
 
     def check_keys(self):
         for event in pygame.event.get():
@@ -66,39 +73,52 @@ class GameContext:
                     pygame.quit()
                     quit()
 
-    def is_game_complete(self):
-        return len([x for x in self.players if x.world.finish is True]) == len(self.players)
+    # def is_game_complete(self):
+    #     return len([x for x in self.players if x.world.finish is True]) == len(self.players)
 
     def run_game(self):
         clock = pygame.time.Clock()
         while True:
             self.screen.fill((255, 255, 255))
-            for player in self.players:  # should iterate on Players, who have Worlds
-                left, right = (0, 0), (0, 0)
-                if len(self.countdown) <= 1 or skip_countdown:
-                    if not self.is_game_complete():
-                        player.world.start_timer()
-                    left, right = player.read_input()
-                player.world.player_character.update_limbs(left, right)
-                x_vel, y_vel = player.get_velocity(left, right)
-                if player.world.update(x_vel, y_vel):
-                    self.victory = True  # mark game finish because
 
-                player.world.draw(self.screen)
-                if not skip_countdown:
-                    if len(self.countdown) > 0:
-                        player.world.draw_countdown(self.screen, self.countdown[0], self.start_timer*3)
+            p1_left, p1_right = self.players[0].read_input()
+            p2_left, p2_right = self.players[1].read_input()
+
+            self.world.player_one.update_limbs(p1_left, p1_right)
+            self.world.player_two.update_limbs(p1_left, p1_right)
+            p1_vel = self.players[0].get_velocity(p1_left, p1_right)
+            p2_vel = self.players[1].get_velocity(p2_left, p2_right)
+
+            self.world.update(p1_vel, p2_vel)
+            self.world.draw(self.screen)
+            #
+            # for player in self.players:  # should iterate on Players, who have Worlds
+            #     left, right = (0, 0), (0, 0)
+            #     if skip_countdown or len(self.countdown) <= 1:
+            #         if not self.is_game_complete():
+            #             player.world.start_timer()
+            #         left, right = player.read_input()
+            #     player.world.player_character.update_limbs(left, right)
+            #     x_vel, y_vel = player.get_velocity(left, right)
+            #     if player.world.update(x_vel, y_vel):
+            #         self.victory = True  # mark game finish because
+            #
+            #     player.world.draw(self.screen)
+            #     if not skip_countdown:
+            #         if len(self.countdown) > 0:
+            #             player.world.draw_countdown(self.screen, self.countdown[0], self.start_timer*3)
 
             self.draw_hud(self.screen)
 
-            if self.is_game_complete():
-                self.finish_timer += 1
+            #
+            # if self.is_game_complete():
+            #     self.finish_timer += 1
 
-            if self.finish_timer > 90:
-                return [self.players[0].world.get_score(),
-                        self.players[1].world.get_score()
-                        ]
-                # TODO:  FANCY FINISH ANIMATION
+            # if self.finish_timer > 90:
+            #     return [self.players[0].world.get_score(),
+            #             self.players[1].world.get_score()
+            #             ]
+            #     # TODO:  FANCY FINISH ANIMATION
 
             if not skip_countdown:
                 if self.start_timer < int(fps) and len(self.countdown) > 0:

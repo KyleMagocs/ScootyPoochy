@@ -14,7 +14,6 @@ class Player:
     def __init__(self, player_id, control_type=DUMMY):
         self.DUMMY_FLAG = False
         self.player_id = player_id
-        self.world = None
         self.character = None
         self.control_one = None
         self.control_two = None
@@ -41,9 +40,6 @@ class Player:
         # TODO:  BUTTONS
 
         return left, right
-
-    def get_progress(self):
-        return math.fabs(max((self.world.player_character.y + vars.PLAYER_START_Y), 0) / (self.world.level.height))
 
     def handle_input(self):
         left, right = self.read_input()

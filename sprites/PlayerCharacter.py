@@ -1,5 +1,7 @@
 import math
 import os
+
+import copy
 import pygame
 
 
@@ -23,6 +25,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.z = 1
         self.z_speed = 0
         self.min_z = 1
+        self.old_rect = None
 
         self.poops = pygame.sprite.Group()
         self.poop_score = 0
@@ -34,8 +37,8 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.character = None
         self.orig_sprite = None
         self.cur_sprite = None
-        #
-        # self.rect = None
+
+        self.break_score = 0
 
         self.larm_images = None
         self.left_index = 0
@@ -47,6 +50,10 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.body_index = 0
         self.head_images = None
         self.head_index = 0
+
+        self.timer = 0
+        self.timer_activated = False
+        self.final_timer = float('inf')
 
     def set_character(self, character):
         self.character = character
@@ -86,6 +93,15 @@ class PlayerCharacter(pygame.sprite.Sprite):
         except:
             pass
 
+    def start_timer(self):
+        if not self.timer_activated:
+            self.timer_activated = True
+
+    def check_victory(self, finish_line):
+        if self.y < finish_line:
+            self.final_timer = min(self.final_timer, self.timer)
+            return True
+
     def generate_new_sprite(self):
         _im = pygame.Surface((self.character.width, self.character.height), pygame.SRCALPHA)
         try:
@@ -108,12 +124,18 @@ class PlayerCharacter(pygame.sprite.Sprite):
         return _images
 
     def update(self):
+        self.old_rect = copy.deepcopy(self.rect)
+        if self.timer_activated:
+            self.timer += 1
+
         if self.y_speed != 0:
             self.angle = math.atan(self.x_speed/self.y_speed) / 0.0174533
+
         self.x += self.x_speed
         self.y += self.y_speed
         self.rect.x = self.x
         self.rect.y = self.y
+
         if self.distance_travelled > self.character.poop_factor:
             self.distance_travelled = 0
             self.spawn_poop()
@@ -130,7 +152,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
             self.z_speed = 0
             self.jump_state = 0
 
-    def draw(self, screen, x_offset, y_offset):
+    def draw_as_player(self, screen, x_offset, y_offset):
         self.cur_sprite = self.generate_new_sprite()
         self.cur_sprite = pygame.transform.scale(self.cur_sprite, (int(self.character.width*self.z), int(self.character.height*self.z)))
         _image = rot_center(self.cur_sprite, self.angle)
@@ -147,6 +169,24 @@ class PlayerCharacter(pygame.sprite.Sprite):
             _rect.x += x_offset
             _rect.y = y_offset + (SCREEN_HEIGHT - PLAYER_START_Y + 10)
             pygame.draw.rect(screen, self.character.color, _rect, 1)   #
+
+    def draw_normal(self, screen, x_offset, y_offset):
+        self.cur_sprite = self.generate_new_sprite()
+        self.cur_sprite = pygame.transform.scale(self.cur_sprite, (int(self.character.width*self.z), int(self.character.height*self.z)))
+        _image = rot_center(self.cur_sprite, self.angle)
+        _rect = _image.get_rect()
+        _rect.x = self.x
+        _rect.y = self.y
+        screen.blit(_image, (_rect.x + x_offset, _rect.y + y_offset))
+        if show_velocity:
+            pygame.draw.line(screen, colors.debug_velocity_line, [self.x + self.character.width / 2, self.y + self.character.height / 2],
+                             [self.x + (self.x_speed*15) + self.character.width / 2,
+                              50 - (self.y_speed*15) + self.character.height / 2], 3)
+        if draw_rects:
+            _rect = self.rect
+            _rect.x += x_offset
+            _rect.y = _rect.y + y_offset
+            pygame.draw.rect(screen, (255, 0, 0), _rect, 1)   #
 
     @property
     def rect(self):

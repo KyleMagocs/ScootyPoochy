@@ -29,8 +29,8 @@ class LevelObject(pygame.sprite.Sprite):
             return True
 
     def draw(self, screen, x_offset, y_offset):
-        # if self.rect.bottom < 0 or self.rect.top > vars.SCREEN_HEIGHT:
-        #     return
+        if self.rect.bottom + y_offset < 0 or self.rect.top + y_offset > vars.SCREEN_HEIGHT:
+            return
         screen.blit(self.image, (self.rect.x + x_offset, self.rect.y - self.image.get_height() + self.rect.height + y_offset))
         if vars.draw_rects:
             _rect = self.rect
