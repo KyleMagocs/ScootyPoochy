@@ -90,6 +90,7 @@ class World:
                                            dokillb=False)
 
         _min_z = None
+        self.level.update(addtl_x=0, addtl_y=0)
 
         # todo:  this is all collision, leave it alone for now
         for wall in walls:
@@ -105,7 +106,7 @@ class World:
 
                 delta_x, delta_y = get_conform_deltas(char_rect, old_rect, new_rect)
                 self.player_character.eff_y -= delta_y
-                self.level.update(addtl_x=0, addtl_y=0 - delta_y)
+                self.level.update(addtl_x=0, addtl_y=0)
                 # movepoops -= delta_y
 
                 delta_x, delta_y = get_conform_deltas(wall.rect, old_player_rect, char_rect)
