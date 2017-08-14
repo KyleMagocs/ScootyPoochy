@@ -155,5 +155,5 @@ class PlayerCharacter(pygame.sprite.Sprite):
         return _rect
 
     def spawn_poop(self):
-        self.poops.add(self.character.get_a_poop(self.x, 50, self.z, self.angle))
+        self.poops.add(self.character.get_a_poop(self.x, self.y, self.z, self.angle))
         self.poop_score += self.character.poop_factor

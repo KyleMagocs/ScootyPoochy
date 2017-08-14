@@ -21,9 +21,9 @@ class World:
         self.level = level
         self.level.x = 0
         self.level.y = 0
-        self.level.update_objects(self.x_offset)
+        # self.level.update_objects(self.x_offset)
 
-        self.player_character = PlayerCharacter(init_x=self.x_offset + self.width / 2,
+        self.player_character = PlayerCharacter(init_x=self.width / 2,
                                                 init_y=y_offset)  # TODO:  This math is bad
         self.player_group = pygame.sprite.Group(self.player_character)
 
@@ -91,6 +91,7 @@ class World:
 
         _min_z = None
         self.level.update(addtl_x=0, addtl_y=0)
+        self.poops.update()
 
         # todo:  this is all collision, leave it alone for now
         for wall in walls:
@@ -155,6 +156,7 @@ class World:
 
         for poop in self.player_character.poops:
             poop.draw(screen, x_offset, y_offset)
+
         self.player_character.draw(screen, x_offset, 0)
 
         for sprite in [x for x in self.level.walls]:
