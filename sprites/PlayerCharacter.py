@@ -61,15 +61,15 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.character = character
         self.orig_sprite = character.sprite
         if hasattr(character, 'head_path'):
-            self.head_images = self.load_sprite_sheet(character.head_path, 60, 60, 9)
+            self.head_images = self.load_sprite_sheet(character.head_path, 60, 60, 9, 2)
         if hasattr(character, 'larm_path'):
-            self.larm_images = self.load_sprite_sheet(character.larm_path, 60, 60, 9)
+            self.larm_images = self.load_sprite_sheet(character.larm_path, 60, 60, 9, 2)
         if hasattr(character, 'rarm_path'):
-            self.rarm_images = self.load_sprite_sheet(character.rarm_path, 60, 60, 9)
+            self.rarm_images = self.load_sprite_sheet(character.rarm_path, 60, 60, 9, 2)
         if hasattr(character, 'tail_path'):
-            self.tail_images = self.load_sprite_sheet(character.tail_path, 60, 60, 9)
+            self.tail_images = self.load_sprite_sheet(character.tail_path, 60, 60, 9, 4)
         if hasattr(character, 'body_path'):
-            self.body_images = self.load_sprite_sheet(character.body_path, 60, 60, 1)
+            self.body_images = self.load_sprite_sheet(character.body_path, 60, 60, 1, 1)
 
         self.cur_sprite = self.orig_sprite
         self.radius = character.radius
@@ -117,13 +117,12 @@ class PlayerCharacter(pygame.sprite.Sprite):
             _im = self.orig_sprite
         return _im
 
-    def load_sprite_sheet(self, sheet_path, width, height, num):
+    def load_sprite_sheet(self, sheet_path, width, height, num, copies=3):
         _images = []
         sheet = spritesheet(os.path.join(IMAGES_PATH, 'characters', sheet_path))
         for x in range(0,width*num,width):
-            _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
-            _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
-            _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
+            for i in range(0, copies):
+                _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
         return _images
 
     def update(self):

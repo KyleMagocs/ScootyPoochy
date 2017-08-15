@@ -63,8 +63,8 @@ class TempLevel(Level):
         _wall = Wall(0, 900, 150)
         self.walls.add(_wall)
 
-        _leftside = SideWall(0, 60, self.height)
-        _rightside = SideWall(self.width - 60, 60, self.height)
+        _leftside = SideWall(0, 55, self.height)
+        _rightside = SideWall(self.width - 55, 55, self.height)
         self.walls.add(_leftside, _rightside)
 
         _couch = Couch((475, 2570))

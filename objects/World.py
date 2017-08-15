@@ -7,11 +7,13 @@ import colors
 import vars
 from sprites.PlayerCharacter import PlayerCharacter
 from utils.hollow import textOutline
-from utils.sprite_utils import get_conform_deltas
+from utils.sprite_utils import get_conform_deltas, get_velocity
 
 
 class World:
     def __init__(self, width, y_offset, level):
+        self.countdown = ['3', '2', '1', 'GO!']
+
         self.width = width
         self.break_score = 0
 
@@ -27,6 +29,7 @@ class World:
 
         self.level = level
 
+        self.countdown_timer = 0
         self.timer_enabled = 0
         self.timer = 0
 
@@ -35,7 +38,23 @@ class World:
         p2_progress = math.fabs(max((self.player_two.y + vars.PLAYER_START_Y), 0) / (self.level.height))
         return p1_progress, p2_progress
 
-    def update(self, p1_vel, p2_vel):
+    def update(self, p1_left, p1_right, p2_left, p2_right):
+        if not vars.skip_countdown and len(self.countdown) > 0:
+            if self.countdown_timer < int(vars.fps) and len(self.countdown) > 0:
+                self.countdown_timer += 1
+            else:
+                if len(self.countdown) > 0:
+                    self.countdown.remove(self.countdown[0])
+
+                self.countdown_timer = 0
+        if len(self.countdown) > 1:
+            return
+
+        self.player_one.update_limbs(p1_left, p1_right)
+        self.player_two.update_limbs(p2_left, p2_right)
+        p1_vel = get_velocity(p1_left, p1_right)
+        p2_vel = get_velocity(p2_left, p2_right)
+
         if self.player_one.jump_state == 0:
             self.player_one.x_speed = (self.player_one.x_speed - p1_vel[0]) / self.level.theme.friction
             self.player_one.y_speed = (self.player_one.y_speed - p1_vel[1]) / self.level.theme.friction
@@ -63,10 +82,10 @@ class World:
             else:
                 one_y = -1
 
-            self.player_one.x_speed = 5 * one_x
-            self.player_one.y_speed = 5 * one_y
-            self.player_two.x_speed = 5 * one_x * -1
-            self.player_two.y_speed = 5 * one_y * -1
+            self.player_one.x_speed = 2 * one_x * -1
+            self.player_one.y_speed = 2 * one_y
+            self.player_two.x_speed = 2 * one_x
+            self.player_two.y_speed = 2 * one_y * -1
 
             self.player_one.update()
             self.player_two.update()
@@ -110,16 +129,10 @@ class World:
         for player in self.player_group:
             player.update_z()
 
-        return False
-
-    def draw_win_text(self, screen):
-        return
-        # todo:  fix this somehow
-        font = pygame.font.SysFont('Impact', 70)
-        text = textOutline(font, 'FINISH !', self.player_character.character.color,
-                           colors.black)
-        text.get_width()
-        screen.blit(text, (self.x_offset + self.width / 2 - text.get_width() / 2, vars.SCREEN_HEIGHT / 2 - 10))
+        if self.player_one.y < 50 and self.player_two.y < 50:
+            return self.get_scores()
+        else:
+            return None
 
     def draw(self, screen):
         self.draw_a_player(screen, self.player_one, self.player_two, 0)
@@ -145,34 +158,48 @@ class World:
         for poop in other_player.poops:
             poop.draw(screen, x_offset, y_offset)
 
-        # todo:  this will only draw one player, need to do something to draw both
         player.draw_as_player(screen, x_offset, player_y_offset)
         other_player.draw_normal(screen, x_offset, y_offset)
 
         for sprite in [x for x in self.level.walls]:
             sprite.draw_part_two(screen, x_offset, y_offset)
 
-        if self.finish:
-            self.draw_win_text(screen)
+        if player.y < 50:
+            self.draw_win_text(screen, x_offset, player.character.color)
 
+        if len(self.countdown) > 0:
+            self.draw_countdown(screen, x_offset, player.character.color, self.countdown[0], self.countdown_timer * 3)
+
+            # # IF YOU'RE LOOKING FOR A GOOD PLACE TO LOG SOME CRAP TO THE SCREEN, THIS WOULD BE A PRETTY GOOD SPOT # #
             # font = pygame.font.SysFont('Impact', 14)
             # label = font.render(str(self.player_character.z), 1, (0, 255, 255))
             # screen.blit(label, (self.x_offset + self.width / 4 + 2, vars.SCREEN_HEIGHT / 2 - 10 + 2))
+            ############################################################################################################
 
     def start_timer(self):
         self.timer_enabled = 1
 
-    def draw_countdown(self, screen, text, size):
-        return  # TODO:  fix this
+    def draw_countdown(self, screen, x_offset, color, text, size):
         font2 = pygame.font.SysFont('Impact', size)
-        label = textOutline(font2, text, self.player_character.character.color, colors.black)
+        label = textOutline(font2, text, color, colors.black)
         screen.blit(label, (
-        self.x_offset + self.width / 2 - label.get_width() / 2, vars.SCREEN_HEIGHT / 2 - label.get_height() / 2))
+        x_offset + self.width / 2 - label.get_width() / 2, vars.SCREEN_HEIGHT / 2 - label.get_height() / 2))
+
+    def draw_win_text(self, screen, x_offset, color):
+        font = pygame.font.SysFont('Impact', 70)
+        text = textOutline(font, 'FINISH !', color,
+                           colors.black)
+        text.get_width()
+        screen.blit(text, (x_offset + self.width / 2 - text.get_width() / 2, vars.SCREEN_HEIGHT / 2 - 10))
 
     def get_scores(self):
-        return None # TODO: fix this
-        return {'time': max(2000 - self.final_timer, 0),
-                'break': self.break_score,
-                # todo:  maybe return a list of objects instead and then you can do something neat there?
-                'poop': self.player_character.poop_score,
-                'color': self.player_character.character.color}
+        return ({'time': max(2000 - self.player_one.final_timer, 0),
+                 'break': self.player_one.break_score,
+                 # todo:  maybe return a list of objects instead and then you can do something neat there?
+                 'poop': self.player_one.poop_score,
+                 'color': self.player_one.character.color},
+                {'time': max(2000 - self.player_two.final_timer, 0),
+                 'break': self.player_two.break_score,
+                 # todo:  maybe return a list of objects instead and then you can do something neat there?
+                 'poop': self.player_two.poop_score,
+                 'color': self.player_two.character.color},)
