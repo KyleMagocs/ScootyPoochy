@@ -121,6 +121,7 @@ class TestCharacter(CharacterBase):
     poop_factor = 50
     width = 60
     height = 60
+    radius = 30
     color = red
     name = 'XYLONS DOG'
     attributes = {
@@ -147,6 +148,7 @@ class Doge(CharacterBase):
     acceleration = .35
     width = 60
     height = 60
+    radius = 30
     handling = .95
     poop_factor = 30
     color = blue
@@ -173,6 +175,7 @@ class Nort(CharacterBase):
     poop_factor = 15
     width = 60
     height = 60
+    radius = 30
     handling = .95
     color = aqua
     name = 'NORT'
@@ -198,6 +201,7 @@ class Carlos(CharacterBase):
     acceleration = .5
     width = 30
     height = 30
+    radius = 15
     handling = .8
     poop_factor = 30
     color = green

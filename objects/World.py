@@ -50,6 +50,27 @@ class World:
         self.player_one.update()
         self.player_two.update()
 
+        # check player-player collisions
+        collide = pygame.sprite.collide_circle(self.player_one, self.player_two)
+        if collide:
+            if self.player_one.x > self.player_two.x:
+                one_x = 1
+            else:
+                one_x = -1
+
+            if self.player_one.y > self.player_one.y:
+                one_y = 1
+            else:
+                one_y = -1
+
+            self.player_one.x_speed = 5 * one_x
+            self.player_one.y_speed = 5 * one_y
+            self.player_two.x_speed = 5 * one_x * -1
+            self.player_two.y_speed = 5 * one_y * -1
+
+            self.player_one.update()
+            self.player_two.update()
+
         # check object collisions
         col = pygame.sprite.groupcollide(self.player_group, self.level.objects, dokilla=False, dokillb=False)
         for p_sprite, obj_sprites in col.items():

@@ -55,6 +55,8 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.timer_activated = False
         self.final_timer = float('inf')
 
+        self.radius = 50
+
     def set_character(self, character):
         self.character = character
         self.orig_sprite = character.sprite
@@ -70,6 +72,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
             self.body_images = self.load_sprite_sheet(character.body_path, 60, 60, 1)
 
         self.cur_sprite = self.orig_sprite
+        self.radius = character.radius
         # self.rect = self.orig_sprite.get_rect()
 
     def jump(self):

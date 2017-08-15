@@ -80,3 +80,29 @@ class right_wall(collide_object):
         _rect.x += self.x + 49
         _rect.y += self.y
         return _rect
+
+class SideWall(collide_object):
+    def __init__(self, x, width, height):
+        self.width = width  # Todo: hack
+        super().__init__(None, x, 0)
+        self.x = x
+        self.y = 0
+        self.height = height
+
+    def update(self, *args):
+        pass
+
+    def get_collide_walls(self):
+        return self
+
+    def draw_part_one(self, *args):
+        pass
+
+    def draw_part_two(self, screen, x_offset, *args):
+        if vars.draw_rects:
+            _rect = self.rect
+            _rect.x += x_offset
+            pygame.draw.rect(screen, (0, 255, 255), _rect, 1)
+
+    def get_rect(self):
+        return pygame.Rect(self.x, 0, self.width, self.height)

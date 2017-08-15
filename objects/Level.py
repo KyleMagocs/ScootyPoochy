@@ -2,7 +2,7 @@ import pygame
 
 from objects.LevelObjects import Lamp, Couch, Table, Vase
 from objects.Theme import TempTheme
-from objects.Wall import Wall
+from objects.Wall import Wall, SideWall
 
 
 class Level:
@@ -62,6 +62,10 @@ class TempLevel(Level):
 
         _wall = Wall(0, 900, 150)
         self.walls.add(_wall)
+
+        _leftside = SideWall(0, 60, self.height)
+        _rightside = SideWall(self.width - 60, 60, self.height)
+        self.walls.add(_leftside, _rightside)
 
         _couch = Couch((475, 2570))
         self.objects.add(_couch)  # TODO:  Yank later
