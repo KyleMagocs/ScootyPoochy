@@ -181,6 +181,9 @@ class World:
 
         if len(self.countdown) > 0:
             self.draw_countdown(screen, x_offset, player.character.color, self.countdown[0], self.countdown_timer * 3)
+            font = pygame.font.SysFont('Impact', 14)
+            label = font.render('YOU!', 1, player.character.color)
+            screen.blit(label, (x_offset + player.x + label.get_width()/2, (vars.SCREEN_HEIGHT - vars.PLAYER_START_Y + 75)))
 
             # # IF YOU'RE LOOKING FOR A GOOD PLACE TO LOG SOME CRAP TO THE SCREEN, THIS WOULD BE A PRETTY GOOD SPOT # #
             # font = pygame.font.SysFont('Impact', 14)
@@ -195,7 +198,7 @@ class World:
         font2 = pygame.font.SysFont('Impact', size)
         label = textOutline(font2, text, color, colors.black)
         screen.blit(label, (
-        x_offset + self.width / 2 - label.get_width() / 2, vars.SCREEN_HEIGHT / 2 - label.get_height() / 2))
+            x_offset + self.width / 2 - label.get_width() / 2, vars.SCREEN_HEIGHT / 2 - label.get_height() / 2))
 
     def draw_win_text(self, screen, x_offset, color):
         font = pygame.font.SysFont('Impact', 70)
@@ -209,9 +212,9 @@ class World:
                  'break': self.player_one.break_score,
                  # todo:  maybe return a list of objects instead and then you can do something neat there?
                  'poop': self.player_one.poop_score,
-                 'color': self.player_one.character.color},
+                 'char': self.player_one.character, },
                 {'time': max(2000 - self.player_two.final_timer, 0),
                  'break': self.player_two.break_score,
                  # todo:  maybe return a list of objects instead and then you can do something neat there?
                  'poop': self.player_two.poop_score,
-                 'color': self.player_two.character.color},)
+                 'char': self.player_two.character},)

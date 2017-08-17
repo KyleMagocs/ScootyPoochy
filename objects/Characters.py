@@ -166,15 +166,12 @@ class Doge(CharacterBase):
 
     def __init__(self):
         CharacterBase.__init__(self)
-        self
-
-
 
 
 class Nort(CharacterBase):
     sprite_path = 'nort_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
     portrait_path = 'nort_portrait_temp.png'
-    poop_paths = ['nort_poop_temp.png',]
+    poop_paths = ['nort_poop_temp.png', ]
     max_speed = .7 * 6
     acceleration = .35
     poop_factor = 15

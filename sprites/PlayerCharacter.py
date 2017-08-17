@@ -179,7 +179,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
         _rect = _image.get_rect()
         _rect.x = self.x
         _rect.y = self.y
-        screen.blit(_image, (_rect.x + x_offset, _rect.y + y_offset))
+        screen.blit(_image, (_rect.x + x_offset, _rect.y + y_offset + 10))
         if show_velocity:
             pygame.draw.line(screen, colors.debug_velocity_line, [self.x + self.character.width / 2, self.y + self.character.height / 2],
                              [self.x + (self.x_speed*15) + self.character.width / 2,
