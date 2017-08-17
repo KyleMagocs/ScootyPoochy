@@ -79,7 +79,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
         if self.jump_state == 0:
             self.jump_state = 1
             self.z_speed = .15
-            self.x_speed += 2 * math.sin(self.angle * radians_factor)
+            self.x_speed -= 2 * math.sin(self.angle * radians_factor)
             self.y_speed -= 2 * math.cos(self.angle * radians_factor)
 
     def update_limbs(self, left, right):

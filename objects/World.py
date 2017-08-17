@@ -52,26 +52,52 @@ class World:
 
         self.player_one.update_limbs(p1_left, p1_right)
         self.player_two.update_limbs(p2_left, p2_right)
+
+        self.handle_player_vel(p1_left, p1_right, p2_left, p2_right)
+
+        self.player_one.update()
+        self.player_two.update()
+
+        self.handle_player_collisions()
+
+        self.handle_breakable_collisions()
+
+        self.handle_wall_collisions()
+
+        for obj in self.level.objects:
+            obj.update(0, 0)
+
+        for player in self.player_group:
+            player.update_z()
+
+        return self.game_finished()
+
+    def game_finished(self):
+        if self.player_one.y < 50 and self.player_two.y < 50:
+            return self.get_scores()
+        else:
+            return None
+
+    def handle_player_vel(self, p1_left, p1_right, p2_left, p2_right):
         p1_vel = get_velocity(p1_left, p1_right)
         p2_vel = get_velocity(p2_left, p2_right)
-
         if self.player_one.jump_state == 0:
             self.player_one.x_speed = (self.player_one.x_speed - p1_vel[0]) / self.level.theme.friction
             self.player_one.y_speed = (self.player_one.y_speed - p1_vel[1]) / self.level.theme.friction
             # TODO:  this should be part of the player, not the world
             self.player_one.distance_travelled += math.sqrt(p1_vel[0] * p1_vel[0] + p1_vel[1] * p1_vel[1])
-
         if self.player_two.jump_state == 0:
             self.player_two.x_speed = (self.player_two.x_speed - p2_vel[0]) / self.level.theme.friction
             self.player_two.y_speed = (self.player_two.y_speed - p2_vel[1]) / self.level.theme.friction
             # TODO:  this should be part of the player, not the world
             self.player_two.distance_travelled += math.sqrt(p2_vel[0] * p2_vel[0] + p2_vel[1] * p2_vel[1])
-        self.player_one.update()
-        self.player_two.update()
 
+    def handle_player_collisions(self):
         # check player-player collisions
         collide = pygame.sprite.collide_circle(self.player_one, self.player_two)
+
         if collide:
+
             if self.player_one.x > self.player_two.x:
                 one_x = 1
             else:
@@ -87,9 +113,7 @@ class World:
             self.player_two.x_speed = 2 * one_x
             self.player_two.y_speed = 2 * one_y * -1
 
-            self.player_one.update()
-            self.player_two.update()
-
+    def handle_breakable_collisions(self):
         # check object collisions
         col = pygame.sprite.groupcollide(self.player_group, self.level.objects, dokilla=False, dokillb=False)
         for p_sprite, obj_sprites in col.items():
@@ -97,12 +121,11 @@ class World:
                 if obj.breakable and obj.get_wrecked():
                     p_sprite.break_score += obj.points
 
-        # TODO:  Combine this with passable non-breakable object colissions
+    def handle_wall_collisions(self):
         collide_objects = [x.get_collide_walls() for x in self.level.walls] + [x for x in self.level.objects if
                                                                                x.height > 1]
         walls = pygame.sprite.groupcollide(self.player_group, pygame.sprite.Group(collide_objects), dokilla=False,
                                            dokillb=False)
-
         for p_sprite, wall_sprites in walls.items():
             _min_z = None
             for wall in wall_sprites:
@@ -122,17 +145,6 @@ class World:
                 p_sprite.min_z = _min_z
             else:
                 p_sprite.min_z = 1
-
-        for obj in self.level.objects:
-            obj.update(0, 0)
-
-        for player in self.player_group:
-            player.update_z()
-
-        if self.player_one.y < 50 and self.player_two.y < 50:
-            return self.get_scores()
-        else:
-            return None
 
     def draw(self, screen):
         self.draw_a_player(screen, self.player_one, self.player_two, 0)
