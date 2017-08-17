@@ -88,8 +88,8 @@ class ButtLevel(Level):
         self.theme = TempTheme()
         self.width = self.theme.background_sprite.get_width()
 
-        my_rooms = Room_Finish, Room_One, Room_One, Room_Two, Room_Start
-        my_doors = 0,           75,       75,       150,      100
+        my_rooms = Room_Finish, Room_One, Room_One, Room_Two, Room_One, Room_Two, Room_Start
+        my_doors = 0,           75,       75,       150,      75,       150,      100
         height = 0
         _im = pygame.Surface((self.width, sum([x.height for x in my_rooms])), pygame.SRCALPHA)
         for room, door_x in zip(my_rooms, my_doors):

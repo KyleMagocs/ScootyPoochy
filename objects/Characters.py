@@ -16,6 +16,8 @@ def get_all_characters():
     return [Carlos, Doge, TestCharacter, Nort, Carlos, Doge, TestCharacter, Nort]
 
 
+# TODO:  THIS IS TRASH
+
 class PoopTrail(pygame.sprite.Sprite):
     def __init__(self, character, x, y, z):
         super().__init__()
@@ -71,6 +73,9 @@ class NortPoop(pygame.sprite.Sprite):
         self.y += addtl_y
         self.rect.x = self.x
         self.rect.y = self.y
+
+    def draw(self, screen, x_offset, y_offset):
+        screen.blit(self.image, (self.rect.x + x_offset, self.rect.y + y_offset))
 
 
 class CharacterBase:
@@ -188,8 +193,8 @@ class Nort(CharacterBase):
     def __init__(self):
         CharacterBase.__init__(self)
 
-    def get_a_poop(self, x, y, angle):
-        new_poop = NortPoop(self, x + self.width / 2, y + self.width / 2, angle)
+    def get_a_poop(self, x, y, z, angle):
+        new_poop = NortPoop(self, x + self.width / 2, y + self.width / 2, z, angle)
         return new_poop
 
 

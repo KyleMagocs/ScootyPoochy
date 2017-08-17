@@ -50,7 +50,7 @@ class Room_Two(Room):
         self.objects = pygame.sprite.Group(
             Lamp((65, 170)),
             Lamp((515, 170)),
-            Couch((475, 270))
+            Couch((475, 280))
         )
         super().__init__(y_position)
 

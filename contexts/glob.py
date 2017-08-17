@@ -34,8 +34,8 @@ class GlobalContext:
                 select = CharacterSelectContext(self.screen, p1, p2)
                 characters = select.main_loop()
 
-                theme_select = LevelSelectContext(self.screen)
-                theme = theme_select.main_loop()
+                # theme_select = LevelSelectContext(self.screen)
+                # theme = theme_select.main_loop()
                 # TODO:  Build level here
             else:
                 characters = [Doge(), Doge()]

@@ -39,7 +39,7 @@ class GameContext:
         self.world.player_one.set_character(character_list[0])
 
         self.world.player_two.y = levels[0].height - PLAYER_START_Y
-        self.world.player_two.set_character(character_list[0])
+        self.world.player_two.set_character(character_list[1])
 
         # self.players_group = pygame.sprite.Group()
 

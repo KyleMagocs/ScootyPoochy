@@ -1,9 +1,9 @@
 import os
 
 fps = 30
-skip_intro = True
+skip_intro = False
 show_velocity = False
-draw_rects = True
+draw_rects = False
 skip_countdown = False
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 800
