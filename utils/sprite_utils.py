@@ -2,6 +2,9 @@ import pygame
 
 
 #  https://www.pygame.org/wiki/RotateCenter
+from objects import Characters
+
+
 def rot_center(image, angle):
     """rotate an image while keeping its center and size"""
     orig_rect = image.get_rect()
@@ -25,3 +28,8 @@ def get_conform_deltas(obstacle, old, new):
         delta_y = new.top - obstacle.bottom
 
     return delta_x, delta_y
+
+def get_velocity(left, right):
+    addtl_y_vel = (left[1] / 10 + right[1] / 10) / 2 * Characters.ACCEL_COEF
+    addtl_x_vel = ((left[0] / 10 - 10) + (right[0] / 10 + 10)) / 2 * Characters.ACCEL_COEF
+    return addtl_x_vel, addtl_y_vel

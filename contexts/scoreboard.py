@@ -3,7 +3,6 @@ import pygame
 from vars import fps
 
 TOTAL_WAIT = 5
-ffps = float(fps)
 
 class ScoreboardContext:
 
@@ -15,36 +14,42 @@ class ScoreboardContext:
         self.right_color = None
 
     def main_loop(self, game_data):
-        self.left_color = game_data[0]['color']
-        self.right_color = game_data[1]['color']
+        self.left_color = game_data[0]['char'].color
+        self.right_color = game_data[1]['char'].color
 
         l_total = int(game_data[0]['time']) + int(game_data[0]['poop']) + int(game_data[0]['break'])
         r_total = int(game_data[1]['time']) + int(game_data[1]['poop']) + int(game_data[1]['break'])
 
+        _p1 = pygame.transform.scale(game_data[0]['char'].portrait, (150, 150))
+        _p1 = pygame.transform.flip(_p1, True, False)
+        _p2 = pygame.transform.scale(game_data[1]['char'].portrait, (150, 150))
+
+
         while True:
-            self.clock.tick(ffps)
+            self.clock.tick(fps)
 
             self.timer += 1
-            # if self.timer > TOTAL_WAIT * ffps:
-            #     return [None, ]
             self.screen.fill((0, 0, 0))
             font = pygame.font.SysFont('Arial', 40)
-            label = font.render('SCOOOOOOOOORE BOOOOOOOOOARD ! {0:.2f}'.format(self.timer/ffps), 1, (100, 150, 200))
-            self.screen.blit(label, (200, 200))
+            label = font.render('SCORE! {0:.2f}'.format(self.timer/fps), 1, (100, 150, 200))
+            self.screen.blit(label, (500, 200))
 
-            if self.timer > ffps * 1.25:
+            self.screen.blit(_p1, (90, 100))
+            self.screen.blit(_p2, (1200-150-90, 100))
+
+            if self.timer > int(fps * 1.25):
                 self.show_stat(font, game_data[0]['time'], game_data[1]['time'], 'TIME', 280)
 
-            if self.timer > ffps * 2.5:
+            if self.timer > int(fps * 2.5):
                 self.show_stat(font, game_data[0]['break'], game_data[1]['break'], 'ITEMS BROKEN', 340)
 
-            if self.timer > ffps * 3.75:
+            if self.timer > int(fps * 3.75):
                 self.show_stat(font, game_data[0]['poop'], game_data[1]['poop'], 'POOP', 400)
 
-            if self.timer > ffps * 5.8:
+            if self.timer > int(fps * 5.8):
                 self.show_stat(font, l_total, r_total, 'TOTAL', 540)
 
-            if self.timer > ffps * 10:
+            if self.timer > int(fps * 10):
                 return
 
             pygame.display.flip()

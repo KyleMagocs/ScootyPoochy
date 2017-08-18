@@ -16,6 +16,8 @@ def get_all_characters():
     return [Carlos, Doge, TestCharacter, Nort, Carlos, Doge, TestCharacter, Nort]
 
 
+# TODO:  THIS IS TRASH
+
 class PoopTrail(pygame.sprite.Sprite):
     def __init__(self, character, x, y, z):
         super().__init__()
@@ -72,6 +74,9 @@ class NortPoop(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
+    def draw(self, screen, x_offset, y_offset):
+        screen.blit(self.image, (self.rect.x + x_offset, self.rect.y + y_offset))
+
 
 class CharacterBase:
     sprite_path = None
@@ -121,6 +126,7 @@ class TestCharacter(CharacterBase):
     poop_factor = 50
     width = 60
     height = 60
+    radius = 30
     color = red
     name = 'XYLONS DOG'
     attributes = {
@@ -147,6 +153,7 @@ class Doge(CharacterBase):
     acceleration = .35
     width = 60
     height = 60
+    radius = 30
     handling = .95
     poop_factor = 30
     color = blue
@@ -159,20 +166,18 @@ class Doge(CharacterBase):
 
     def __init__(self):
         CharacterBase.__init__(self)
-        self
-
-
 
 
 class Nort(CharacterBase):
     sprite_path = 'nort_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
     portrait_path = 'nort_portrait_temp.png'
-    poop_paths = ['nort_poop_temp.png',]
+    poop_paths = ['nort_poop_temp.png', ]
     max_speed = .7 * 6
     acceleration = .35
     poop_factor = 15
     width = 60
     height = 60
+    radius = 30
     handling = .95
     color = aqua
     name = 'NORT'
@@ -185,8 +190,8 @@ class Nort(CharacterBase):
     def __init__(self):
         CharacterBase.__init__(self)
 
-    def get_a_poop(self, x, y, angle):
-        new_poop = NortPoop(self, x + self.width / 2, y + self.width / 2, angle)
+    def get_a_poop(self, x, y, z, angle):
+        new_poop = NortPoop(self, x + self.width / 2, y + self.width / 2, z, angle)
         return new_poop
 
 
@@ -198,6 +203,7 @@ class Carlos(CharacterBase):
     acceleration = .5
     width = 30
     height = 30
+    radius = 15
     handling = .8
     poop_factor = 30
     color = green

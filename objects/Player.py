@@ -14,7 +14,6 @@ class Player:
     def __init__(self, player_id, control_type=DUMMY):
         self.DUMMY_FLAG = False
         self.player_id = player_id
-        self.world = None
         self.character = None
         self.control_one = None
         self.control_two = None
@@ -42,15 +41,7 @@ class Player:
 
         return left, right
 
-    def get_progress(self):
-        return math.fabs(max((self.world.player_character.y + vars.PLAYER_START_Y), 0) / (self.world.level.height))
-
-    def handle_input(self):
-        left, right = self.read_input()
-
-        return self.get_velocity(left, right)
-
-    def get_velocity(self, left, right):
-        addtl_y_vel = (left[1] / 10 + right[1] / 10) / 2 * Characters.ACCEL_COEF
-        addtl_x_vel = ((left[0] / 10 - 10) + (right[0] / 10 + 10)) / 2 * Characters.ACCEL_COEF
-        return addtl_x_vel, addtl_y_vel
+    # def handle_input(self):
+    #     left, right = self.read_input()
+    #
+    #     return get_velocity(left, right)
