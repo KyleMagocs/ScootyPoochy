@@ -11,6 +11,7 @@ class LevelObject(pygame.sprite.Sprite):
     passable = 1 #
     image_path = None
     height = 1
+    z = 1
 
     def __init__(self):
         super().__init__()
@@ -25,7 +26,6 @@ class LevelObject(pygame.sprite.Sprite):
             self.broken = 1
             self.points_delta = 5
             # TODO: PLAY BROKEN NOISE
-            # self.image = pygame.transform.rotate(self.image, -90)
             return True
 
     def draw(self, screen, x_offset, y_offset):
@@ -44,76 +44,55 @@ class LevelObject(pygame.sprite.Sprite):
             screen.blit(label, (self.rect.x + x_offset, self.rect.y - self.points_delta + y_offset))
             self.points_delta += 5
 
+    def load_sprite_sheet(self, sheet_path, width, height, num):
+        _images = []
+        sheet = spritesheet(os.path.join(vars.IMAGES_PATH, sheet_path))
+        for x in range(0,width*num,width):
+            _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
+            _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
+            _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
+        return _images
+
     @property
     def rect(self):
         _rect = self.image.get_rect()
         _rect.x += self.x
         _rect.y += self.y
+        _rect.width = self.width
         return _rect
 
 class Lamp(LevelObject):
     breakable = 1
     broken = None
 
-    image_rects = (
-        (0, 0, 30, 100),
-        (31, 0, 58, 100),
-        (90, 0, 88, 100),
-        (179, 0, 100, 100),
-    )
+    width = 40
 
     image_path = 'objects/lamp.png'
-    sheet_path = 'objects/lampsheet.png'
+    sheet_path = 'objects/lamp_sheet.png'
 
     def __init__(self, init_pos):
         super().__init__()
-        self.image = self.load_sprite()
-        self.rect.height = 25
-        self.rect.width = 30
+
+        self.images = self.load_sprite_sheet(self.sheet_path, 130, 100, 9)
+        self.image = self.images[0]
+        self.image_index = 0
         self.x = init_pos[0]
-        self.rect.x = init_pos[0]
         self.y = init_pos[1]
-        self.rect.y = init_pos[1]
         self.points = 100
 
-        self.images = self.load_sprite_sheet()
-        self.image_index = 0
-
-    def load_sprite_sheet(self):
-        _images = []
-        sheet = spritesheet(os.path.join(vars.IMAGES_PATH, self.sheet_path))
-        for x1, y1, x2, y2 in self.image_rects:
-            _images.append(sheet.image_at((x1, y1, x2, y2), (255, 0, 255)))
-            _images.append(sheet.image_at((x1, y1, x2, y2), (255, 0, 255)))
-            _images.append(sheet.image_at((x1, y1, x2, y2), (255, 0, 255)))
-        return _images
-
-    def load_sprite(self):
-        _image = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
-        _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
-        return _image
-
     def update(self, addtl_x, addtl_y):
-        # self.x += addtl_x
-        # self.y += addtl_y
-        # self.rect.x = self.x
-        # self.rect.y = self.y
         if self.image_index >= len(self.images):
             self.broken = 2
         if self.broken == 1:
             self.image = self.images[self.image_index]
             self.image_index += 1
 
-    @property
-    def rect(self):
-        _rect = self.image.get_rect()
-        _rect.x += self.x
-        _rect.y += self.y
-        return _rect
 
 class Vase(LevelObject):
     breakable = 1
     broken = None
+
+    width = 32
 
     sheet_path = 'objects/vase_sheet.png'
 
@@ -126,45 +105,44 @@ class Vase(LevelObject):
         self.points = 400
         self.image_index = 0
 
-    def load_sprite_sheet(self, sheet_path, width, height, num):
-        _images = []
-        sheet = spritesheet(os.path.join(vars.IMAGES_PATH, sheet_path))
-        for x in range(0,width*num,width):
-            _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
-            _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
-            _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
-        return _images
-
-    # def load_sprite(self):
-    #     _image = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
-    #     _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
-    #     return _image
-
     def update(self, addtl_x, addtl_y):
-        # self.x += addtl_x
-        # self.y += addtl_y
-
         if self.image_index >= len(self.images):
             self.broken = 2
         if self.broken == 1:
             self.image = self.images[self.image_index]
             self.image_index += 1
 
-    @property
-    def rect(self):
-        _rect = self.image.get_rect()
-        _rect.x += self.x
-        _rect.y += self.y
-        return _rect
 
+class Cuckoo(LevelObject):
+    breakable = 1
+    broken = None
+    z = 1.5
+    width = 30
 
-    def get_rect(self):
-        pass
+    sheet_path = 'objects/clock_sheet.png'
+
+    def __init__(self, init_pos):
+        super().__init__()
+        self.x = init_pos[0]
+        self.y = init_pos[1]
+        self.images = self.load_sprite_sheet(self.sheet_path, 60, 90, 9)
+        self.image = self.images[0]
+        self.points = 800
+        self.image_index = 0
+
+    def update(self, addtl_x, addtl_y):
+        if self.image_index >= len(self.images):
+            self.broken = 2
+        if self.broken == 1:
+            self.image = self.images[self.image_index]
+            self.image_index += 1
+
 
 class Couch(LevelObject, collide_object):
     breakable = 0
     score = 10
     image_path = 'objects/couch.png'
+    width = 100
 
     def __init__(self, init_pos):
         self.image = self.load_sprite()
@@ -191,6 +169,7 @@ class Table(LevelObject, collide_object):
     breakable = 0
     score = 10
     image_path = 'objects/table.png'
+    width = 150
 
     def __init__(self, init_pos):
         self.image = self.load_sprite()

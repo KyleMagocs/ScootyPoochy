@@ -2,7 +2,7 @@ import os
 
 import pygame
 
-from objects.LevelObjects import Lamp, Table, Couch, Vase
+from objects.LevelObjects import Lamp, Table, Couch, Vase, Cuckoo
 from objects.Wall import Wall
 
 ASSETS_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'images', 'level_assets')
@@ -39,6 +39,7 @@ class Room_One(Room):
             Lamp((65, 170)),
             Lamp((535, 170)),
             Table((100, 200)),
+            Cuckoo((100, 150)),
             Vase((175, 270))
         )
         super().__init__(y_position)

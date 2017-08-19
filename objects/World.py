@@ -118,7 +118,7 @@ class World:
         col = pygame.sprite.groupcollide(self.player_group, self.level.objects, dokilla=False, dokillb=False)
         for p_sprite, obj_sprites in col.items():
             for obj in obj_sprites:
-                if obj.breakable and obj.get_wrecked():
+                if p_sprite.z >= obj.z and obj.breakable and obj.get_wrecked():
                     p_sprite.break_score += obj.points
 
     def handle_wall_collisions(self):
