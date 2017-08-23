@@ -10,8 +10,8 @@ class LevelObject(pygame.sprite.Sprite):
     broken = 0  # 1 = breaking, 2 = broken
     passable = 1 #
     image_path = None
-    height = 1
-    z = 1
+    height = 0
+    z = 0
 
     def __init__(self):
         super().__init__()
@@ -73,7 +73,7 @@ class Lamp(LevelObject):
     def __init__(self, init_pos):
         super().__init__()
 
-        self.images = self.load_sprite_sheet(self.sheet_path, 130, 100, 9)
+        self.images = self.load_sprite_sheet(self.sheet_path, 130, 100, 10)
         self.image = self.images[0]
         self.image_index = 0
         self.x = init_pos[0]
@@ -116,7 +116,7 @@ class Vase(LevelObject):
 class Cuckoo(LevelObject):
     breakable = 1
     broken = None
-    z = 1.5
+    z = .5
     width = 30
 
     sheet_path = 'objects/clock_sheet.png'
@@ -138,6 +138,32 @@ class Cuckoo(LevelObject):
             self.image_index += 1
 
 
+class HDTV(LevelObject):
+    breakable = 1
+    broken = None
+    z = .5
+    width = 100
+
+    sheet_path = 'objects/hdtv_sheet.png'
+
+    def __init__(self, init_pos):
+        super().__init__()
+        self.x = init_pos[0]
+        self.y = init_pos[1]
+        self.images = self.load_sprite_sheet(self.sheet_path, 100, 160, 11)
+        self.image = self.images[0]
+        self.points = 800
+        self.image_index = 0
+
+    def update(self, addtl_x, addtl_y):
+        if self.image_index >= len(self.images):
+            self.broken = 2
+        if self.broken == 1:
+            self.image = self.images[self.image_index]
+            self.image_index += 1
+
+
+
 class Couch(LevelObject, collide_object):
     breakable = 0
     score = 10
@@ -148,8 +174,8 @@ class Couch(LevelObject, collide_object):
         self.image = self.load_sprite()
         LevelObject().__init__()
         collide_object.__init__(self, self.image, init_pos[0], init_pos[1])
-        self.height = 1.2
-        self.z = 1.2
+        self.height = .2
+        self.z = .2
 
     def load_sprite(self):
         _image = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
@@ -175,8 +201,8 @@ class Table(LevelObject, collide_object):
         self.image = self.load_sprite()
         LevelObject().__init__()
         collide_object.__init__(self, self.image, init_pos[0], init_pos[1])
-        self.height = 1.2
-        self.z = 1.2
+        self.height = .2
+        self.z = .2
 
     def load_sprite(self):
         _image = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
@@ -190,4 +216,32 @@ class Table(LevelObject, collide_object):
         _rect = self.image.subsurface((0, 0, self.image.get_width(), self.image.get_height()-10)).get_rect()
         _rect.x += self.x
         _rect.y += self.y
+        return _rect
+
+
+class BookShelf(LevelObject, collide_object):
+    breakable = 0
+    score = 10
+    image_path = 'objects/bookshelf.png'
+    width = 106
+
+    def __init__(self, init_pos):
+        self.image = self.load_sprite()
+        LevelObject().__init__()
+        collide_object.__init__(self, self.image, init_pos[0], init_pos[1])
+        self.height = .4
+        self.z = .4
+
+    def load_sprite(self):
+        _image = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
+        _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+        return _image
+
+    def draw(self, screen, x_offset, y_offset):
+        collide_object.draw(self, screen, x_offset, y_offset)
+
+    def get_rect(self):
+        _rect = self.image.subsurface((0, 0, self.image.get_width(), self.image.get_height()-40)).get_rect()
+        _rect.x += self.x
+        _rect.y += self.y + 30
         return _rect

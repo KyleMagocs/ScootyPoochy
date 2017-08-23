@@ -93,6 +93,7 @@ class World:
             self.player_two.distance_travelled += math.sqrt(p2_vel[0] * p2_vel[0] + p2_vel[1] * p2_vel[1])
 
     def handle_player_collisions(self):
+        return
         # check player-player collisions
         collide = pygame.sprite.collide_circle(self.player_one, self.player_two)
 
@@ -123,7 +124,7 @@ class World:
 
     def handle_wall_collisions(self):
         collide_objects = [x.get_collide_walls() for x in self.level.walls] + [x for x in self.level.objects if
-                                                                               x.height > 1]
+                                                                               x.height > 0]
         walls = pygame.sprite.groupcollide(self.player_group, pygame.sprite.Group(collide_objects), dokilla=False,
                                            dokillb=False)
         for p_sprite, wall_sprites in walls.items():
@@ -144,7 +145,7 @@ class World:
             if _min_z is not None:
                 p_sprite.min_z = _min_z
             else:
-                p_sprite.min_z = 1
+                p_sprite.min_z = 0
 
     def draw(self, screen):
         self.draw_a_player(screen, self.player_one, self.player_two, 0)
@@ -185,11 +186,11 @@ class World:
             label = font.render('YOU!', 1, player.character.color)
             screen.blit(label, (x_offset + player.x + label.get_width()/2, (vars.SCREEN_HEIGHT - vars.PLAYER_START_Y + 75)))
 
-            # # IF YOU'RE LOOKING FOR A GOOD PLACE TO LOG SOME CRAP TO THE SCREEN, THIS WOULD BE A PRETTY GOOD SPOT # #
-            # font = pygame.font.SysFont('Impact', 14)
-            # label = font.render(str(self.player_character.z), 1, (0, 255, 255))
-            # screen.blit(label, (self.x_offset + self.width / 4 + 2, vars.SCREEN_HEIGHT / 2 - 10 + 2))
-            ############################################################################################################
+        # # IF YOU'RE LOOKING FOR A GOOD PLACE TO LOG SOME CRAP TO THE SCREEN, THIS WOULD BE A PRETTY GOOD SPOT # #
+        font = pygame.font.SysFont('Impact', 14)
+        label = font.render('Player z: ' + str(self.player_one.z), 1, (0, 255, 255))
+        screen.blit(label, (x_offset + self.width / 4 + 2, vars.SCREEN_HEIGHT / 2 - 10 + 2))
+        ############################################################################################################
 
     def start_timer(self):
         self.timer_enabled = 1

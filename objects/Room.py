@@ -2,7 +2,7 @@ import os
 
 import pygame
 
-from objects.LevelObjects import Lamp, Table, Couch, Vase, Cuckoo
+from objects.LevelObjects import Lamp, Table, Couch, Vase, Cuckoo, HDTV, BookShelf
 from objects.Wall import Wall
 
 ASSETS_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'images', 'level_assets')
@@ -51,7 +51,19 @@ class Room_Two(Room):
         self.objects = pygame.sprite.Group(
             Lamp((65, 170)),
             Lamp((515, 170)),
-            Couch((475, 280))
+            Couch((475, 280)),
+            HDTV((100, 130)),
+        )
+        super().__init__(y_position)
+
+class Room_Three(Room):
+    height = 400
+
+    def __init__(self, y_position):
+        self.objects = pygame.sprite.Group(
+            Lamp((65, 170)),
+            BookShelf((150, 165)),
+            Cuckoo((175, 150)),
         )
         super().__init__(y_position)
 
