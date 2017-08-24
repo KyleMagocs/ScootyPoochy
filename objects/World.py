@@ -40,7 +40,7 @@ class World:
 
     def update(self, p1_left, p1_right, p2_left, p2_right):
         if not vars.skip_countdown and len(self.countdown) > 0:
-            if self.countdown_timer < int(vars.fps) and len(self.countdown) > 0:
+            if self.countdown_timer < int(vars.fps*.75) and len(self.countdown) > 0:
                 self.countdown_timer += 1
             else:
                 if len(self.countdown) > 0:
@@ -140,7 +140,7 @@ class World:
                     p_sprite.x -= delta_x
                     p_sprite.y -= delta_y
 
-                    p_sprite.distance_travelled -= math.sqrt(delta_x * delta_x + delta_y * delta_y)
+                    # p_sprite.distance_travelled -= math.sqrt(delta_x * delta_x + delta_y * delta_y)
 
             if _min_z is not None:
                 p_sprite.min_z = _min_z
@@ -186,10 +186,11 @@ class World:
             label = font.render('YOU!', 1, player.character.color)
             screen.blit(label, (x_offset + player.x + label.get_width()/2, (vars.SCREEN_HEIGHT - vars.PLAYER_START_Y + 75)))
 
+        # TODO:  Should put a real debug in here
         # # IF YOU'RE LOOKING FOR A GOOD PLACE TO LOG SOME CRAP TO THE SCREEN, THIS WOULD BE A PRETTY GOOD SPOT # #
-        font = pygame.font.SysFont('Impact', 14)
-        label = font.render('Player z: ' + str(self.player_one.z), 1, (0, 255, 255))
-        screen.blit(label, (x_offset + self.width / 4 + 2, vars.SCREEN_HEIGHT / 2 - 10 + 2))
+        # font = pygame.font.SysFont('Impact', 14)
+        # label = font.render('Player z: ' + str(self.player_one.z), 1, (0, 255, 255))
+        # screen.blit(label, (x_offset + self.width / 4 + 2, vars.SCREEN_HEIGHT / 2 - 10 + 2))
         ############################################################################################################
 
     def start_timer(self):

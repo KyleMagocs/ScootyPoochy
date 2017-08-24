@@ -39,7 +39,7 @@ class Room_One(Room):
             Lamp((65, 170)),
             Lamp((535, 170)),
             Table((100, 200)),
-            Cuckoo((100, 150)),
+            Cuckoo((200, 150)),
             Vase((175, 270))
         )
         super().__init__(y_position)
@@ -63,7 +63,7 @@ class Room_Three(Room):
         self.objects = pygame.sprite.Group(
             Lamp((65, 170)),
             BookShelf((150, 165)),
-            Cuckoo((175, 150)),
+            Cuckoo((475, 150)),
         )
         super().__init__(y_position)
 
