@@ -81,38 +81,64 @@ class World:
     def handle_player_vel(self, p1_left, p1_right, p2_left, p2_right):
         p1_vel = get_velocity(p1_left, p1_right)
         p2_vel = get_velocity(p2_left, p2_right)
-        if self.player_one.jump_state == 0:
+        if self.player_one.jump_state == 0 and self.player_one.bounce_count == 0:
             self.player_one.x_speed = (self.player_one.x_speed - p1_vel[0]) / self.level.theme.friction
             self.player_one.y_speed = (self.player_one.y_speed - p1_vel[1]) / self.level.theme.friction
             # TODO:  this should be part of the player, not the world
             self.player_one.distance_travelled += math.sqrt(p1_vel[0] * p1_vel[0] + p1_vel[1] * p1_vel[1])
-        if self.player_two.jump_state == 0:
+        if self.player_two.jump_state == 0  and self.player_two.bounce_count == 0:
             self.player_two.x_speed = (self.player_two.x_speed - p2_vel[0]) / self.level.theme.friction
             self.player_two.y_speed = (self.player_two.y_speed - p2_vel[1]) / self.level.theme.friction
             # TODO:  this should be part of the player, not the world
-            self.player_two.distance_travelled += math.sqrt(p2_vel[0] * p2_vel[0] + p2_vel[1] * p2_vel[1])
+            self.player_two.distance_travelled += math.sqrt(p2_vel[0] ** 2 + p2_vel[1] ** 2)
 
     def handle_player_collisions(self):
-        return
-        # check player-player collisions
-        collide = pygame.sprite.collide_circle(self.player_one, self.player_two)
+        for player in self.player_group:
+            for player2 in self.player_group:
+                if player != player2:
+                    if math.sqrt(((player.x - player2.x) ** 2) + ((player.y - player2.y) ** 2)) <= (player.radius + player2.radius):
+                        self.bounce_player(player, player2)
 
-        if collide:
 
-            if self.player_one.x > self.player_two.x:
-                one_x = 1
+    def bounce_player(self, bouncee, bouncer):
+        C1Speed = math.sqrt((bouncee.x_speed ** 2) + (bouncee.y_speed ** 2))
+        XDiff = -(bouncee.x - bouncer.x)
+        YDiff = -(bouncee.y - bouncer.y)
+        if XDiff > 0:
+            if YDiff > 0:
+                Angle = math.degrees(math.atan(YDiff / XDiff))
+                XSpeed = -C1Speed * math.cos(math.radians(Angle))
+                YSpeed = -C1Speed * math.sin(math.radians(Angle))
+            elif YDiff < 0:
+                Angle = math.degrees(math.atan(YDiff / XDiff))
+                XSpeed = -C1Speed * math.cos(math.radians(Angle))
+                YSpeed = -C1Speed * math.sin(math.radians(Angle))
+        elif XDiff < 0:
+            if YDiff > 0:
+                Angle = 180 + math.degrees(math.atan(YDiff / XDiff))
+                XSpeed = -C1Speed * math.cos(math.radians(Angle))
+                YSpeed = -C1Speed * math.sin(math.radians(Angle))
+            elif YDiff < 0:
+                Angle = -180 + math.degrees(math.atan(YDiff / XDiff))
+                XSpeed = -C1Speed * math.cos(math.radians(Angle))
+                YSpeed = -C1Speed * math.sin(math.radians(Angle))
+        elif XDiff == 0:
+            if YDiff > 0:
+                Angle = -90
             else:
-                one_x = -1
-
-            if self.player_one.y > self.player_one.y:
-                one_y = 1
+                Angle = 90
+            XSpeed = C1Speed * math.cos(math.radians(Angle))
+            YSpeed = C1Speed * math.sin(math.radians(Angle))
+        elif YDiff == 0:
+            if XDiff < 0:
+                Angle = 0
             else:
-                one_y = -1
-
-            self.player_one.x_speed = 2 * one_x * -1
-            self.player_one.y_speed = 2 * one_y
-            self.player_two.x_speed = 2 * one_x
-            self.player_two.y_speed = 2 * one_y * -1
+                Angle = 180
+            XSpeed = C1Speed * math.cos(math.radians(Angle))
+            YSpeed = C1Speed * math.sin(math.radians(Angle))
+        bouncee.x_speed = XSpeed
+        bouncee.y_speed = YSpeed
+        bouncee.bounce_count = 5
 
     def handle_breakable_collisions(self):
         # check object collisions

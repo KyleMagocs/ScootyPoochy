@@ -26,6 +26,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.z_speed = 0
         self.min_z = 0
         self.old_rect = None
+        self.bounce_count = 0
 
         self.poops = pygame.sprite.Group()
         self.poop_score = 0
@@ -142,6 +143,8 @@ class PlayerCharacter(pygame.sprite.Sprite):
         if self.distance_travelled > self.character.poop_factor:
             self.distance_travelled = 0
             self.spawn_poop()
+
+        self.bounce_count = max(0, self.bounce_count-1)
 
     def update_z(self):
         self.z += self.z_speed
