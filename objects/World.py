@@ -40,6 +40,8 @@ class World:
 
     def update(self, p1_left, p1_right, p2_left, p2_right):
         if not vars.skip_countdown and len(self.countdown) > 0:
+            self.player_one.update_limbs((0,0), (0,0))
+            self.player_two.update_limbs((0,0), (0,0))
             if self.countdown_timer < int(vars.fps*.75) and len(self.countdown) > 0:
                 self.countdown_timer += 1
             else:
@@ -98,7 +100,6 @@ class World:
                 if player != player2:
                     if math.sqrt(((player.x - player2.x) ** 2) + ((player.y - player2.y) ** 2)) <= (player.radius + player2.radius):
                         self.bounce_player(player, player2)
-
 
     def bounce_player(self, bouncee, bouncer):
         C1Speed = math.sqrt((bouncee.x_speed ** 2) + (bouncee.y_speed ** 2))
@@ -200,10 +201,13 @@ class World:
         for poop in other_player.poops:
             poop.draw(screen, x_offset, y_offset)
 
+        for sprite in [x for x in self.level.walls if x.y + 32 < player.y]:
+            sprite.draw_part_two(screen, x_offset, y_offset)
+
         player.draw_as_player(screen, x_offset, player_y_offset)
         other_player.draw_normal(screen, x_offset, y_offset)
 
-        for sprite in [x for x in self.level.walls]:
+        for sprite in [x for x in self.level.walls if x.y+32>=player.y]:
             sprite.draw_part_two(screen, x_offset, y_offset)
 
         for sprite in [x for x in self.level.objects if x.broken == 1]:

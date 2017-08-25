@@ -51,13 +51,14 @@ class LevelObject(pygame.sprite.Sprite):
             screen.blit(text, (self.rect.x + x_offset, self.rect.y - self.points_delta + y_offset))
             self.points_delta += 5
 
-    def load_sprite_sheet(self, sheet_path, width, height, num):
+    def load_sprite_sheet(self, sheet_path, width, height, num, mirror=False):
         _images = []
         sheet = spritesheet(os.path.join(vars.IMAGES_PATH, sheet_path))
         for x in range(0, width * num, width):
-            _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
-            _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
-            _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
+            _image = sheet.image_at((x, 0, width, height), (255, 0, 255))
+            _image = pygame.transform.flip(_image, mirror, False)
+            for x in range(0, int(vars.fps/10)):
+                _images.append(_image)
         return _images
 
     def get_draw_rect(self):
@@ -94,15 +95,18 @@ class Lamp(LevelObject):
     image_path = 'objects/lamp.png'
     sheet_path = 'objects/lamp_sheet.png'
 
-    def __init__(self, init_pos):
+    def __init__(self, init_pos, mirror=False):
         super().__init__()
 
-        self.images = self.load_sprite_sheet(self.sheet_path, 130, 100, 10)
+        self.images = self.load_sprite_sheet(self.sheet_path, 130, 100, 10, mirror)
         self.image = self.images[0]
         self.image_index = 0
         self.x = init_pos[0]
         self.y = init_pos[1]
         self.points = 100
+        if mirror:
+            self.x -= self.image.get_width()
+            self.x_collide_offset = self.image.get_width()-self.width-4
 
     def update(self, addtl_x, addtl_y):
         if self.image_index >= len(self.images):
@@ -120,11 +124,11 @@ class Vase(LevelObject):
 
     sheet_path = 'objects/vase_sheet.png'
 
-    def __init__(self, init_pos):
+    def __init__(self, init_pos, mirror=False):
         super().__init__()
         self.x = init_pos[0]
         self.y = init_pos[1]
-        self.images = self.load_sprite_sheet(self.sheet_path, 32, 32, 8)
+        self.images = self.load_sprite_sheet(self.sheet_path, 32, 32, 8, mirror)
         self.image = self.images[0]
         self.points = 400
         self.image_index = 0
@@ -145,11 +149,11 @@ class Cuckoo(LevelObject):
 
     sheet_path = 'objects/clock_sheet.png'
 
-    def __init__(self, init_pos):
+    def __init__(self, init_pos, mirror=False):
         super().__init__()
         self.x = init_pos[0]
         self.y = init_pos[1]
-        self.images = self.load_sprite_sheet(self.sheet_path, 60, 90, 9)
+        self.images = self.load_sprite_sheet(self.sheet_path, 60, 90, 9, mirror)
         self.image = self.images[0]
         self.points = 800
         self.image_index = 0
@@ -170,11 +174,11 @@ class HDTV(LevelObject):
 
     sheet_path = 'objects/hdtv_sheet.png'
 
-    def __init__(self, init_pos):
+    def __init__(self, init_pos, mirror=False):
         super().__init__()
         self.x = init_pos[0]
         self.y = init_pos[1]
-        self.images = self.load_sprite_sheet(self.sheet_path, 100, 160, 11)
+        self.images = self.load_sprite_sheet(self.sheet_path, 100, 160, 11, mirror)
         self.image = self.images[0]
         self.points = 800
         self.image_index = 0
@@ -193,14 +197,14 @@ class Couch(LevelObject, collide_object):
     image_path = 'objects/couch.png'
     width = 100
 
-    def __init__(self, init_pos):
-        self.image = self.load_sprite()
+    def __init__(self, init_pos, mirror=False):
+        self.image = self.load_sprite(mirror)
         LevelObject().__init__()
         collide_object.__init__(self, self.image, init_pos[0], init_pos[1])
         self.height = .2
         self.z = .2
 
-    def load_sprite(self):
+    def load_sprite(self, mirror=False):
         _image = pygame.image.load_extended(
             os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
         _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
@@ -222,14 +226,14 @@ class Table(LevelObject, collide_object):
     image_path = 'objects/table.png'
     width = 150
 
-    def __init__(self, init_pos):
-        self.image = self.load_sprite()
+    def __init__(self, init_pos, mirror=False):
+        self.image = self.load_sprite(mirror)
         LevelObject().__init__()
         collide_object.__init__(self, self.image, init_pos[0], init_pos[1])
         self.height = .2
         self.z = .2
 
-    def load_sprite(self):
+    def load_sprite(self, mirror=False):
         _image = pygame.image.load_extended(
             os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
         _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
@@ -251,14 +255,14 @@ class BookShelf(LevelObject, collide_object):
     image_path = 'objects/bookshelf.png'
     width = 106
 
-    def __init__(self, init_pos):
-        self.image = self.load_sprite()
+    def __init__(self, init_pos, mirror=False):
+        self.image = self.load_sprite(mirror)
         LevelObject().__init__()
         collide_object.__init__(self, self.image, init_pos[0], init_pos[1])
         self.height = .4
         self.z = .4
 
-    def load_sprite(self):
+    def load_sprite(self, mirror=False):
         _image = pygame.image.load_extended(
             os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
         _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
@@ -281,14 +285,14 @@ class Shower(LevelObject, collide_object):
     width = 15
     x_collide_offset = 175
 
-    def __init__(self, init_pos):
-        self.image = self.load_sprite()
+    def __init__(self, init_pos, mirror=False):
+        self.image = self.load_sprite(mirror)
         LevelObject().__init__()
         collide_object.__init__(self, self.image, init_pos[0], init_pos[1])
         self.height = .4
         self.z = .4
 
-    def load_sprite(self):
+    def load_sprite(self, mirror=False):
         _image = pygame.image.load_extended(
             os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
         _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
