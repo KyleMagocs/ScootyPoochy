@@ -65,7 +65,7 @@ class Wall(pygame.sprite.Sprite):
 
 
 class left_wall(collide_object):
-    def get_rect(self):
+    def get_collide_rect(self):
         _rect = self.image.subsurface((0, 0, self.image.get_width()-47, self.image.get_height()/1.2)).get_rect()
         _rect.x += self.x
         _rect.y += self.y
@@ -73,7 +73,7 @@ class left_wall(collide_object):
 
 
 class right_wall(collide_object):
-    def get_rect(self):
+    def get_collide_rect(self):
         _new = self.image.subsurface((0, 0, self.image.get_width() - 42, self.image.get_height()/1.2))
         _reflip = pygame.transform.flip(_new, True, False)
         _rect = _reflip.get_rect()
@@ -104,5 +104,10 @@ class SideWall(collide_object):
             _rect.x += x_offset
             pygame.draw.rect(screen, (0, 255, 255), _rect, 1)
 
-    def get_rect(self):
+    def get_collide_rect(self):
         return pygame.Rect(self.x, 0, self.width, self.height)
+
+class BathroomWall(Wall):
+    side_image = 'objects/bathroom_wall_side.png'
+    top_image = 'objects/bathroom_wall_top.png'
+    bottom_image = 'objects/bathroom_wall_bottom.png'

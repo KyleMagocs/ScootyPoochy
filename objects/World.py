@@ -182,7 +182,7 @@ class World:
 
         if len(self.countdown) > 0:
             self.draw_countdown(screen, x_offset, player.character.color, self.countdown[0], self.countdown_timer * 3)
-            font = pygame.font.SysFont('Impact', 14)
+            font = pygame.font.SysFont('Impact', 18)
             label = font.render('YOU!', 1, player.character.color)
             screen.blit(label, (x_offset + player.x + label.get_width()/2, (vars.SCREEN_HEIGHT - vars.PLAYER_START_Y + 75)))
 

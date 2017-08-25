@@ -12,6 +12,9 @@ class LevelObject(pygame.sprite.Sprite):
     image_path = None
     height = 0
     z = 0
+    width = 15
+    x_collide_offset = 0
+    y_collide_offset = 0
 
     def __init__(self):
         super().__init__()
@@ -29,11 +32,11 @@ class LevelObject(pygame.sprite.Sprite):
             return True
 
     def draw(self, screen, x_offset, y_offset):
-        if self.rect.bottom + y_offset < 0 or self.rect.top + y_offset > vars.SCREEN_HEIGHT:
+        if self.get_draw_rect().bottom + y_offset < 0 or self.get_draw_rect().top + y_offset > vars.SCREEN_HEIGHT:
             return
-        screen.blit(self.image, (self.rect.x + x_offset, self.rect.y - self.image.get_height() + self.rect.height + y_offset))
+        screen.blit(self.image, (self.x + x_offset, self.y + y_offset))
         if vars.draw_rects:
-            _rect = self.rect
+            _rect = self.get_collide_rect()
             _rect.x += x_offset
             _rect.y += y_offset
             pygame.draw.rect(screen, (255, 255, 255), _rect, 1)
@@ -47,25 +50,41 @@ class LevelObject(pygame.sprite.Sprite):
     def load_sprite_sheet(self, sheet_path, width, height, num):
         _images = []
         sheet = spritesheet(os.path.join(vars.IMAGES_PATH, sheet_path))
-        for x in range(0,width*num,width):
+        for x in range(0, width*num, width):
             _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
             _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
             _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
         return _images
 
-    @property
-    def rect(self):
+    def get_draw_rect(self):
         _rect = self.image.get_rect()
         _rect.x += self.x
         _rect.y += self.y
-        _rect.width = self.width
         return _rect
+
+    def get_collide_rect(self):
+        _rect = self.image.get_rect()
+        _rect.width = self.width
+        _rect.x += self.x + self.x_collide_offset
+        _rect.y += self.y + self.y_collide_offset
+        return _rect
+
+    @property
+    def rect(self):
+        return self.get_collide_rect()
+    #
+    # def get_rect(self):
+    #     _rect = self.image.subsurface((0, 0, self.image.get_width(), self.image.get_height())).get_rect()
+    #     _rect.x += self.x
+    #     _rect.y += self.y
+    #     return _rect
 
 class Lamp(LevelObject):
     breakable = 1
     broken = None
 
-    width = 40
+    width = 30
+    x_collide_offset = 6
 
     image_path = 'objects/lamp.png'
     sheet_path = 'objects/lamp_sheet.png'
@@ -245,3 +264,26 @@ class BookShelf(LevelObject, collide_object):
         _rect.x += self.x
         _rect.y += self.y + 30
         return _rect
+
+
+class Shower(LevelObject, collide_object):
+    breakable = 0
+    score = 10
+    image_path = 'objects/shower.png'
+    width = 15
+    x_collide_offset = 175
+
+    def __init__(self, init_pos):
+        self.image = self.load_sprite()
+        LevelObject().__init__()
+        collide_object.__init__(self, self.image, init_pos[0], init_pos[1])
+        self.height = .4
+        self.z = .4
+
+    def load_sprite(self):
+        _image = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
+        _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+        return _image
+
+    def draw(self, screen, x_offset, y_offset):
+        collide_object.draw(self, screen, x_offset, y_offset)

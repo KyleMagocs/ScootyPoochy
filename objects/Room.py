@@ -2,8 +2,8 @@ import os
 
 import pygame
 
-from objects.LevelObjects import Lamp, Table, Couch, Vase, Cuckoo, HDTV, BookShelf
-from objects.Wall import Wall
+from objects.LevelObjects import Lamp, Table, Couch, Vase, Cuckoo, HDTV, BookShelf, Shower
+from objects.Wall import Wall, BathroomWall
 
 ASSETS_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'images', 'level_assets')
 
@@ -28,7 +28,7 @@ class Room:
             obj.y += y_position
 
     def load_wall(self, door_x):
-        self.top_wall = Wall(0, self.y_position + 100, door_x)
+        self.top_wall = Wall(0, self.y_position, door_x)
 
 
 class Room_One(Room):
@@ -36,11 +36,11 @@ class Room_One(Room):
 
     def __init__(self, y_position):
         self.objects = pygame.sprite.Group(
-            Lamp((65, 170)),
-            Lamp((535, 170)),
-            Table((100, 200)),
+            Lamp((65, 70)),
+            Lamp((535, 70)),
+            Table((100, 100)),
             Cuckoo((200, 150)),
-            Vase((175, 270))
+            Vase((175, 170))
         )
         super().__init__(y_position)
 
@@ -49,10 +49,10 @@ class Room_Two(Room):
 
     def __init__(self, y_position):
         self.objects = pygame.sprite.Group(
-            Lamp((65, 170)),
-            Lamp((515, 170)),
-            Couch((475, 280)),
-            HDTV((100, 130)),
+            Lamp((65, 70)),
+            Lamp((515, 70)),
+            Couch((475, 180)),
+            HDTV((100, 30)),
         )
         super().__init__(y_position)
 
@@ -61,12 +61,22 @@ class Room_Three(Room):
 
     def __init__(self, y_position):
         self.objects = pygame.sprite.Group(
-            Lamp((65, 170)),
-            BookShelf((150, 165)),
-            Cuckoo((475, 150)),
+            Lamp((65, 70)),
+            BookShelf((150, 65)),
+            Cuckoo((475, 50)),
         )
         super().__init__(y_position)
 
+class Bathroom(Room):
+    height = 350
+
+    floor_image = os.path.join(ASSETS_PATH, 'bathroom_bg.png')
+    objects = pygame.sprite.Group(
+        Shower((0, 32)),
+    )
+
+    def load_wall(self, door_x):
+        self.top_wall = BathroomWall(0, self.y_position, door_x)
 
 class Room_Start(Room):
     objects = pygame.sprite.Group()
