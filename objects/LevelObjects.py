@@ -31,7 +31,7 @@ class LevelObject(pygame.sprite.Sprite):
             # TODO: PLAY BROKEN NOISE
             return True
 
-    def draw(self, screen, x_offset, y_offset):
+    def draw(self, screen, x_offset, y_offset, draw_points=False):
         if self.get_draw_rect().bottom + y_offset < 0 or self.get_draw_rect().top + y_offset > vars.SCREEN_HEIGHT:
             return
         screen.blit(self.image, (self.x + x_offset, self.y + y_offset))
@@ -41,7 +41,7 @@ class LevelObject(pygame.sprite.Sprite):
             _rect.y += y_offset
             pygame.draw.rect(screen, (255, 255, 255), _rect, 1)
 
-        if 0 < self.points_delta < 100:
+        if draw_points and 0 < self.points_delta < 100:
             font = pygame.font.SysFont('Impact', 16)
             label = font.render(str(self.points), 1, (255, 255, 255))
             screen.blit(label, (self.rect.x + x_offset, self.rect.y - self.points_delta + y_offset))
@@ -202,7 +202,7 @@ class Couch(LevelObject, collide_object):
         _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
         return _image
 
-    def draw(self, screen, x_offset, y_offset):
+    def draw(self, screen, x_offset, y_offset, draw_points=False):
         collide_object.draw(self, screen, x_offset, y_offset)
 
     def get_rect(self):
@@ -231,7 +231,7 @@ class Table(LevelObject, collide_object):
         _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
         return _image
 
-    def draw(self, screen, x_offset, y_offset):
+    def draw(self, screen, x_offset, y_offset, draw_points=False):
         collide_object.draw(self, screen, x_offset, y_offset)
 
     def get_rect(self):
@@ -260,7 +260,7 @@ class BookShelf(LevelObject, collide_object):
         _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
         return _image
 
-    def draw(self, screen, x_offset, y_offset):
+    def draw(self, screen, x_offset, y_offset, draw_points=False):
         collide_object.draw(self, screen, x_offset, y_offset)
 
     def get_rect(self):
@@ -290,5 +290,5 @@ class Shower(LevelObject, collide_object):
         _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
         return _image
 
-    def draw(self, screen, x_offset, y_offset):
+    def draw(self, screen, x_offset, y_offset, draw_points=False):
         collide_object.draw(self, screen, x_offset, y_offset)

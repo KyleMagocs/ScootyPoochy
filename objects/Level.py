@@ -14,6 +14,7 @@ class Level:
     def __init__(self):
         self.theme = None
         self.objects = pygame.sprite.Group()
+        self.broken_objects = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
         self.y = 0
         self.x = 0

@@ -39,6 +39,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.cur_sprite = None
 
         self.break_score = 0
+        self.broken_objects = pygame.sprite.Group()
 
         self.larm_images = None
         self.left_index = 0

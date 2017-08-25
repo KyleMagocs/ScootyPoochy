@@ -14,7 +14,7 @@ class collide_object(pygame.sprite.Sprite):
         self.y = y
         self.old_rect = self.get_collide_rect()
 
-    def draw(self, screen, x_offset, y_offset):
+    def draw(self, screen, x_offset, y_offset, draw_points=False):
         self.old_rect = self.get_collide_rect()
         screen.blit(self.image, (self.x + x_offset, self.y + y_offset))
         if vars.draw_rects:
