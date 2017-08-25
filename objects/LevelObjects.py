@@ -8,7 +8,7 @@ from utils.spritesheet import spritesheet
 class LevelObject(pygame.sprite.Sprite):
     breakable = 0  # 1 for breakable objects
     broken = 0  # 1 = breaking, 2 = broken
-    passable = 1 #
+    passable = 1  #
     image_path = None
     height = 0
     z = 0
@@ -50,7 +50,7 @@ class LevelObject(pygame.sprite.Sprite):
     def load_sprite_sheet(self, sheet_path, width, height, num):
         _images = []
         sheet = spritesheet(os.path.join(vars.IMAGES_PATH, sheet_path))
-        for x in range(0, width*num, width):
+        for x in range(0, width * num, width):
             _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
             _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
             _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
@@ -72,12 +72,13 @@ class LevelObject(pygame.sprite.Sprite):
     @property
     def rect(self):
         return self.get_collide_rect()
-    #
-    # def get_rect(self):
-    #     _rect = self.image.subsurface((0, 0, self.image.get_width(), self.image.get_height())).get_rect()
-    #     _rect.x += self.x
-    #     _rect.y += self.y
-    #     return _rect
+        #
+        # def get_rect(self):
+        #     _rect = self.image.subsurface((0, 0, self.image.get_width(), self.image.get_height())).get_rect()
+        #     _rect.x += self.x
+        #     _rect.y += self.y
+        #     return _rect
+
 
 class Lamp(LevelObject):
     breakable = 1
@@ -182,7 +183,6 @@ class HDTV(LevelObject):
             self.image_index += 1
 
 
-
 class Couch(LevelObject, collide_object):
     breakable = 0
     score = 10
@@ -197,7 +197,8 @@ class Couch(LevelObject, collide_object):
         self.z = .2
 
     def load_sprite(self):
-        _image = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
+        _image = pygame.image.load_extended(
+            os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
         _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
         return _image
 
@@ -205,10 +206,11 @@ class Couch(LevelObject, collide_object):
         collide_object.draw(self, screen, x_offset, y_offset)
 
     def get_rect(self):
-        _rect = self.image.subsurface((0, 0, self.image.get_width(), self.image.get_height()-10)).get_rect()
+        _rect = self.image.subsurface((0, 0, self.image.get_width(), self.image.get_height() - 10)).get_rect()
         _rect.x += self.x
         _rect.y += self.y
         return _rect
+
 
 class Table(LevelObject, collide_object):
     breakable = 0
@@ -224,7 +226,8 @@ class Table(LevelObject, collide_object):
         self.z = .2
 
     def load_sprite(self):
-        _image = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
+        _image = pygame.image.load_extended(
+            os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
         _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
         return _image
 
@@ -232,7 +235,7 @@ class Table(LevelObject, collide_object):
         collide_object.draw(self, screen, x_offset, y_offset)
 
     def get_rect(self):
-        _rect = self.image.subsurface((0, 0, self.image.get_width(), self.image.get_height()-10)).get_rect()
+        _rect = self.image.subsurface((0, 0, self.image.get_width(), self.image.get_height() - 10)).get_rect()
         _rect.x += self.x
         _rect.y += self.y
         return _rect
@@ -252,7 +255,8 @@ class BookShelf(LevelObject, collide_object):
         self.z = .4
 
     def load_sprite(self):
-        _image = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
+        _image = pygame.image.load_extended(
+            os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
         _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
         return _image
 
@@ -260,7 +264,7 @@ class BookShelf(LevelObject, collide_object):
         collide_object.draw(self, screen, x_offset, y_offset)
 
     def get_rect(self):
-        _rect = self.image.subsurface((0, 0, self.image.get_width(), self.image.get_height()-40)).get_rect()
+        _rect = self.image.subsurface((0, 0, self.image.get_width(), self.image.get_height() - 40)).get_rect()
         _rect.x += self.x
         _rect.y += self.y + 30
         return _rect
@@ -281,7 +285,8 @@ class Shower(LevelObject, collide_object):
         self.z = .4
 
     def load_sprite(self):
-        _image = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
+        _image = pygame.image.load_extended(
+            os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
         _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
         return _image
 

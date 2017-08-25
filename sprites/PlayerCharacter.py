@@ -156,13 +156,13 @@ class PlayerCharacter(pygame.sprite.Sprite):
 
     def draw_as_player(self, screen, x_offset, y_offset):
         self.cur_sprite = self.generate_new_sprite()
-        self.cur_sprite = pygame.transform.scale(self.cur_sprite, (int(self.character.width*(self.z/1.4 + 1)), int(self.character.height*(self.z/1.4 + 1))))
-        _scale_dif = (self.z/1.4 + 1) * self.character.width - self.character.width
+        self.cur_sprite = pygame.transform.scale(self.cur_sprite, (int(self.character.width*(self.z/1.8 + 1)), int(self.character.height*(self.z/1.8 + 1))))
+        _scale_dif = (self.z/1.8 + 1) * self.character.width - self.character.width
         _image = rot_center(self.cur_sprite, self.angle)
         _rect = _image.get_rect()
         _rect.x = self.x
         _rect.y = self.y
-        screen.blit(_image, (_rect.x + x_offset - _scale_dif/2, SCREEN_HEIGHT - PLAYER_START_Y + y_offset + 10 - self.z * 100))
+        screen.blit(_image, (_rect.x + x_offset - _scale_dif/2, SCREEN_HEIGHT - PLAYER_START_Y + y_offset + 10 - self.z * 150))
         if show_velocity:
             pygame.draw.line(screen, colors.debug_velocity_line, [self.x + self.character.width / 2, self.y + self.character.height / 2],
                              [self.x + (self.x_speed*15) + self.character.width / 2,
@@ -175,13 +175,13 @@ class PlayerCharacter(pygame.sprite.Sprite):
 
     def draw_normal(self, screen, x_offset, y_offset):
         self.cur_sprite = self.generate_new_sprite()
-        self.cur_sprite = pygame.transform.scale(self.cur_sprite, (int(self.character.width*(self.z/1.4 + 1)), int(self.character.height*(self.z/1.4 + 1))))
-        _scale_dif = (self.z/1.4+1) * self.character.width - self.character.width
+        self.cur_sprite = pygame.transform.scale(self.cur_sprite, (int(self.character.width*(self.z/1.8 + 1)), int(self.character.height*(self.z/1.8 + 1))))
+        _scale_dif = (self.z/1.8+1) * self.character.width - self.character.width
         _image = rot_center(self.cur_sprite, self.angle)
         _rect = _image.get_rect()
         _rect.x = self.x
         _rect.y = self.y
-        screen.blit(_image, (_rect.x + x_offset - _scale_dif/2, _rect.y + y_offset + 10 - self.z * 100))
+        screen.blit(_image, (_rect.x + x_offset - _scale_dif/2, _rect.y + y_offset + 10 - self.z * 150))
         if show_velocity:
             pygame.draw.line(screen, colors.debug_velocity_line, [self.x + self.character.width / 2, self.y + self.character.height / 2],
                              [self.x + (self.x_speed*15) + self.character.width / 2,
