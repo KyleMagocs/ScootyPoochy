@@ -136,8 +136,8 @@ class World:
                 Angle = 180
             XSpeed = C1Speed * math.cos(math.radians(Angle))
             YSpeed = C1Speed * math.sin(math.radians(Angle))
-        bouncee.x_speed = XSpeed
-        bouncee.y_speed = YSpeed
+        bouncee.x_speed = XSpeed*0.8
+        bouncee.y_speed = YSpeed*0.8
         bouncee.bounce_count = 5
 
     def handle_breakable_collisions(self):
