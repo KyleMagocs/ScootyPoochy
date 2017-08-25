@@ -45,6 +45,8 @@ class PoopTrail(pygame.sprite.Sprite):
         self.rect.y = self.y
 
     def draw(self, screen, x_offset, y_offset):
+        if self.rect.bottom + y_offset < 0 or self.rect.top + y_offset > vars.SCREEN_HEIGHT:
+            return
         screen.blit(self.image, (self.rect.x + x_offset, self.rect.y + y_offset))
 
 

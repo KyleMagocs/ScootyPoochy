@@ -90,7 +90,7 @@ class World:
             self.player_one.y_speed = (self.player_one.y_speed - p1_vel[1]) / self.level.theme.friction
             # TODO:  this should be part of the player, not the world
             self.player_one.distance_travelled += math.sqrt(p1_vel[0] * p1_vel[0] + p1_vel[1] * p1_vel[1])
-        if self.player_two.jump_state == 0  and self.player_two.bounce_count == 0:
+        if self.player_two.jump_state == 0 and self.player_two.bounce_count == 0:
             self.player_two.x_speed = (self.player_two.x_speed - p2_vel[0]) / self.level.theme.friction
             self.player_two.y_speed = (self.player_two.y_speed - p2_vel[1]) / self.level.theme.friction
             # TODO:  this should be part of the player, not the world
@@ -192,12 +192,12 @@ class World:
             player_y_offset = player.y - (vars.SCREEN_HEIGHT - vars.PLAYER_START_Y)
         self.level.draw(screen, x_offset, y_offset)
 
-        for sprite in [x for x in self.level.walls]:
+        for sprite in self.level.walls:
             sprite.draw_part_one(screen, x_offset, y_offset)
-        for sprite in [x for x in self.level.objects]:
+        for sprite in self.level.objects:
             sprite.draw(screen, x_offset, y_offset)
-        for sprite in [x for x in self.level.broken_objects]:
-            sprite.draw(screen, x_offset, y_offset, draw_points=(sprite in player.broken_objects))
+        for sprite in self.level.broken_objects:
+            sprite.draw(screen, x_offset, y_offset)
         for poop in player.poops:
             poop.draw(screen, x_offset, y_offset)
 
@@ -213,7 +213,7 @@ class World:
         for sprite in [x for x in self.level.walls if x.y+32>=player.y]:
             sprite.draw_part_two(screen, x_offset, y_offset)
 
-        for sprite in [x for x in self.level.objects if x.broken == 1]:
+        for sprite in self.level.broken_objects:
             sprite.draw_score(screen, x_offset, y_offset, draw_points=(sprite in player.broken_objects))
 
         if player.y < 50:

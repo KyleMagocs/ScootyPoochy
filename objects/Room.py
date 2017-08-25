@@ -39,7 +39,7 @@ class Room_One(Room):
             Lamp((65, 70)),
             Lamp((535, 70)),
             Table((100, 100)),
-            Cuckoo((200, 150)),
+            Cuckoo((200, 50)),
             Vase((175, 170))
         )
         super().__init__(y_position)

@@ -4,7 +4,6 @@ import os
 import copy
 import pygame
 
-
 from objects.Characters import PoopTrail, Nort
 from utils.sprite_utils import rot_center
 from utils.spritesheet import spritesheet
@@ -110,11 +109,11 @@ class PlayerCharacter(pygame.sprite.Sprite):
     def generate_new_sprite(self):
         _im = pygame.Surface((self.character.width, self.character.height), pygame.SRCALPHA)
         try:
-            _im.blit(self.larm_images[self.left_index], (0,0))
-            _im.blit(self.rarm_images[self.right_index], (0,0))
-            _im.blit(self.tail_images[self.tail_index], (0,0))
-            _im.blit(self.body_images[self.body_index], (0,0))
-            _im.blit(self.head_images[self.head_index], (0,0))
+            _im.blit(self.larm_images[self.left_index], (0, 0))
+            _im.blit(self.rarm_images[self.right_index], (0, 0))
+            _im.blit(self.tail_images[self.tail_index], (0, 0))
+            _im.blit(self.body_images[self.body_index], (0, 0))
+            _im.blit(self.head_images[self.head_index], (0, 0))
         except:
             _im = self.orig_sprite
         return _im
@@ -122,7 +121,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
     def load_sprite_sheet(self, sheet_path, width, height, num, copies=3):
         _images = []
         sheet = spritesheet(os.path.join(IMAGES_PATH, 'characters', sheet_path))
-        for x in range(0,width*num,width):
+        for x in range(0, width * num, width):
             for i in range(0, copies):
                 _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
         return _images
@@ -132,8 +131,8 @@ class PlayerCharacter(pygame.sprite.Sprite):
         if self.timer_activated:
             self.timer += 1
 
-        if self.y_speed != 0 and self.bounce_count==0:
-            self.angle = math.atan(self.x_speed/self.y_speed) / 0.0174533
+        if self.y_speed != 0 and self.bounce_count == 0:
+            self.angle = math.atan(self.x_speed / self.y_speed) / 0.0174533
 
         self.x += self.x_speed
         self.y += self.y_speed
@@ -144,7 +143,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
             self.distance_travelled = 0
             self.spawn_poop()
 
-        self.bounce_count = max(0, self.bounce_count-1)
+        self.bounce_count = max(0, self.bounce_count - 1)
 
     def update_z(self):
         self.z += self.z_speed
@@ -160,45 +159,45 @@ class PlayerCharacter(pygame.sprite.Sprite):
 
     def draw_as_player(self, screen, x_offset, y_offset):
         self.cur_sprite = self.generate_new_sprite()
-        self.cur_sprite = pygame.transform.scale(self.cur_sprite, (int(self.character.width*(self.z/1.8 + 1)), int(self.character.height*(self.z/1.8 + 1))))
-        _scale_dif = (self.z/1.8 + 1) * self.character.width - self.character.width
+        self.cur_sprite = pygame.transform.scale(self.cur_sprite, (int(self.character.width * (self.z / 1.8 + 1)), int(self.character.height * (self.z / 1.8 + 1))))
+        _scale_dif = (self.z / 1.8 + 1) * self.character.width - self.character.width
         _image = rot_center(self.cur_sprite, self.angle)
         _rect = _image.get_rect()
         _rect.x = self.x
         _rect.y = self.y
-        screen.blit(_image, (_rect.x + x_offset - _scale_dif/2, SCREEN_HEIGHT - PLAYER_START_Y + y_offset + 10 - self.z * 150))
+        screen.blit(_image, (_rect.x + x_offset - _scale_dif / 2, SCREEN_HEIGHT - PLAYER_START_Y + y_offset + 10 - self.z * 150))
         if show_velocity:
             pygame.draw.line(screen, colors.debug_velocity_line, [self.x + self.character.width / 2, self.y + self.character.height / 2],
-                             [self.x + (self.x_speed*15) + self.character.width / 2,
-                              50 - (self.y_speed*15) + self.character.height / 2], 3)
+                             [self.x + (self.x_speed * 15) + self.character.width / 2,
+                              50 - (self.y_speed * 15) + self.character.height / 2], 3)
         if draw_rects:
             _rect = self.rect
             _rect.x += x_offset
             _rect.y = y_offset + (SCREEN_HEIGHT - PLAYER_START_Y + 10)
-            pygame.draw.rect(screen, self.character.color, _rect, 1)   #
+            pygame.draw.rect(screen, self.character.color, _rect, 1)  #
 
     def draw_normal(self, screen, x_offset, y_offset):
         self.cur_sprite = self.generate_new_sprite()
-        self.cur_sprite = pygame.transform.scale(self.cur_sprite, (int(self.character.width*(self.z/1.8 + 1)), int(self.character.height*(self.z/1.8 + 1))))
-        _scale_dif = (self.z/1.8+1) * self.character.width - self.character.width
+        self.cur_sprite = pygame.transform.scale(self.cur_sprite, (int(self.character.width * (self.z / 1.8 + 1)), int(self.character.height * (self.z / 1.8 + 1))))
+        _scale_dif = (self.z / 1.8 + 1) * self.character.width - self.character.width
         _image = rot_center(self.cur_sprite, self.angle)
         _rect = _image.get_rect()
         _rect.x = self.x
         _rect.y = self.y
-        screen.blit(_image, (_rect.x + x_offset - _scale_dif/2, _rect.y + y_offset + 10 - self.z * 150))
+        screen.blit(_image, (_rect.x + x_offset - _scale_dif / 2, _rect.y + y_offset + 10 - self.z * 150))
         if show_velocity:
             pygame.draw.line(screen, colors.debug_velocity_line, [self.x + self.character.width / 2, self.y + self.character.height / 2],
-                             [self.x + (self.x_speed*15) + self.character.width / 2,
-                              50 - (self.y_speed*15) + self.character.height / 2], 3)
+                             [self.x + (self.x_speed * 15) + self.character.width / 2,
+                              50 - (self.y_speed * 15) + self.character.height / 2], 3)
         if draw_rects:
             _rect = self.rect
             _rect.x += x_offset
             _rect.y = _rect.y + y_offset
-            pygame.draw.rect(screen, (255, 0, 0), _rect, 1)   #
+            pygame.draw.rect(screen, (255, 0, 0), _rect, 1)  #
 
     @property
     def rect(self):
-        _rect = pygame.Rect(self.x+self.character.width/6, self.y+self.character.height/6, self.character.width/8*6,self.character.width/8*6)
+        _rect = pygame.Rect(self.x + self.character.width / 6, self.y + self.character.height / 6, self.character.width / 8 * 6, self.character.width / 8 * 6)
 
         return _rect
 
