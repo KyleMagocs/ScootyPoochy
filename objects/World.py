@@ -68,6 +68,8 @@ class World:
 
         for obj in self.level.objects:
             obj.update(0, 0)
+        for obj in self.level.broken_objects:
+            obj.update(0, 0)
 
         for player in self.player_group:
             player.update_z()
@@ -110,7 +112,7 @@ class World:
                 Angle = math.degrees(math.atan(YDiff / XDiff))
                 XSpeed = -C1Speed * math.cos(math.radians(Angle))
                 YSpeed = -C1Speed * math.sin(math.radians(Angle))
-            elif YDiff < 0:
+            elif YDiff <= 0:
                 Angle = math.degrees(math.atan(YDiff / XDiff))
                 XSpeed = -C1Speed * math.cos(math.radians(Angle))
                 YSpeed = -C1Speed * math.sin(math.radians(Angle))
@@ -119,7 +121,7 @@ class World:
                 Angle = 180 + math.degrees(math.atan(YDiff / XDiff))
                 XSpeed = -C1Speed * math.cos(math.radians(Angle))
                 YSpeed = -C1Speed * math.sin(math.radians(Angle))
-            elif YDiff < 0:
+            elif YDiff <= 0:
                 Angle = -180 + math.degrees(math.atan(YDiff / XDiff))
                 XSpeed = -C1Speed * math.cos(math.radians(Angle))
                 YSpeed = -C1Speed * math.sin(math.radians(Angle))
@@ -150,7 +152,7 @@ class World:
                     p_sprite.break_score += obj.points
                     p_sprite.broken_objects.add(obj)
                     self.level.objects.remove(obj)
-                    self.level.objects.add(obj)  # things are drawn in order, so by putting it at the end, it'll draw on top of objects that haven't been broken yet
+                    self.level.broken_objects.add(obj)
 
     def handle_wall_collisions(self):
         collide_objects = [x.get_collide_walls() for x in self.level.walls] + [x for x in self.level.objects if
@@ -193,8 +195,9 @@ class World:
         for sprite in [x for x in self.level.walls]:
             sprite.draw_part_one(screen, x_offset, y_offset)
         for sprite in [x for x in self.level.objects]:
+            sprite.draw(screen, x_offset, y_offset)
+        for sprite in [x for x in self.level.broken_objects]:
             sprite.draw(screen, x_offset, y_offset, draw_points=(sprite in player.broken_objects))
-
         for poop in player.poops:
             poop.draw(screen, x_offset, y_offset)
 
