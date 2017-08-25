@@ -180,6 +180,9 @@ class World:
         for sprite in [x for x in self.level.walls]:
             sprite.draw_part_two(screen, x_offset, y_offset)
 
+        for sprite in [x for x in self.level.objects if x.broken == 1]:
+            sprite.draw_score(screen, x_offset, y_offset, draw_points=(sprite in player.broken_objects))
+
         if player.y < 50:
             self.draw_win_text(screen, x_offset, player.character.color)
 

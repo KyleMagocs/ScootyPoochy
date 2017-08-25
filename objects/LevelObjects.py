@@ -1,7 +1,10 @@
 import os
 import pygame
+
+import colors
 import vars
 from objects.CollideObject import collide_object
+from utils.hollow import textHollow, textOutline
 from utils.spritesheet import spritesheet
 
 
@@ -41,10 +44,11 @@ class LevelObject(pygame.sprite.Sprite):
             _rect.y += y_offset
             pygame.draw.rect(screen, (255, 255, 255), _rect, 1)
 
+    def draw_score(self, screen, x_offset, y_offset, draw_points=False):
         if draw_points and 0 < self.points_delta < 100:
             font = pygame.font.SysFont('Impact', 16)
-            label = font.render(str(self.points), 1, (255, 255, 255))
-            screen.blit(label, (self.rect.x + x_offset, self.rect.y - self.points_delta + y_offset))
+            text = textOutline(font, str(self.points), colors.white, colors.black)
+            screen.blit(text, (self.rect.x + x_offset, self.rect.y - self.points_delta + y_offset))
             self.points_delta += 5
 
     def load_sprite_sheet(self, sheet_path, width, height, num):
