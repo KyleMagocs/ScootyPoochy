@@ -259,8 +259,8 @@ class BookShelf(LevelObject, collide_object):
         self.image = self.load_sprite(mirror)
         LevelObject().__init__()
         collide_object.__init__(self, self.image, init_pos[0], init_pos[1])
-        self.height = .8
-        self.z = .8
+        self.height = .6
+        self.z = .6
 
     def load_sprite(self, mirror=False):
         _image = pygame.image.load_extended(

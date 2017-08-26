@@ -143,10 +143,6 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.rect.y = self.y
         self.visible_y = self.y - (self.z * 150)
 
-        if self.distance_travelled > self.character.poop_factor:
-            self.distance_travelled = 0
-            self.spawn_poop()
-
         self.bounce_count = max(0, self.bounce_count - 1)
 
     def update_z(self):
@@ -160,6 +156,13 @@ class PlayerCharacter(pygame.sprite.Sprite):
             self.z = self.min_z
             self.z_speed = 0
             self.jump_state = 0
+
+    def spawn_poop_or_dont(self):
+        if self.distance_travelled > self.character.poop_factor:
+            self.distance_travelled = 0
+            return self.spawn_poop()
+        else:
+            return None
 
     def draw_as_player(self, screen, x_offset, y_offset):
         self.cur_sprite = self.generate_new_sprite()
@@ -210,7 +213,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
             angle = angle_between_points(self.last_poop_x, self.last_poop_y, self.x, self.visible_y) # TODO:  THIS IS WORKING REALLY POORLY
         else:
             angle = self.angle
-        self.poops.add(self.character.get_a_poop(self.x, self.visible_y+self.character.width/2, self.z, angle))
         self.last_poop_x = self.x
         self.last_poop_y = self.visible_y
         self.poop_score += self.character.poop_factor
+        return self.character.get_a_poop(self.x, self.visible_y+self.character.width/2, self.z, angle)

@@ -29,6 +29,10 @@ class World:
 
         self.level = level
 
+        self.poop_surface = pygame.Surface((level.width, level.height))
+        self.poop_surface.fill((255,0,255))
+        self.poop_surface.set_colorkey((255,0,255))
+
         self.countdown_timer = 0
         self.timer_enabled = 0
         self.timer = 0
@@ -73,6 +77,14 @@ class World:
 
         for player in self.player_group:
             player.update_z()
+
+        new_poop = self.player_one.spawn_poop_or_dont()
+        if new_poop is not None:
+            self.poop_surface.blit(new_poop.image, (new_poop.x, new_poop.y))
+
+        new_poop = self.player_two.spawn_poop_or_dont()
+        if new_poop is not None:
+            self.poop_surface.blit(new_poop.image, (new_poop.x, new_poop.y))
 
         return self.game_finished()
 
@@ -198,11 +210,8 @@ class World:
             sprite.draw(screen, x_offset, y_offset)
         for sprite in self.level.broken_objects:
             sprite.draw(screen, x_offset, y_offset)
-        for poop in player.poops:
-            poop.draw(screen, x_offset, y_offset)
 
-        for poop in other_player.poops:
-            poop.draw(screen, x_offset, y_offset)
+        screen.blit(self.poop_surface, (x_offset, y_offset))
 
         # TODO:  This is dumb and gross
         if player.z < other_player.z:
