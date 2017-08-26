@@ -33,7 +33,7 @@ class GameContext:
             player = Player(i, i)
             self.players.append(player)
 
-        self.world = World(width=(SCREEN_WIDTH / self.num_players), y_offset=SCREEN_HEIGHT+10, level=levels[0])
+        self.world = World(width=600, y_offset=SCREEN_HEIGHT+10, level=levels[0])
 
         self.world.player_one.y = levels[0].height - PLAYER_START_Y
         self.world.player_one.set_character(character_list[0])
@@ -49,10 +49,10 @@ class GameContext:
         self.gameOverCount = 0
 
     def draw_hud(self, screen):
-        pygame.draw.line(screen, (0, 0, 0), (SCREEN_WIDTH/2, 100), (SCREEN_WIDTH/2, SCREEN_HEIGHT-100), 5)
-        pygame.draw.line(screen, (0, 0, 0), (SCREEN_WIDTH / 2 - 50, 100), (SCREEN_WIDTH / 2 + 50, 100), 5)
-        pygame.draw.line(screen, (0, 0, 0), (SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT-100), (SCREEN_WIDTH / 2 + 50, SCREEN_HEIGHT-100), 5)
-        pygame.draw.line(screen, (0, 0, 0), (SCREEN_WIDTH / 2 - 25, SCREEN_HEIGHT/2), (SCREEN_WIDTH / 2 + 25, SCREEN_HEIGHT/2), 5)
+        pygame.draw.line(screen, colors.white, (SCREEN_WIDTH/2, 100), (SCREEN_WIDTH/2, SCREEN_HEIGHT-100), 4)
+        pygame.draw.line(screen, colors.white, (SCREEN_WIDTH / 2 - 50, 100), (SCREEN_WIDTH / 2 + 50, 100), 4)
+        pygame.draw.line(screen, colors.white, (SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT-100), (SCREEN_WIDTH / 2 + 50, SCREEN_HEIGHT-100), 4)
+        pygame.draw.line(screen, colors.white, (SCREEN_WIDTH / 2 - 25, SCREEN_HEIGHT/2), (SCREEN_WIDTH / 2 + 25, SCREEN_HEIGHT/2), 4)
         # draw p1
         # draw p2
         _prog = self.world.get_progress()
@@ -76,9 +76,9 @@ class GameContext:
     def run_game(self):
         clock = pygame.time.Clock()
         while True:
-            clock.tick(fps)
+            real_fps = clock.tick(fps)
 
-            self.screen.fill((255, 255, 255))
+            self.screen.fill(colors.black)
 
             p1_left, p1_right = self.players[0].read_input()
             p2_left, p2_right = self.players[1].read_input()

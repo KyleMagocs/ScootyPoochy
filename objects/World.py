@@ -181,7 +181,7 @@ class World:
 
     def draw(self, screen):
         self.draw_a_player(screen, self.player_one, self.player_two, 0)
-        self.draw_a_player(screen, self.player_two, self.player_one, vars.SCREEN_WIDTH / 2)
+        self.draw_a_player(screen, self.player_two, self.player_one, vars.SCREEN_WIDTH - self.width)
 
     def draw_a_player(self, screen, player, other_player, x_offset):
         if player.y > vars.SCREEN_HEIGHT - vars.PLAYER_START_Y:

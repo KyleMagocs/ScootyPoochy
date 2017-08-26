@@ -1,11 +1,11 @@
 import os
 
 fps = 30
-skip_intro = True
+skip_intro = False
 show_velocity = False
 draw_rects = False
 skip_countdown = False
-SCREEN_WIDTH = 1200
+SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 800
 PLAYER_START_Y = 200
 radians_factor = 0.0174533  # Lol this is a constant not a var
