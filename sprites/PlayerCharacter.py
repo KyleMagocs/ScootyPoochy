@@ -163,7 +163,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
             self.jump_state = 0
 
     def spawn_poop_or_dont(self):
-        if self.distance_travelled > self.character.poop_factor:
+        if self.z_speed == 0 and self.distance_travelled > self.character.poop_factor:
             self.distance_travelled = 0
             return self.spawn_poop()
         else:

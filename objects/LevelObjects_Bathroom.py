@@ -43,8 +43,8 @@ class BathroomSink(LevelObject, collide_object):
         self.image = self.load_sprite(mirror)
         LevelObject().__init__()
         collide_object.__init__(self, self.image, init_pos[0], init_pos[1])
-        self.height = .55
-        self.z = .55
+        self.height = .5
+        self.z = .5
 
     def load_sprite(self, mirror=False):
         _image = pygame.image.load_extended(
