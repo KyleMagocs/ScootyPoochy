@@ -6,7 +6,7 @@ show_velocity = False
 draw_rects = False
 skip_countdown = False
 SCREEN_WIDTH = 1280
-SCREEN_HEIGHT = 800
+SCREEN_HEIGHT = 720
 PLAYER_START_Y = 200
 radians_factor = 0.0174533  # Lol this is a constant not a var
 

@@ -1,5 +1,8 @@
 import pygame
 
+from utils.hollow import textOutline
+from utils.roundrects import round_rect
+import colors
 import vars
 
 TOTAL_WAIT = 5
@@ -32,13 +35,26 @@ class ScoreboardContext:
             self.clock.tick(vars.fps)
 
             self.timer += 1
-            self.screen.fill((0, 0, 0))
-            font = pygame.font.SysFont('Arial', 40)
-            label = font.render('SCORE! {0:.2f}'.format(self.timer / vars.fps), 1, (100, 150, 200))
-            self.screen.blit(label, (500, 200))
+            self.screen.fill(colors.black)
 
-            self.screen.blit(_p1, (90, 100))
-            self.screen.blit(_p2, (vars.SCREEN_WIDTH - 150 - 90, 100))
+            round_rect(self.screen, (LEFT_ALIGN-150, 150, 300, 420), self.left_color, 20, 5)
+            round_rect(self.screen, (LEFT_ALIGN-155, 145, 310, 430), self.left_color, 20, 2)
+            round_rect(self.screen, (RIGHT_ALIGN-150, 150, 300, 420), self.right_color, 20, 5)
+            round_rect(self.screen, (RIGHT_ALIGN-155, 145, 310, 430), self.right_color, 20, 2)
+            pygame.draw.rect(self.screen, colors.black, (LEFT_ALIGN - _p1.get_width() / 2 - 10, 75, _p1.get_width()+20, 800), 0)
+            pygame.draw.rect(self.screen, colors.black, (RIGHT_ALIGN - _p2.get_width() / 2 - 10, 75, _p2.get_width()+20, 800), 0)
+
+            font = pygame.font.SysFont('Arial', 40)
+            label = font.render('SCORE!'.format(self.timer / vars.fps), 1, (100, 150, 200))
+            self.screen.blit(label, (CENTER_ALIGN-label.get_width()/2, 200))
+
+            pygame.draw.rect(self.screen, colors.black, (LEFT_ALIGN-_p1.get_width()/2, 75, _p1.get_width(), _p1.get_height()), )
+            self.screen.blit(_p1, (LEFT_ALIGN-_p1.get_width()/2, 75))
+            pygame.draw.rect(self.screen, self.left_color, (LEFT_ALIGN-_p1.get_width()/2, 75, _p1.get_width(), _p1.get_height()), 6)
+
+            pygame.draw.rect(self.screen, colors.black, (RIGHT_ALIGN-_p2.get_width()/2, 75, _p2.get_width(), _p2.get_height()), 0)
+            self.screen.blit(_p2, (RIGHT_ALIGN-_p2.get_width()/2, 75))
+            pygame.draw.rect(self.screen, self.right_color, (RIGHT_ALIGN-_p2.get_width()/2, 75, _p2.get_width(), _p2.get_height()), 6)
 
             if self.timer > int(vars.fps * 1.25):
                 self.show_stat(font, game_data[0]['time'], game_data[1]['time'], 'TIME', 280)
@@ -59,13 +75,13 @@ class ScoreboardContext:
             pygame.event.get()
 
     def show_stat(self, font, left_val, right_val, stat_label, y):
-        label = font.render(stat_label, 1, (255, 255, 255))
+        label = font.render(stat_label, 1, colors.white)
         self.screen.blit(label, (CENTER_ALIGN-label.get_width()/2, y))
 
-        label = font.render(str(left_val), 1, self.left_color)
+        label = textOutline(font, str(left_val), colors.black, self.left_color)
         self.screen.blit(label, (LEFT_ALIGN-label.get_width()/2, y))
 
-        label = font.render(str(right_val), 1, self.right_color)
+        label = textOutline(font, str(left_val), colors.black, self.right_color)
         self.screen.blit(label, (RIGHT_ALIGN-label.get_width()/2, y))
 
     # def show_total(self, font, game_data):

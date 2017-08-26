@@ -2,7 +2,7 @@ import os
 
 import pygame
 
-from colors import *
+import colors
 from utils.sprite_utils import rot_center
 from utils.spritesheet import spritesheet
 from vars import IMAGES_PATH
@@ -129,7 +129,7 @@ class TestCharacter(CharacterBase):
     width = 60
     height = 60
     radius = 30
-    color = red
+    color = colors.red
     name = 'XYLONS DOG'
     attributes = {
         '+ test character',
@@ -158,7 +158,7 @@ class Doge(CharacterBase):
     radius = 30
     handling = .95
     poop_factor = 30
-    color = blue
+    color = colors.light_blue
     name = 'DOGE'
     attributes = {
         '+ very meme',
@@ -181,7 +181,7 @@ class Nort(CharacterBase):
     height = 60
     radius = 30
     handling = .95
-    color = aqua
+    color = colors.aqua
     name = 'NORT'
     attributes = {
         '+ Laser poops',
@@ -208,7 +208,7 @@ class Carlos(CharacterBase):
     radius = 15
     handling = .8
     poop_factor = 30
-    color = green
+    color = colors.green
     name = 'Chichi'
     attributes = {
         '- lower top speed',
