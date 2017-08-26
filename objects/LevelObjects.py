@@ -283,7 +283,7 @@ class Shower(LevelObject, collide_object):
     score = 10
     image_path = 'objects/shower.png'
     width = 15
-    x_collide_offset = 175
+    x_collide_offset = 150
 
     def __init__(self, init_pos, mirror=False):
         self.image = self.load_sprite(mirror)
