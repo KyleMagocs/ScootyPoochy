@@ -204,22 +204,30 @@ class World:
         for poop in other_player.poops:
             poop.draw(screen, x_offset, y_offset)
 
-        for sprite in [x for x in self.level.walls if x.y + 32 < player.y]:
-            sprite.draw_part_two(screen, x_offset, y_offset)
+        # TODO:  This is dumb and gross
+        if player.z < other_player.z:
+            for sprite in [x for x in self.level.walls if x.y + 32 < player.y]:
+                sprite.draw_part_two(screen, x_offset, y_offset)
+            player.draw_as_player(screen, x_offset, player_y_offset)
+            for sprite in [x for x in self.level.walls if x.y+32>=player.y]:
+                sprite.draw_part_two(screen, x_offset, y_offset)
 
-        player.draw_as_player(screen, x_offset, player_y_offset)
-
-        for sprite in [x for x in self.level.walls if x.y+32>=player.y]:
-            sprite.draw_part_two(screen, x_offset, y_offset)
-
-        for sprite in [x for x in self.level.walls if x.y + 32 < other_player.y]:
-            sprite.draw_part_two(screen, x_offset, y_offset)
-
-        other_player.draw_normal(screen, x_offset, y_offset)
-
-        for sprite in [x for x in self.level.walls if x.y+32>=other_player.y]:
-            sprite.draw_part_two(screen, x_offset, y_offset)
-
+            for sprite in [x for x in self.level.walls if x.y + 32 < other_player.y]:
+                sprite.draw_part_two(screen, x_offset, y_offset)
+            other_player.draw_normal(screen, x_offset, y_offset)
+            for sprite in [x for x in self.level.walls if x.y+32>=other_player.y]:
+                sprite.draw_part_two(screen, x_offset, y_offset)
+        else:
+            for sprite in [x for x in self.level.walls if x.y + 32 < other_player.y]:
+                sprite.draw_part_two(screen, x_offset, y_offset)
+            other_player.draw_normal(screen, x_offset, y_offset)
+            for sprite in [x for x in self.level.walls if x.y+32>=other_player.y]:
+                sprite.draw_part_two(screen, x_offset, y_offset)
+            for sprite in [x for x in self.level.walls if x.y + 32 < player.y]:
+                sprite.draw_part_two(screen, x_offset, y_offset)
+            player.draw_as_player(screen, x_offset, player_y_offset)
+            for sprite in [x for x in self.level.walls if x.y+32>=player.y]:
+                sprite.draw_part_two(screen, x_offset, y_offset)
 
 
 

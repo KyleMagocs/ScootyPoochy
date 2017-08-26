@@ -18,7 +18,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.speed = 0
         self.x = init_x
         self.y = init_y
-        self.eff_y = 0  # used for tracking effective y (because real y is static)
+        self.visible_y = 0  # used for tracking effective y (because real y is static)
         self.x_speed = 0
         self.y_speed = 0
         self.z = 0
@@ -138,6 +138,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.y += self.y_speed
         self.rect.x = self.x
         self.rect.y = self.y
+        self.visible_y = self.y - (self.z * 150)
 
         if self.distance_travelled > self.character.poop_factor:
             self.distance_travelled = 0
