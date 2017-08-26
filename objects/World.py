@@ -208,10 +208,20 @@ class World:
             sprite.draw_part_two(screen, x_offset, y_offset)
 
         player.draw_as_player(screen, x_offset, player_y_offset)
-        other_player.draw_normal(screen, x_offset, y_offset)
 
         for sprite in [x for x in self.level.walls if x.y+32>=player.y]:
             sprite.draw_part_two(screen, x_offset, y_offset)
+
+        for sprite in [x for x in self.level.walls if x.y + 32 < other_player.y]:
+            sprite.draw_part_two(screen, x_offset, y_offset)
+
+        other_player.draw_normal(screen, x_offset, y_offset)
+
+        for sprite in [x for x in self.level.walls if x.y+32>=other_player.y]:
+            sprite.draw_part_two(screen, x_offset, y_offset)
+
+
+
 
         for sprite in self.level.broken_objects:
             sprite.draw_score(screen, x_offset, y_offset, draw_points=(sprite in player.broken_objects))
@@ -225,12 +235,12 @@ class World:
             label = font.render('YOU!', 1, player.character.color)
             screen.blit(label, (x_offset + player.x + label.get_width()/2, (vars.SCREEN_HEIGHT - vars.PLAYER_START_Y + 75)))
 
-        # TODO:  Should put a real debug in here
-        # # IF YOU'RE LOOKING FOR A GOOD PLACE TO LOG SOME CRAP TO THE SCREEN, THIS WOULD BE A PRETTY GOOD SPOT # #
-        # font = pygame.font.SysFont('Impact', 14)
-        # label = font.render('Player z: ' + str(self.player_one.z), 1, (0, 255, 255))
-        # screen.blit(label, (x_offset + self.width / 4 + 2, vars.SCREEN_HEIGHT / 2 - 10 + 2))
-        ############################################################################################################
+            # TODO:  Should put a real debug in here
+            # # IF YOU'RE LOOKING FOR A GOOD PLACE TO LOG SOME CRAP TO THE SCREEN, THIS WOULD BE A PRETTY GOOD SPOT # #
+            # font = pygame.font.SysFont('Impact', 14)
+            # label = font.render('Player z: ' + str(self.player_one.z), 1, (0, 255, 255))
+            # screen.blit(label, (x_offset + self.width / 4 + 2, vars.SCREEN_HEIGHT / 2 - 10 + 2))
+            ############################################################################################################
 
     def start_timer(self):
         self.timer_enabled = 1

@@ -1,11 +1,15 @@
 import pygame
 
-from vars import fps
+import vars
 
 TOTAL_WAIT = 5
 
-class ScoreboardContext:
+LEFT_ALIGN = vars.SCREEN_WIDTH / 6
+CENTER_ALIGN = vars.SCREEN_WIDTH / 2
+RIGHT_ALIGN = vars.SCREEN_WIDTH / 6 * 5
 
+
+class ScoreboardContext:
     def __init__(self, screen):
         self.screen = screen
         self.clock = pygame.time.Clock()
@@ -24,32 +28,31 @@ class ScoreboardContext:
         _p1 = pygame.transform.flip(_p1, True, False)
         _p2 = pygame.transform.scale(game_data[1]['char'].portrait, (150, 150))
 
-
         while True:
-            self.clock.tick(fps)
+            self.clock.tick(vars.fps)
 
             self.timer += 1
             self.screen.fill((0, 0, 0))
             font = pygame.font.SysFont('Arial', 40)
-            label = font.render('SCORE! {0:.2f}'.format(self.timer/fps), 1, (100, 150, 200))
+            label = font.render('SCORE! {0:.2f}'.format(self.timer / vars.fps), 1, (100, 150, 200))
             self.screen.blit(label, (500, 200))
 
             self.screen.blit(_p1, (90, 100))
-            self.screen.blit(_p2, (1200-150-90, 100))
+            self.screen.blit(_p2, (vars.SCREEN_WIDTH - 150 - 90, 100))
 
-            if self.timer > int(fps * 1.25):
+            if self.timer > int(vars.fps * 1.25):
                 self.show_stat(font, game_data[0]['time'], game_data[1]['time'], 'TIME', 280)
 
-            if self.timer > int(fps * 2.5):
+            if self.timer > int(vars.fps * 2.5):
                 self.show_stat(font, game_data[0]['break'], game_data[1]['break'], 'ITEMS BROKEN', 340)
 
-            if self.timer > int(fps * 3.75):
+            if self.timer > int(vars.fps * 3.75):
                 self.show_stat(font, game_data[0]['poop'], game_data[1]['poop'], 'POOP', 400)
 
-            if self.timer > int(fps * 5.8):
+            if self.timer > int(vars.fps * 5.8):
                 self.show_stat(font, l_total, r_total, 'TOTAL', 540)
 
-            if self.timer > int(fps * 10):
+            if self.timer > int(vars.fps * 10):
                 return
 
             pygame.display.flip()
@@ -57,52 +60,50 @@ class ScoreboardContext:
 
     def show_stat(self, font, left_val, right_val, stat_label, y):
         label = font.render(stat_label, 1, (255, 255, 255))
-        self.screen.blit(label, (500, y))
+        self.screen.blit(label, (CENTER_ALIGN-label.get_width()/2, y))
 
         label = font.render(str(left_val), 1, self.left_color)
-        self.screen.blit(label, (200, y))
+        self.screen.blit(label, (LEFT_ALIGN-label.get_width()/2, y))
 
         label = font.render(str(right_val), 1, self.right_color)
-        self.screen.blit(label, (800, y))
+        self.screen.blit(label, (RIGHT_ALIGN-label.get_width()/2, y))
 
-
-    def show_total(self, font, game_data):
-        label = font.render('Total', 1, (255, 255, 255))
-        self.screen.blit(label, (300, 360))
-
-
-        label = font.render(str(total), 1, game_data[1]['color'])
-        self.screen.blit(label, (800, 360))
-
-    def show_poop(self, font, game_data):
-        label = font.render('Poop', 1, (255, 255, 255))
-        self.screen.blit(label, (300, 320))
-
-        label = font.render(str(game_data[0]['poop']), 1, game_data[0]['color'])
-        self.screen.blit(label, (200, 320))
-
-        label = font.render(str(game_data[1]['poop']), 1, game_data[1]['color'])
-        self.screen.blit(label, (800, 320))
-
-    def show_break(self, font, game_data):
-        label = font.render('Items broken', 1, (255, 255, 255))
-        self.screen.blit(label, (300, 300))
-
-        label = font.render(str(game_data[0]['break']), 1, game_data[0]['color'])
-        self.screen.blit(label, (200, 300))
-
-        label = font.render(str(game_data[1]['break']), 1, game_data[1]['color'])
-        self.screen.blit(label, (800, 300))
-
-    def show_time(self, font, game_data):
-        label = font.render('Time', 1, (255, 255, 255))
-        self.screen.blit(label, (300, 280))
-
-        label = font.render(str(game_data[0]['time']), 1, game_data[0]['color'])
-        self.screen.blit(label, (200, 280))
-
-        label = font.render(str(game_data[1]['time']), 1, game_data[1]['color'])
-        self.screen.blit(label, (800, 280))
-
-
-# TODO:  All these placements should be dynamic or something so it doesn't look like shit
+    # def show_total(self, font, game_data):
+    #     label = font.render('Total', 1, (255, 255, 255))
+    #     self.screen.blit(label, (300, 360))
+    #
+    #     label = font.render(str(total), 1, game_data[1]['color'])
+    #     self.screen.blit(label, (800, 360))
+    #
+    # def show_poop(self, font, game_data):
+    #     label = font.render('Poop', 1, (255, 255, 255))
+    #     self.screen.blit(label, (300, 320))
+    #
+    #     label = font.render(str(game_data[0]['poop']), 1, game_data[0]['color'])
+    #     self.screen.blit(label, (200, 320))
+    #
+    #     label = font.render(str(game_data[1]['poop']), 1, game_data[1]['color'])
+    #     self.screen.blit(label, (800, 320))
+    #
+    # def show_break(self, font, game_data):
+    #     label = font.render('Items broken', 1, (255, 255, 255))
+    #     self.screen.blit(label, (300, 300))
+    #
+    #     label = font.render(str(game_data[0]['break']), 1, game_data[0]['color'])
+    #     self.screen.blit(label, (200, 300))
+    #
+    #     label = font.render(str(game_data[1]['break']), 1, game_data[1]['color'])
+    #     self.screen.blit(label, (800, 300))
+    #
+    # def show_time(self, font, game_data):
+    #     label = font.render('Time', 1, (255, 255, 255))
+    #     self.screen.blit(label, (300, 280))
+    #
+    #     label = font.render(str(game_data[0]['time']), 1, game_data[0]['color'])
+    #     self.screen.blit(label, (200, 280))
+    #
+    #     label = font.render(str(game_data[1]['time']), 1, game_data[1]['color'])
+    #     self.screen.blit(label, (800, 280))
+    #
+    #
+    #     # TODO:  All these placements should be dynamic or something so it doesn't look like shit
