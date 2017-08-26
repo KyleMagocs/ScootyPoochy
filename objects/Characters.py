@@ -142,7 +142,7 @@ class TestCharacter(CharacterBase):
 
 
 class Doge(CharacterBase):
-    sprite_path = 'DOGE_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
+    #sprite_path = 'DOGE_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
     portrait_path = 'DOGE_portrait_temp.png'
 
     head_path = 'doge_temp/head.png'

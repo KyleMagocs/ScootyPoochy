@@ -2,7 +2,8 @@ import os
 
 import pygame
 
-from objects.LevelObjects import Lamp, Table, Couch, Vase, Cuckoo, HDTV, BookShelf, Shower
+from objects.LevelObjects import Lamp, Table, Couch, Vase, Cuckoo, HDTV, BookShelf
+from objects.LevelObjects_Bathroom import BathroomSink, Shower, Toilet, SinkStuff, BathMat
 from objects.Wall import Wall, BathroomWall
 
 ASSETS_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'images', 'level_assets')
@@ -73,6 +74,10 @@ class Bathroom(Room):
     floor_image = os.path.join(ASSETS_PATH, 'bathroom_bg.png')
     objects = pygame.sprite.Group(
         Shower((0, 32)),
+        BathroomSink((170, 80)),
+        SinkStuff((170, 73)),
+        Toilet((295, 90)),
+        BathMat((200, 230))
     )
 
     def load_wall(self, door_x):

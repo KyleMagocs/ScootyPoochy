@@ -177,7 +177,8 @@ class World:
                 if wall.height <= p_sprite.z:
                     if _min_z is None:
                         _min_z = wall.height
-                    _min_z = min(_min_z, wall.height)
+                    else:
+                        _min_z = max(_min_z, wall.height)
                 else:
                     delta_x, delta_y = get_conform_deltas(wall.rect, p_sprite.old_rect, p_sprite.rect)
 

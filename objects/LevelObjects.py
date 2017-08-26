@@ -61,6 +61,12 @@ class LevelObject(pygame.sprite.Sprite):
                 _images.append(_image)
         return _images
 
+    def load_sprite(self, mirror=False):
+        _image = pygame.image.load_extended(
+            os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
+        _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+        return _image
+
     def get_draw_rect(self):
         _rect = self.image.get_rect()
         _rect.x += self.x
@@ -204,12 +210,6 @@ class Couch(LevelObject, collide_object):
         self.height = .2
         self.z = .2
 
-    def load_sprite(self, mirror=False):
-        _image = pygame.image.load_extended(
-            os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
-        _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
-        return _image
-
     def draw(self, screen, x_offset, y_offset, draw_points=False):
         collide_object.draw(self, screen, x_offset, y_offset)
 
@@ -277,26 +277,3 @@ class BookShelf(LevelObject, collide_object):
         _rect.y += self.y + 30
         return _rect
 
-
-class Shower(LevelObject, collide_object):
-    breakable = 0
-    score = 10
-    image_path = 'objects/shower.png'
-    width = 15
-    x_collide_offset = 150
-
-    def __init__(self, init_pos, mirror=False):
-        self.image = self.load_sprite(mirror)
-        LevelObject().__init__()
-        collide_object.__init__(self, self.image, init_pos[0], init_pos[1])
-        self.height = .2
-        self.z = .2
-
-    def load_sprite(self, mirror=False):
-        _image = pygame.image.load_extended(
-            os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
-        _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
-        return _image
-
-    def draw(self, screen, x_offset, y_offset, draw_points=False):
-        collide_object.draw(self, screen, x_offset, y_offset)

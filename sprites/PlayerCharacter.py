@@ -73,7 +73,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
         if hasattr(character, 'tail_path'):
             self.tail_images = self.load_sprite_sheet(character.tail_path, 60, 60, 9, 4)
         if hasattr(character, 'body_path'):
-            self.body_images = self.load_sprite_sheet(character.body_path, 60, 60, 1, 1)
+            self.body_images = self.load_sprite_sheet(character.body_path, 60, 60, 9, 2)
 
         self.cur_sprite = self.orig_sprite
         self.radius = character.radius
@@ -95,10 +95,15 @@ class PlayerCharacter(pygame.sprite.Sprite):
             if math.fabs(right[0]) + math.fabs(right[1]) > 20:
                 head_inc = 1
                 self.right_index = ((self.right_index + 1) % len(self.rarm_images))
+            if self.jump_state == 1:
+                self.body_index = min(self.body_index+1, len(self.body_images)-1)
+            else:
+                self.body_index = 0
             self.tail_index = ((self.tail_index + 1) % len(self.tail_images))
             self.head_index = ((self.head_index + head_inc) % len(self.head_images))
         except:
             pass
+
 
     def start_timer(self):
         if not self.timer_activated:
@@ -166,8 +171,8 @@ class PlayerCharacter(pygame.sprite.Sprite):
 
     def draw_as_player(self, screen, x_offset, y_offset):
         self.cur_sprite = self.generate_new_sprite()
-        self.cur_sprite = pygame.transform.scale(self.cur_sprite, (int(self.character.width * (self.z / 1.8 + 1)), int(self.character.height * (self.z / 1.8 + 1))))
-        _scale_dif = (self.z / 1.8 + 1) * self.character.width - self.character.width
+        self.cur_sprite = pygame.transform.scale(self.cur_sprite, (int(self.character.width * (self.z / 3 + 1)), int(self.character.height * (self.z / 3 + 1))))
+        _scale_dif = (self.z / 3 + 1) * self.character.width - self.character.width
         _image = rot_center(self.cur_sprite, self.angle)
         _rect = _image.get_rect()
         _rect.x = self.x
@@ -185,8 +190,8 @@ class PlayerCharacter(pygame.sprite.Sprite):
 
     def draw_normal(self, screen, x_offset, y_offset):
         self.cur_sprite = self.generate_new_sprite()
-        self.cur_sprite = pygame.transform.scale(self.cur_sprite, (int(self.character.width * (self.z / 1.8 + 1)), int(self.character.height * (self.z / 1.8 + 1))))
-        _scale_dif = (self.z / 1.8 + 1) * self.character.width - self.character.width
+        self.cur_sprite = pygame.transform.scale(self.cur_sprite, (int(self.character.width * (self.z / 3 + 1)), int(self.character.height * (self.z / 3 + 1))))
+        _scale_dif = (self.z / 3 + 1) * self.character.width - self.character.width
         _image = rot_center(self.cur_sprite, self.angle)
         _rect = _image.get_rect()
         _rect.x = self.x
