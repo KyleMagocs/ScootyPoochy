@@ -1,5 +1,6 @@
 import pygame
 
+import colors
 from colors import *
 from objects.CharSelectWheel import CharacterWheel
 from vars import fps
@@ -45,18 +46,40 @@ class CharacterSelectContext:
                     quit()
 
     def main_loop(self):
+        start_timer = 0
+        end_timer = 0
         while True:
+
             if self.timer % 5 == 0:
                 vars.selected_character_color_index = (vars.selected_character_color_index + 1) % 3
-            self.check_events()
 
             self.timer += 1
             self.draw()
 
-            pygame.display.flip()
+            if start_timer < int(vars.fps / 2):
+                fade_overlay = pygame.Surface((vars.SCREEN_WIDTH, vars.SCREEN_HEIGHT))
+                fade_overlay.fill(colors.black)
+                fade_overlay.set_alpha(((int(vars.fps / 2) - start_timer) / int(vars.fps / 2)) * 255)
+                self.screen.blit(fade_overlay, (0, 0))
+                start_timer += 1
+
+            self.check_events()
+
+
             self.clock.tick(fps)
             if self.both_wheels_confirmed():
-                return [self.left_wheel.get_selected_character(), self.right_wheel.get_selected_character(),]
+                if end_timer > int(vars.fps / 2):
+                    return [self.left_wheel.get_selected_character(), self.right_wheel.get_selected_character(),]
+                else:
+                    fade_overlay = pygame.Surface((vars.SCREEN_WIDTH, vars.SCREEN_HEIGHT))
+                    fade_overlay.fill(colors.black)
+                    fade_overlay.set_alpha((end_timer / int(vars.fps / 2)) * 255)
+                    self.screen.blit(fade_overlay, (0, 0))
+                    end_timer += 1
+
+            pygame.display.flip()
+
+
 
     def draw(self):
         self.draw_background()

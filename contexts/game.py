@@ -75,10 +75,15 @@ class GameContext:
 
     def run_game(self):
         clock = pygame.time.Clock()
+        start_timer = 0
+        end_timer = 0
         while True:
+
+
             real_fps = clock.tick(fps)
 
             self.screen.fill(colors.black)
+
 
             p1_left, p1_right = self.players[0].read_input()
             p2_left, p2_right = self.players[1].read_input()
@@ -88,11 +93,26 @@ class GameContext:
 
             self.draw_hud(self.screen)
 
+            if start_timer < int(fps / 2):
+                fade_overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
+                fade_overlay.fill(colors.black)
+                fade_overlay.set_alpha(((int(fps / 2) - start_timer) / int(fps / 2)) * 255)
+                self.screen.blit(fade_overlay, (0, 0))
+                start_timer += 1
+
             if results is not None:
                 self.finish_timer += 1
 
-            if self.finish_timer > 90:
-                return results
+            if self.finish_timer > 75:
+                if end_timer > int(fps / 2):
+                    return results
+                else:
+                    fade_overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
+                    fade_overlay.fill(colors.black)
+                    fade_overlay.set_alpha((end_timer / int(fps / 2)) * 255)
+                    self.screen.blit(fade_overlay, (0, 0))
+                    end_timer += 1
+
                 # TODO:  FANCY FINISH ANIMATION
 
             self.check_keys()

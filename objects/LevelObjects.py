@@ -259,8 +259,8 @@ class BookShelf(LevelObject, collide_object):
         self.image = self.load_sprite(mirror)
         LevelObject().__init__()
         collide_object.__init__(self, self.image, init_pos[0], init_pos[1])
-        self.height = .4
-        self.z = .4
+        self.height = .8
+        self.z = .8
 
     def load_sprite(self, mirror=False):
         _image = pygame.image.load_extended(
@@ -289,8 +289,8 @@ class Shower(LevelObject, collide_object):
         self.image = self.load_sprite(mirror)
         LevelObject().__init__()
         collide_object.__init__(self, self.image, init_pos[0], init_pos[1])
-        self.height = .4
-        self.z = .4
+        self.height = .2
+        self.z = .2
 
     def load_sprite(self, mirror=False):
         _image = pygame.image.load_extended(

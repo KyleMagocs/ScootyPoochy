@@ -1,8 +1,9 @@
 import pygame
 
-
 #  https://www.pygame.org/wiki/RotateCenter
 from objects import Characters
+import math
+import vars
 
 
 def rot_center(image, angle):
@@ -29,7 +30,13 @@ def get_conform_deltas(obstacle, old, new):
 
     return delta_x, delta_y
 
+
 def get_velocity(left, right):
     addtl_y_vel = (left[1] / 10 + right[1] / 10) / 2 * Characters.ACCEL_COEF
     addtl_x_vel = ((left[0] / 10 - 10) + (right[0] / 10 + 10)) / 2 * Characters.ACCEL_COEF
     return addtl_x_vel, addtl_y_vel
+
+
+def angle_between_points(x1, y1, x2, y2):
+    theta = math.atan(((y2 - y1)*-1) / (x2 - x1)) / vars.radians_factor + 90
+    return theta

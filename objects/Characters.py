@@ -95,6 +95,7 @@ class CharacterBase:
     height = 0
     attributes = None
     name = None
+    finish_text = 'FINISH !'
 
     def __init__(self):
         self.load_sprite()
@@ -150,6 +151,8 @@ class Doge(CharacterBase):
     tail_path = 'doge_temp/tail.png'
     body_path = 'doge_temp/body.png'
 
+    finish_text = 'MUCH FINISH'
+
     poop_paths = ['poop_temp_2.png', 'poop_temp_3.png']
     max_speed = .7 * 6
     acceleration = .35
@@ -176,7 +179,7 @@ class Nort(CharacterBase):
     poop_paths = ['nort_poop_temp.png', ]
     max_speed = .7 * 6
     acceleration = .35
-    poop_factor = 15
+    poop_factor = 5
     width = 60
     height = 60
     radius = 30

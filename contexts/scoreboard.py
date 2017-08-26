@@ -31,6 +31,9 @@ class ScoreboardContext:
         _p1 = pygame.transform.flip(_p1, True, False)
         _p2 = pygame.transform.scale(game_data[1]['char'].portrait, (150, 150))
 
+        start_timer = 0
+        end_timer = 0
+
         while True:
             self.clock.tick(vars.fps)
 
@@ -56,20 +59,34 @@ class ScoreboardContext:
             self.screen.blit(_p2, (RIGHT_ALIGN-_p2.get_width()/2, 75))
             pygame.draw.rect(self.screen, self.right_color, (RIGHT_ALIGN-_p2.get_width()/2, 75, _p2.get_width(), _p2.get_height()), 6)
 
-            if self.timer > int(vars.fps * 1.25):
+            if self.timer > int(vars.fps * 1.75):
                 self.show_stat(font, game_data[0]['time'], game_data[1]['time'], 'TIME', 280)
 
-            if self.timer > int(vars.fps * 2.5):
+            if self.timer > int(vars.fps * 3):
                 self.show_stat(font, game_data[0]['break'], game_data[1]['break'], 'ITEMS BROKEN', 340)
 
-            if self.timer > int(vars.fps * 3.75):
+            if self.timer > int(vars.fps * 4.25):
                 self.show_stat(font, game_data[0]['poop'], game_data[1]['poop'], 'POOP', 400)
 
-            if self.timer > int(vars.fps * 5.8):
+            if self.timer > int(vars.fps * 6.3):
                 self.show_stat(font, l_total, r_total, 'TOTAL', 540)
 
+            if start_timer < int(vars.fps / 2):
+                fade_overlay = pygame.Surface((vars.SCREEN_WIDTH, vars.SCREEN_HEIGHT))
+                fade_overlay.fill(colors.black)
+                fade_overlay.set_alpha(((int(vars.fps / 2) - start_timer) / int(vars.fps / 2)) * 255)
+                self.screen.blit(fade_overlay, (0, 0))
+                start_timer += 1
+
             if self.timer > int(vars.fps * 10):
-                return
+                if end_timer > int(vars.fps / 2):
+                    return
+                else:
+                    fade_overlay = pygame.Surface((vars.SCREEN_WIDTH, vars.SCREEN_HEIGHT))
+                    fade_overlay.fill(colors.black)
+                    fade_overlay.set_alpha((end_timer / int(vars.fps / 2)) * 255)
+                    self.screen.blit(fade_overlay, (0, 0))
+                    end_timer += 1
 
             pygame.display.flip()
             pygame.event.get()

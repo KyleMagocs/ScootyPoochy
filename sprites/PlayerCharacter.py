@@ -5,7 +5,7 @@ import copy
 import pygame
 
 from objects.Characters import PoopTrail, Nort
-from utils.sprite_utils import rot_center
+from utils.sprite_utils import rot_center, angle_between_points
 from utils.spritesheet import spritesheet
 from vars import show_velocity, draw_rects, SCREEN_HEIGHT, PLAYER_START_Y, IMAGES_PATH, radians_factor
 import colors
@@ -26,6 +26,9 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.min_z = 0
         self.old_rect = None
         self.bounce_count = 0
+
+        self.last_poop_x = 0
+        self.last_poop_y = 0
 
         self.poops = pygame.sprite.Group()
         self.poop_score = 0
@@ -203,5 +206,11 @@ class PlayerCharacter(pygame.sprite.Sprite):
         return _rect
 
     def spawn_poop(self):
-        self.poops.add(self.character.get_a_poop(self.x, self.y, self.z, self.angle))
+        if len(self.poops) > 0:
+            angle = angle_between_points(self.last_poop_x, self.last_poop_y, self.x, self.visible_y) # TODO:  THIS IS WORKING REALLY POORLY
+        else:
+            angle = self.angle
+        self.poops.add(self.character.get_a_poop(self.x, self.visible_y+self.character.width/2, self.z, angle))
+        self.last_poop_x = self.x
+        self.last_poop_y = self.visible_y
         self.poop_score += self.character.poop_factor

@@ -229,13 +229,11 @@ class World:
             for sprite in [x for x in self.level.walls if x.y+32>=player.y]:
                 sprite.draw_part_two(screen, x_offset, y_offset)
 
-
-
         for sprite in self.level.broken_objects:
             sprite.draw_score(screen, x_offset, y_offset, draw_points=(sprite in player.broken_objects))
 
         if player.y < 50:
-            self.draw_win_text(screen, x_offset, player.character.color)
+            self.draw_win_text(screen, x_offset, player.character.color, player.character.finish_text)
 
         if len(self.countdown) > 0:
             self.draw_countdown(screen, x_offset, player.character.color, self.countdown[0], self.countdown_timer * 3)
@@ -259,7 +257,7 @@ class World:
         screen.blit(label, (
             x_offset + self.width / 2 - label.get_width() / 2, vars.SCREEN_HEIGHT / 2 - label.get_height() / 2))
 
-    def draw_win_text(self, screen, x_offset, color):
+    def draw_win_text(self, screen, x_offset, color, text= 'FINISH !'):
         font = pygame.font.SysFont('Impact', 70)
         text = textOutline(font, 'FINISH !', color,
                            colors.black)
