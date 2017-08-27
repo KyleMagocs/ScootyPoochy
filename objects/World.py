@@ -30,23 +30,23 @@ class World:
         self.level = level
 
         self.poop_surface = pygame.Surface((level.width, level.height))
-        self.poop_surface.fill((255,0,255))
-        self.poop_surface.set_colorkey((255,0,255))
+        self.poop_surface.fill((255, 0, 255))
+        self.poop_surface.set_colorkey((255, 0, 255))
 
         self.countdown_timer = 0
         self.timer_enabled = 0
         self.timer = 0
 
     def get_progress(self):
-        p1_progress = math.fabs(max((self.player_one.y + vars.PLAYER_START_Y), 0) / (self.level.height))
-        p2_progress = math.fabs(max((self.player_two.y + vars.PLAYER_START_Y), 0) / (self.level.height))
+        p1_progress = math.fabs(max((self.player_one.y + vars.PLAYER_START_Y), 0) / self.level.height)
+        p2_progress = math.fabs(max((self.player_two.y + vars.PLAYER_START_Y), 0) / self.level.height)
         return p1_progress, p2_progress
 
     def update(self, p1_left, p1_right, p2_left, p2_right):
         if not vars.skip_countdown and len(self.countdown) > 0:
-            self.player_one.update_limbs((0,0), (0,0))
-            self.player_two.update_limbs((0,0), (0,0))
-            if self.countdown_timer < int(vars.fps*.75) and len(self.countdown) > 0:
+            self.player_one.update_limbs((0, 0), (0, 0))
+            self.player_two.update_limbs((0, 0), (0, 0))
+            if self.countdown_timer < int(vars.fps * .75) and len(self.countdown) > 0:
                 self.countdown_timer += 1
             else:
                 if len(self.countdown) > 0:
@@ -151,8 +151,8 @@ class World:
                 Angle = 180
             XSpeed = C1Speed * math.cos(math.radians(Angle))
             YSpeed = C1Speed * math.sin(math.radians(Angle))
-        bouncee.x_speed = XSpeed*0.8
-        bouncee.y_speed = YSpeed*0.8
+        bouncee.x_speed = XSpeed * 0.8
+        bouncee.y_speed = YSpeed * 0.8
         bouncee.bounce_count = 5
 
     def handle_breakable_collisions(self):
@@ -219,24 +219,24 @@ class World:
             for sprite in [x for x in self.level.walls if x.y + 32 < player.visible_y]:
                 sprite.draw_part_two(screen, x_offset, y_offset)
             player.draw_as_player(screen, x_offset, player_y_offset)
-            for sprite in [x for x in self.level.walls if x.y+32>=player.visible_y]:
+            for sprite in [x for x in self.level.walls if x.y + 32 >= player.visible_y]:
                 sprite.draw_part_two(screen, x_offset, y_offset)
 
             for sprite in [x for x in self.level.walls if x.y + 32 < other_player.visible_y]:
                 sprite.draw_part_two(screen, x_offset, y_offset)
             other_player.draw_normal(screen, x_offset, y_offset)
-            for sprite in [x for x in self.level.walls if x.y+32>=other_player.visible_y]:
+            for sprite in [x for x in self.level.walls if x.y + 32 >= other_player.visible_y]:
                 sprite.draw_part_two(screen, x_offset, y_offset)
         else:
             for sprite in [x for x in self.level.walls if x.y + 32 < other_player.visible_y]:
                 sprite.draw_part_two(screen, x_offset, y_offset)
             other_player.draw_normal(screen, x_offset, y_offset)
-            for sprite in [x for x in self.level.walls if x.y+32>=other_player.visible_y]:
+            for sprite in [x for x in self.level.walls if x.y + 32 >= other_player.visible_y]:
                 sprite.draw_part_two(screen, x_offset, y_offset)
             for sprite in [x for x in self.level.walls if x.y + 32 < player.visible_y]:
                 sprite.draw_part_two(screen, x_offset, y_offset)
             player.draw_as_player(screen, x_offset, player_y_offset)
-            for sprite in [x for x in self.level.walls if x.y+32>=player.visible_y]:
+            for sprite in [x for x in self.level.walls if x.y + 32 >= player.visible_y]:
                 sprite.draw_part_two(screen, x_offset, y_offset)
 
         for sprite in self.level.broken_objects:
@@ -249,7 +249,7 @@ class World:
             self.draw_countdown(screen, x_offset, player.character.color, self.countdown[0], self.countdown_timer * 3)
             font = pygame.font.SysFont('Impact', 18)
             label = font.render('YOU!', 1, player.character.color)
-            screen.blit(label, (x_offset + player.x + label.get_width()/2, (vars.SCREEN_HEIGHT - vars.PLAYER_START_Y + 75)))
+            screen.blit(label, (x_offset + player.x + label.get_width() / 2, (vars.SCREEN_HEIGHT - vars.PLAYER_START_Y + 75)))
 
             # TODO:  Should put a real debug in here
             # # IF YOU'RE LOOKING FOR A GOOD PLACE TO LOG SOME CRAP TO THE SCREEN, THIS WOULD BE A PRETTY GOOD SPOT # #
@@ -267,7 +267,7 @@ class World:
         screen.blit(label, (
             x_offset + self.width / 2 - label.get_width() / 2, vars.SCREEN_HEIGHT / 2 - label.get_height() / 2))
 
-    def draw_win_text(self, screen, x_offset, color, text= 'FINISH !'):
+    def draw_win_text(self, screen, x_offset, color, text='FINISH !'):
         font = pygame.font.SysFont('Impact', 70)
         text = textOutline(font, text, color,
                            colors.black)
@@ -275,12 +275,12 @@ class World:
         screen.blit(text, (x_offset + self.width / 2 - text.get_width() / 2, vars.SCREEN_HEIGHT / 2 - 10))
 
     def get_scores(self):
-        return ({'time': max(2000 - self.player_one.final_timer, 0),
+        return ({'time': max(4000 - self.player_one.final_timer, 0),
                  'break': self.player_one.break_score,
                  # todo:  maybe return a list of objects instead and then you can do something neat there?
                  'poop': self.player_one.poop_score,
                  'char': self.player_one.character, },
-                {'time': max(2000 - self.player_two.final_timer, 0),
+                {'time': max(4000 - self.player_two.final_timer, 0),
                  'break': self.player_two.break_score,
                  # todo:  maybe return a list of objects instead and then you can do something neat there?
                  'poop': self.player_two.poop_score,

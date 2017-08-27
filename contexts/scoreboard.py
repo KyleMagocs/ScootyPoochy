@@ -98,7 +98,7 @@ class ScoreboardContext:
         label = textOutline(font, str(left_val), colors.black, self.left_color)
         self.screen.blit(label, (LEFT_ALIGN-label.get_width()/2, y))
 
-        label = textOutline(font, str(left_val), colors.black, self.right_color)
+        label = textOutline(font, str(right_val), colors.black, self.right_color)
         self.screen.blit(label, (RIGHT_ALIGN-label.get_width()/2, y))
 
     # def show_total(self, font, game_data):
