@@ -1,10 +1,11 @@
 import os
 
-fps = 30
-skip_intro = True
+fps = 60
+skip_intro = False
 show_velocity = False
 draw_rects = False
 skip_countdown = False
+debug_mode = True
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 PLAYER_START_Y = 200
