@@ -88,7 +88,7 @@ class ScoreboardContext:
                     self.screen.blit(fade_overlay, (0, 0))
                     end_timer += 1
 
-            pygame.display.flip()
+            pygame.display.update()
             pygame.event.get()
 
     def show_stat(self, font, left_val, right_val, stat_label, y):

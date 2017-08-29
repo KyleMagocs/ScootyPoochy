@@ -4,7 +4,7 @@ import pygame
 
 import vars
 from objects.CollideObject import collide_object
-
+import colors
 
 class Wall(pygame.sprite.Sprite):
     side_image = 'objects/house_wall_side.png'
@@ -18,24 +18,24 @@ class Wall(pygame.sprite.Sprite):
         self.door_x = door_x
 
         self.left_side = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.side_image))
-        self.left_side.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+        self.left_side.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
 
         self.right_side = pygame.transform.flip(self.left_side, True, False)
-        self.right_side.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+        self.right_side.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
 
         self.top = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.top_image))
-        self.top.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+        self.top.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
 
         _wall_base = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.bottom_image))
         _wall_flipped = pygame.transform.flip(_wall_base, True, False)
 
         _left_flipped = _wall_flipped.subsurface((0, 0, self.top.get_width() - door_x, _wall_flipped.get_height()))
         _left_wall = pygame.transform.flip(_left_flipped, True, False)
-        _left_wall.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+        _left_wall.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
         self.left_wall = left_wall(_left_wall, init_x + self.left_side.get_width(), init_y + self.top.get_height())
 
         _right_wall = _wall_flipped.subsurface((0, 0, door_x, _wall_flipped.get_height()))
-        _right_wall.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+        _right_wall.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
         self.right_wall = right_wall(_right_wall, init_x + self.left_side.get_width() + self.left_wall.image.get_width(), init_y + self.top.get_height())
 
         self.rect = self.top.get_rect()

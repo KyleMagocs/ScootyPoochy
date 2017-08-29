@@ -59,7 +59,7 @@ if __name__ == '__main__':
 
     win.blit(text1, (0, 0))
     win.blit(text2, (0, text1.get_height()))
-    pygame.display.flip()
+    pygame.display.update()
 
     # wait for the finish
     while 1:

@@ -32,12 +32,12 @@ class TitleContext:
             title_image = pygame.transform.scale(title_image, (title_image.get_width()*2, title_image.get_height()*2))
             self.screen.blit(title_image, (vars.SCREEN_WIDTH/2-title_image.get_width()/2,0))
             # if (self.timer // 30) % 2 == 0:
-            #     label = font.render('TITLE! {0:.2f}'.format(self.timer/fps), 1, (255, 0, 255))
+            #     label = font.render('TITLE! {0:.2f}'.format(self.timer/fps), 1, colors.TRANSPARENT)
             # else:
             #     label = font.render('TITLE! {0:.2f}'.format(self.timer/fps), 1, (255, 255, 255))
             # self.screen.blit(label, (200, 150))
             #
-            # # label = font2.render('SUPER POOCH SCOOT !!'.format(self.timer / fps), 1, (255, 0, 255))
+            # # label = font2.render('SUPER POOCH SCOOT !!'.format(self.timer / fps), 1, colors.TRANSPARENT)
             #
             title_text = textOutline(font2, 'S', colors.blue, colors.white)
             self.screen.blit(title_text, (300, 90))
@@ -87,7 +87,7 @@ class TitleContext:
                     self.screen.blit(fade_overlay, (0, 0))
                     end_timer += 1
 
-            pygame.display.flip()
+            pygame.display.update()
 
 
             pygame.event.get()

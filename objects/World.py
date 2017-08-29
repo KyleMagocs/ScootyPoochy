@@ -30,8 +30,8 @@ class World:
         self.level = level
 
         self.poop_surface = pygame.Surface((level.width, level.height))
-        self.poop_surface.fill((255, 0, 255))
-        self.poop_surface.set_colorkey((255, 0, 255))
+        self.poop_surface.fill(colors.TRANSPARENT)
+        self.poop_surface.set_colorkey(colors.TRANSPARENT)
 
         self.countdown_timer = 0
         self.timer_enabled = 0

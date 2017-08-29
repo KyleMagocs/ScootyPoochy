@@ -55,16 +55,20 @@ class LevelObject(pygame.sprite.Sprite):
         _images = []
         sheet = spritesheet(os.path.join(vars.IMAGES_PATH, sheet_path))
         for x in range(0, width * num, width):
-            _image = sheet.image_at((x, 0, width, height), (255, 0, 255))
+            _image = sheet.image_at((x, 0, width, height), colors.TRANSPARENT)
             _image = pygame.transform.flip(_image, mirror, False)
-            for x in range(0, int(vars.fps/10)):
-                _images.append(_image)
+            image_surface = pygame.Surface((_image.get_width(), _image.get_height()))
+            image_surface.fill(colors.TRANSPARENT)
+            image_surface.blit(_image, (0, 0))
+            image_surface.set_colorkey(colors.TRANSPARENT)
+            for x in range(0, 3):
+                _images.append(image_surface)
         return _images
 
     def load_sprite(self, mirror=False):
         _image = pygame.image.load_extended(
             os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
-        _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+        _image.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
         return _image
 
     def get_draw_rect(self):
@@ -236,7 +240,7 @@ class Table(LevelObject, collide_object):
     def load_sprite(self, mirror=False):
         _image = pygame.image.load_extended(
             os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
-        _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+        _image.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
         return _image
 
     def draw(self, screen, x_offset, y_offset, draw_points=False):
@@ -265,7 +269,7 @@ class BookShelf(LevelObject, collide_object):
     def load_sprite(self, mirror=False):
         _image = pygame.image.load_extended(
             os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
-        _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+        _image.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
         return _image
 
     def draw(self, screen, x_offset, y_offset, draw_points=False):

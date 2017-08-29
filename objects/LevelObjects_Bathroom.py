@@ -26,7 +26,7 @@ class Shower(LevelObject, collide_object):
     def load_sprite(self, mirror=False):
         _image = pygame.image.load_extended(
             os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
-        _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+        _image.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
         return _image
 
     def draw(self, screen, x_offset, y_offset, draw_points=False):
@@ -49,7 +49,7 @@ class BathroomSink(LevelObject, collide_object):
     def load_sprite(self, mirror=False):
         _image = pygame.image.load_extended(
             os.path.join(vars.IMAGES_PATH, self.image_path)).convert()  # Todo:  need a full sprite sheet, yeah?
-        _image.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+        _image.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
         return _image
 
     def draw(self, screen, x_offset, y_offset, draw_points=False):

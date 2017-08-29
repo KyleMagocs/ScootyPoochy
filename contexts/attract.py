@@ -28,7 +28,7 @@ class AttractContext:
             font = pygame.font.SysFont('Comic Sans', 60)
             label = font.render('PUT A VIDEO HERE'.format(self.timer / fps), 1, (0, 255, 255))
             self.screen.blit(label, (300, 450))
-            pygame.display.flip()
+            pygame.display.update()
 
             self.clock.tick(fps)
             pygame.event.get()

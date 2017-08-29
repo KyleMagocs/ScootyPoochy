@@ -27,7 +27,7 @@ class PoopTrail(pygame.sprite.Sprite):
         _sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, 'objects',
                                                           character.poop_paths[random.randint(0, len(
                                                               character.poop_paths) - 1)])).convert()
-        _sprite.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+        _sprite.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
 
         self.image = _sprite
         self.rect = self.image.get_rect()
@@ -59,7 +59,7 @@ class NortPoop(pygame.sprite.Sprite):
         _sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, 'objects',
                                                           character.poop_paths[random.randint(0, len(
                                                               character.poop_paths) - 1)])).convert()
-        _sprite.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+        _sprite.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
 
         self.image = _sprite
         self.rect = self.image.get_rect()
@@ -104,14 +104,14 @@ class CharacterBase:
     def load_sprite(self):
         if self.sprite_path is not None:
             _sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, 'characters', self.sprite_path)).convert()
-            _sprite.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+            _sprite.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
             self.sprite = _sprite
 
     def load_portrait(self):
         if self.portrait_path is not None:
             _portrait = pygame.image.load_extended(
                 os.path.join(IMAGES_PATH, 'characters', self.portrait_path)).convert()
-            _portrait.set_colorkey((255, 0, 255), pygame.RLEACCEL)
+            _portrait.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
             self.portrait = _portrait
 
     def get_a_poop(self, x, y, z, angle):

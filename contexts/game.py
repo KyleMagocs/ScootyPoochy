@@ -120,7 +120,7 @@ class GameContext:
 
             self.check_keys()
 
-            pygame.display.flip()
+            pygame.display.update()
             pygame.event.get()
 
 

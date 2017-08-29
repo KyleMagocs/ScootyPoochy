@@ -1,6 +1,6 @@
 import os
 
-fps = 60
+fps = 30
 skip_intro = False
 show_velocity = False
 draw_rects = False

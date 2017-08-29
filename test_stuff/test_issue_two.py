@@ -20,7 +20,7 @@ for char in chars:
     x += 300
     y += 300
 
-pygame.display.flip()
+pygame.display.update()
 
 print('foo')
 print('foo')

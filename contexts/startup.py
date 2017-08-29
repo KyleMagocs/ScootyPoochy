@@ -21,7 +21,7 @@ class StartupContext:
             font = pygame.font.SysFont('Comic Sans MS', 15)
             label = font.render('STARTUP! {0:.2f}'.format(self.timer/fps), 1, (255, 255, 0))
             self.screen.blit(label, (200, 200))
-            pygame.display.flip()
+            pygame.display.update()
             self.clock.tick(fps)
             pygame.event.get()
         return False

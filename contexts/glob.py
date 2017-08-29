@@ -2,6 +2,7 @@ import pygame
 
 from contexts.char_select import CharacterSelectContext
 from contexts.attract import AttractContext
+from contexts.char_select_new import CharacterSelectTrackballContext
 from contexts.game import GameContext
 from contexts.level_select import LevelSelectContext
 from contexts.scoreboard import ScoreboardContext
@@ -31,6 +32,7 @@ class GlobalContext:
                     attract = AttractContext(self.screen)
                     attract.display_loop()
                 pygame.event.clear()
+                # select = CharacterSelectTrackballContext(self.screen, p1, p2)
                 select = CharacterSelectContext(self.screen, p1, p2)
                 characters = select.main_loop()
 

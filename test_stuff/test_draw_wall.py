@@ -22,7 +22,7 @@ wall2.draw_part_one(screen)
 wall2.draw_part_two(screen)
 
 
-pygame.display.flip()
+pygame.display.update()
 
 time.sleep(1)
 
@@ -37,7 +37,7 @@ wall2.draw_part_one(screen)
 wall2.draw_part_two(screen)
 
 
-pygame.display.flip()
+pygame.display.update()
 
 
 input('FOO')

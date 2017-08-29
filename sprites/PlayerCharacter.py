@@ -131,7 +131,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
         sheet = spritesheet(os.path.join(IMAGES_PATH, 'characters', sheet_path))
         for x in range(0, width * num, width):
             for i in range(0, copies):
-                _images.append(sheet.image_at((x, 0, width, height), (255, 0, 255)))
+                _images.append(sheet.image_at((x, 0, width, height), colors.TRANSPARENT))
         return _images
 
     def update(self):

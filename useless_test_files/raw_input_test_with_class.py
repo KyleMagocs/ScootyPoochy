@@ -29,4 +29,4 @@ while True:
     pygame.draw.line(screen, (255, 0, 0), absolute_zero, [absolute_zero[0] + distance_1[0], absolute_zero[1] + distance_1[1]], 3)
     pygame.draw.line(screen, (255, 0, 0), absolute_zero_2, [absolute_zero_2[0] + distance_2[0], absolute_zero_2[1] + distance_2[1]], 3)
 
-    pygame.display.flip()
+    pygame.display.update()

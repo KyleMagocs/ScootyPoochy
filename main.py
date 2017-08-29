@@ -13,9 +13,9 @@ size = width, height = SCREEN_WIDTH, SCREEN_HEIGHT
 if __name__ == "__main__":
     # Windows: windib, directx
     # Unix: x11, dga, fbcon, directfb, ggi, vgl, svgalib, aalib
-    os.environ["SDL_VIDEODRIVER"] = "windib"
+    os.environ["SDL_VIDEODRIVER"] = "directx"
     pygame.init()
-    screen = pygame.display.set_mode(size)
+    screen = pygame.display.set_mode(size, pygame.DOUBLEBUF | pygame.HWSURFACE)
 
     # character_select = CharacterSelectContext(screen)
     # selected_characters = character_select.main_loop()

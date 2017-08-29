@@ -21,14 +21,14 @@ lamp8 = Lamp((0,300))
 
 
 lamp1.draw(screen)
-pygame.display.flip()
+pygame.display.update()
 
 lamp1.get_wrecked()
 
 for i in range(0, 200):
     lamp1.update(lamp1.image.get_width(), 0)
     lamp1.draw(screen)
-    pygame.display.flip()
+    pygame.display.update()
     clock.tick(30)
 
 
