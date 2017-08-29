@@ -42,8 +42,9 @@ class CharacterSelectTrackballContext:
         p1_left, p1_right = self.players[0].read_input()
         p2_left, p2_right = self.players[1].read_input()
         left = int((p1_left[1] + p1_right[1])/10)
+        right = int((p2_left[1] + p2_right[1])/10)
 
-        return(left, 0)
+        return(left, right)
 
     def main_loop(self):
         start_timer = 0
