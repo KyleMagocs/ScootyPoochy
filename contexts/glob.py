@@ -11,7 +11,7 @@ from contexts.title import TitleContext
 from objects.Characters import TestCharacter, Doge
 from objects.Level import TempLevel, ButtLevel
 from objects.Player import Player
-from vars import skip_intro
+import vars
 
 
 class GlobalContext:
@@ -24,7 +24,7 @@ class GlobalContext:
             p2 = Player(1,1)
 
             player_array = []
-            if not skip_intro:
+            if not vars.skip_intro:
                 while True:
                     title = TitleContext(self.screen)
                     if title.display_loop():
@@ -32,8 +32,10 @@ class GlobalContext:
                     attract = AttractContext(self.screen)
                     attract.display_loop()
                 pygame.event.clear()
-                # select = CharacterSelectTrackballContext(self.screen, p1, p2)
-                select = CharacterSelectContext(self.screen, p1, p2)
+                if vars.use_keyboard_character_select:
+                    select = CharacterSelectContext(self.screen, p1, p2)
+                else:
+                    select = CharacterSelectTrackballContext(self.screen, p1, p2)
                 characters = select.main_loop()
 
                 # theme_select = LevelSelectContext(self.screen)

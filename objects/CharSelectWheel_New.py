@@ -1,20 +1,22 @@
+import copy
 import math
 
 import pygame
 
 from objects.Characters import get_all_characters
+
 all_chars = get_all_characters()
 from sprites.CharacterSelectCharacter import CharacterSelectCharacter
 from vars import radians_factor
 
 
-class CharacterWheel:
+class CharacterWheelNew:
     color = (150, 150, 150)
-    inc = (0,0,0)
+    inc = (0, 0, 0)
     final_color = (150, 150, 150)
     counter = 0
 
-    def __init__(self, x, y, blend_frames, angle_offset, left_or_right=1):
+    def __init__(self, x, y, blend_frames, angle_offset, left_or_right=1, min_selected_angle=0, max_selected_angle=0):
         self.spawn_counter = 0
         self.confirmed = False
         self.x = x
@@ -22,6 +24,7 @@ class CharacterWheel:
         self.characters = []
         self.angle_counter = 0
         self.final_angle = 0
+        self.angle = 0
         self.moving = 0
         self.spawning = False
         self.spawned = False
@@ -31,17 +34,63 @@ class CharacterWheel:
         self.selected_character_index = 0
         self.radius = 0
         self.color = (0, 0, 0)
+        self.all_colors = list()
         self.load_characters()
-        self.final_color = self.get_selected_character().color
+        # self.final_color = self.get_selected_character().color
+        self.min_selected_angle = min_selected_angle
+        self.max_selected_angle = max_selected_angle
 
     def load_characters(self):
         char_indices = range(len(all_chars))
-        if self.factor < 0:
-            char_indices = char_indices.__reversed__()
+        # if self.factor < 0:
+        #     char_indices = char_indices.__reversed__()
+
+        angle_divis = int(360 / len(all_chars))
 
         for i in char_indices:
             self.characters.append(
-                CharacterSelectCharacter(all_chars[i](), int(360 / len(all_chars) * i + self.angle_offset), self.x, self.y))
+                CharacterSelectCharacter(all_chars[i](), int(angle_divis * i), self.x, self.y))
+
+        temp_stupid_array = self.characters
+        temp_stupid_array[-1].angle += (360 if temp_stupid_array[-1].angle <= 0 else 0)
+        for i in range(-1, len(temp_stupid_array) - 1):
+            start_color = temp_stupid_array[i].character.color
+            end_color = temp_stupid_array[i + 1].character.color
+            r_diff = end_color[0] - start_color[0]
+            g_diff = end_color[1] - start_color[1]
+            b_diff = end_color[2] - start_color[2]
+
+            start_angle = temp_stupid_array[i].angle
+            end_angle = temp_stupid_array[i + 1].angle
+            if start_angle > end_angle:
+                end_angle += 360
+            for j in range(start_angle, end_angle):
+                # if j - start_angle < 10:
+                #     self.all_colors.append(start_color)
+                #     continue
+                # if end_angle - j - 10 < 10:
+                #     self.all_colors.append(end_color)
+                #     continue
+                ratio = (j - temp_stupid_array[i].angle + 10) / max((angle_divis - 10), 0)
+
+                if r_diff >= 0:
+                    new_r = int(r_diff * ratio + end_color[0])
+                else:
+                    new_r = int(r_diff * ratio + start_color[0])
+                if g_diff >= 0:
+                    new_g = int(g_diff * ratio + end_color[1])
+                else:
+                    new_g = int(g_diff * ratio + start_color[1])
+                if b_diff >= 0:
+                    new_b = int(b_diff * ratio + end_color[2])
+                else:
+                    new_b = int(b_diff * ratio + start_color[2])
+
+                new_color = (new_r, new_g, new_b)
+
+                # todo: from buzzed kyle:  you probably just introduced a bug by doing this
+                # self.all_colors.append(new_color)
+                self.all_colors.append((255, 255, 255))
 
         self.update_chars(0)  # Todo:  this is kind of hacky
 
@@ -54,47 +103,29 @@ class CharacterWheel:
             char.angle = (char.angle + angle_inc) % 360
             char.update()
 
-    def set_color(self, r, g, b):
-        self.counter = 0
-        self.final_color = (r, g, b)
-        self.inc = ((r - self.color[0]) / self.blend_frames, (g - self.color[1]) / self.blend_frames, (b - self.color[2]) / self.blend_frames)
-
-    def update_color(self):
-        self.counter += 1
-        if self.counter > self.blend_frames:
-            self.color = self.final_color
-            return
-        new_r = max(min(int(self.color[0] + self.inc[0]), 255), 0)
-        new_g = max(min(int(self.color[1] + self.inc[1]), 255), 0)
-        new_b = max(min(int(self.color[2] + self.inc[2]), 255), 0)
-
-        self.color = (new_r, new_g, new_b)
-
-    def update_angle(self, direction):
-        if not self.confirmed and self.spawned:
-            if self.moving != direction:
-                self.selected_character_index = (self.selected_character_index - (direction*self.factor)) % len(self.characters)
-                new_color = self.get_selected_character().color
-                self.set_color(new_color[0], new_color[1], new_color[2])
-                # Todo:  set self.final_angle here
-            self.moving = direction
-
     def get_selected_character(self):
-        return self.characters[self.selected_character_index].character
-
-    def update(self):
-        self.update_color()
-
-        self.angle_counter += self.moving
-
-        if math.fabs(self.angle_counter) > self.blend_frames or self.moving and self.angle_counter == 0:
-            self.moving = 0
-            self.angle_counter = 0
-            # TODO:  Fix issue 4 here
-
-        self.update_chars(360 / len(self.characters) / self.blend_frames * self.moving)
+        # TODO:  make this a comprehension
+        # for char in self.characters:
+        #     if self.min_selected_angle < char.angle < self.max_selected_angle:
+        #         return char.character
         for char in self.characters:
-            char.selected = False
+            if char.scale > .75:
+                return char.character
+
+        return None
+
+
+    def update(self, angle):
+        if self.spawning:
+            self.spawn_counter += 1
+            self.radius += 300 / self.blend_frames
+            if self.spawn_counter > self.blend_frames:
+                self.spawning = False
+                self.spawned = True
+
+        self.angle = (self.angle + angle) % 360
+        self.update_chars(angle)
+        self.color = self.all_colors[(self.angle) % 360]
 
     def spawn_or_confirm(self):
         if self.spawned:
@@ -102,26 +133,26 @@ class CharacterWheel:
                 self.confirm_character()
         else:
             self.spawning = True
-            color = self.get_selected_character().color
-            self.set_color(color[0], color[1], color[2])
+            # color = self.get_selected_character().color
+            # self.set_color(color[0], color[1], color[2])
 
-    def display_stats(self, screen):
-        if not self.moving:
-            self.characters[self.selected_character_index].selected = True
-            name = self.get_selected_character().name
-            stats = self.get_selected_character().attributes
-            font = pygame.font.SysFont('Comic Sans MS', 25)
-            label = font.render(name, 1, self.get_selected_character().color)
-            screen.blit(label, (self.x + (200*self.factor), 600))
-            stat_y = 620
-            for stat in stats:
-                label = font.render(stat, 1, self.get_selected_character().color)
-                screen.blit(label, (self.x + (250 * self.factor) - 100, stat_y))
+    def draw_stats(self, screen):
+        if self.get_selected_character() is not None:
+            if not self.moving:
+                name = self.get_selected_character().name
+                stats = self.get_selected_character().attributes
+                font = pygame.font.SysFont('Comic Sans MS', 25)
+                label = font.render(name, 1, self.get_selected_character().color)
+                screen.blit(label, (self.x + (200 * self.factor), 600))
+                stat_y = 620
+                for stat in stats:
+                    label = font.render(stat, 1, self.get_selected_character().color)
+                    screen.blit(label, (self.x + (250 * self.factor) - 100, stat_y))
+                    stat_y += 20
+
+                label = font.render('PRESS BUTTON TO CONFIRM', 1, (200, 200, 200))
+                screen.blit(label, (self.x + (300 * self.factor) - 175, stat_y + 20))
                 stat_y += 20
-
-            label = font.render('PRESS BUTTON TO CONFIRM', 1, (200, 200, 200))
-            screen.blit(label, (self.x + (300 * self.factor) - 175, stat_y+20))
-            stat_y += 20
 
     def draw_circles(self, screen):
         pygame.draw.circle(screen, self.color, (self.x, self.y), int(self.radius + 90), 9)
@@ -133,20 +164,12 @@ class CharacterWheel:
         if not self.spawning and self.radius == 0:
             font = pygame.font.SysFont('Comic Sans MS', 15)
             label = font.render('PRESS KEY TO JOIN', 1, (200, 200, 200))
-            screen.blit(label, (self.x + (200 * self.factor)-75, 200))
-        if self.spawning:
-            self.spawn_counter += 1
-            self.radius += 300 / self.blend_frames
-            if self.spawn_counter > self.blend_frames:
-                self.spawning = False
-                self.spawned = True
-
-        self.update()
+            screen.blit(label, (self.x + (200 * self.factor) - 75, 200))
 
         self.draw_circles(screen)
 
         if self.radius > 0 and not self.confirmed:
-            self.display_stats(screen)
+            self.draw_stats(screen)
 
         if self.confirmed:
             # TODO:  ugly
@@ -154,5 +177,5 @@ class CharacterWheel:
             label = font.render(self.get_selected_character().name, 1, self.get_selected_character().color)
             screen.blit(label, (self.x + (200 * self.factor) - 75, 650))
 
-        for char in self.characters:
+        for char in sorted(self.characters, key=lambda c: c.scale):
             char.draw(screen)
