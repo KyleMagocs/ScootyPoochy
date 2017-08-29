@@ -5,6 +5,8 @@ import pygame
 import vars
 from objects.CollideObject import collide_object
 import colors
+from utils.sprite_utils import image_to_surface
+
 
 class Wall(pygame.sprite.Sprite):
     side_image = 'objects/house_wall_side.png'
@@ -17,14 +19,14 @@ class Wall(pygame.sprite.Sprite):
         self.y = init_y
         self.door_x = door_x
 
-        self.left_side = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.side_image))
-        self.left_side.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
+        left_side_image = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.side_image))
+        self.left_side = image_to_surface(left_side_image)
 
-        self.right_side = pygame.transform.flip(self.left_side, True, False)
-        self.right_side.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
+        right_side_image = pygame.transform.flip(left_side_image, True, False)
+        self.right_side = image_to_surface(right_side_image)
 
-        self.top = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.top_image))
-        self.top.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
+        top_image = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.top_image))
+        self.top = image_to_surface(top_image)
 
         _wall_base = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, self.bottom_image))
         _wall_flipped = pygame.transform.flip(_wall_base, True, False)
@@ -36,7 +38,7 @@ class Wall(pygame.sprite.Sprite):
 
         _right_wall = _wall_flipped.subsurface((0, 0, door_x, _wall_flipped.get_height()))
         _right_wall.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
-        self.right_wall = right_wall(_right_wall, init_x + self.left_side.get_width() + self.left_wall.image.get_width(), init_y + self.top.get_height())
+        self.right_wall = right_wall(_right_wall, init_x + self.left_side.get_width() + self.left_wall.image_surface.get_width(), init_y + self.top.get_height())
 
         self.rect = self.top.get_rect()
 
@@ -48,7 +50,7 @@ class Wall(pygame.sprite.Sprite):
         screen.blit(self.left_side, (self.x + x_offset, self.y + y_offset))
         self.left_wall.draw(screen, x_offset, y_offset)
         self.right_wall.draw(screen, x_offset, y_offset)
-        screen.blit(self.right_side, (self.x + x_offset + self.left_side.get_width() + self.left_wall.image.get_width() + self.right_wall.image.get_width(), self.y + y_offset))
+        screen.blit(self.right_side, (self.x + x_offset + self.left_side.get_width() + self.left_wall.image_surface.get_width() + self.right_wall.image_surface.get_width(), self.y + y_offset))
 
     def draw_part_two(self, screen, x_offset, y_offset):
         screen.blit(self.top, (self.x + x_offset + self.left_side.get_width(), self.y + y_offset))
@@ -66,7 +68,7 @@ class Wall(pygame.sprite.Sprite):
 
 class left_wall(collide_object):
     def get_collide_rect(self):
-        _rect = self.image.subsurface((0, 0, self.image.get_width()-47, self.image.get_height()/1.2)).get_rect()
+        _rect = self.image_surface.subsurface((0, 0, self.image_surface.get_width()-47, self.image_surface.get_height()/1.2)).get_rect()
         _rect.x += self.x
         _rect.y += self.y
         return _rect
@@ -74,7 +76,7 @@ class left_wall(collide_object):
 
 class right_wall(collide_object):
     def get_collide_rect(self):
-        _new = self.image.subsurface((0, 0, self.image.get_width() - 42, self.image.get_height()/1.2))
+        _new = self.image_surface.subsurface((0, 0, self.image_surface.get_width() - 42, self.image_surface.get_height()/1.2))
         _reflip = pygame.transform.flip(_new, True, False)
         _rect = _reflip.get_rect()
         _rect.x += self.x + 49

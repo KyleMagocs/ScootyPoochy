@@ -1,6 +1,7 @@
 import pygame
 
 #  https://www.pygame.org/wiki/RotateCenter
+import colors
 from objects import Characters
 import math
 import vars
@@ -40,3 +41,11 @@ def get_velocity(left, right):
 def angle_between_points(x1, y1, x2, y2):
     theta = math.atan(((y2 - y1)*-1) / (x2 - x1)) / vars.radians_factor + 90
     return theta
+
+
+def image_to_surface(image):
+    image_surface = pygame.Surface((image.get_width(), image.get_height()))
+    image_surface.fill(colors.TRANSPARENT)
+    image_surface.blit(image, (0, 0))
+    image_surface.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
+    return image_surface

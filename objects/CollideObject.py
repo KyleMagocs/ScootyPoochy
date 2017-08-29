@@ -1,5 +1,7 @@
 import pygame
 import vars
+from utils.sprite_utils import image_to_surface
+
 
 class collide_object(pygame.sprite.Sprite):
     collide_x_offset = 0
@@ -9,7 +11,8 @@ class collide_object(pygame.sprite.Sprite):
     def __init__(self, image, x, y):
         super().__init__()
         self.height = 100
-        self.image = image
+        if image is not None:
+            self.image_surface = image_to_surface(image)
         self.x = x
         self.y = y
         self.old_rect = self.get_collide_rect()
@@ -18,7 +21,7 @@ class collide_object(pygame.sprite.Sprite):
         if self.rect.bottom + y_offset < 0 or self.rect.top + y_offset > vars.SCREEN_HEIGHT:
             return
         self.old_rect = self.get_collide_rect()
-        screen.blit(self.image, (self.x + x_offset, self.y + y_offset))
+        screen.blit(self.image_surface, (self.x + x_offset, self.y + y_offset))
         if vars.draw_rects:
             _rect = self.get_collide_rect()
             _rect.x += x_offset
@@ -29,7 +32,7 @@ class collide_object(pygame.sprite.Sprite):
         self.old_rect = self.get_collide_rect()
 
     def get_collide_rect(self):
-        _rect = self.image.subsurface((0, 0, self.image.get_width(), self.image.get_height())).get_rect()
+        _rect = self.image_surface.subsurface((0, 0, self.image_surface.get_width(), self.image_surface.get_height())).get_rect()
         _rect.width = self.width
         _rect.x += self.x + self.collide_x_offset
         _rect.y += self.y + self.collide_y_offset

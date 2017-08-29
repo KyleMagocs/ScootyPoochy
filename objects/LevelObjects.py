@@ -5,6 +5,7 @@ import colors
 import vars
 from objects.CollideObject import collide_object
 from utils.hollow import textHollow, textOutline
+from utils.sprite_utils import image_to_surface
 from utils.spritesheet import spritesheet
 
 
@@ -57,12 +58,9 @@ class LevelObject(pygame.sprite.Sprite):
         for x in range(0, width * num, width):
             _image = sheet.image_at((x, 0, width, height), colors.TRANSPARENT)
             _image = pygame.transform.flip(_image, mirror, False)
-            image_surface = pygame.Surface((_image.get_width(), _image.get_height()))
-            image_surface.fill(colors.TRANSPARENT)
-            image_surface.blit(_image, (0, 0))
-            image_surface.set_colorkey(colors.TRANSPARENT)
+            _image_surface = image_to_surface(_image)
             for x in range(0, 3):
-                _images.append(image_surface)
+                _images.append(_image_surface)
         return _images
 
     def load_sprite(self, mirror=False):
