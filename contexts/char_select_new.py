@@ -17,8 +17,8 @@ transition_frames = 25
 class CharacterSelectTrackballContext:
 
     def __init__(self, screen, p1, p2):
-        self.left_wheel = CharacterWheelNew(-100, 200, transition_frames, 0, 1, 170, 230)
-        self.right_wheel = CharacterWheelNew(vars.SCREEN_WIDTH+100, 200, transition_frames, -1 * (360 / len(all_chars) * (len(all_chars) / 2 - 1)), -1, 170, 230)
+        self.left_wheel = CharacterWheelNew(-100, 200, transition_frames, 0, 1, 15, 40)
+        self.right_wheel = CharacterWheelNew(vars.SCREEN_WIDTH+100, 200, transition_frames, -1 * (360 / len(all_chars) * (len(all_chars) / 2 - 1)), -1, 130, 165)
         self.players = (p1, p2)
         self.screen = screen
         self.clock = pygame.time.Clock()
@@ -74,7 +74,7 @@ class CharacterSelectTrackballContext:
 
             if self.both_wheels_confirmed():
                 if end_timer > int(vars.fps / 2):
-                    return [self.left_wheel.get_selected_character(), self.right_wheel.get_selected_character(),]
+                    return [self.left_wheel.get_selected_character().character, self.right_wheel.get_selected_character().character,]
                 else:
                     fade_overlay = pygame.Surface((vars.SCREEN_WIDTH, vars.SCREEN_HEIGHT))
                     fade_overlay.fill(colors.black)
@@ -93,7 +93,7 @@ class CharacterSelectTrackballContext:
         self.screen.fill(background_fill)
         font = pygame.font.SysFont('Impact', 20)
         label = font.render('CHOOSE YOUR CHARACTERS!'.format(self.timer / fps), 1, (100, 200, 100))
-        self.screen.blit(label, (450, 100))
+        self.screen.blit(label, (vars.SCREEN_WIDTH/2 - label.get_width()/2, 100))
 
 
 

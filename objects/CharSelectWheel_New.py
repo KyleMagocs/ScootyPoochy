@@ -3,6 +3,7 @@ import math
 
 import pygame
 
+import colors
 from objects.Characters import get_all_characters
 
 all_chars = get_all_characters()
@@ -28,17 +29,20 @@ class CharacterWheelNew:
         self.moving = 0
         self.spawning = False
         self.spawned = False
+        self.despawning = False
+        self.despawned = False
+        self.despawn_counter = 0
         self.blend_frames = blend_frames
         self.factor = left_or_right
+        self.flash_timer = 0
         self.angle_offset = angle_offset
         self.selected_character_index = 0
         self.radius = 0
         self.color = (0, 0, 0)
         self.all_colors = list()
-        self.load_characters()
-        # self.final_color = self.get_selected_character().color
         self.min_selected_angle = min_selected_angle
         self.max_selected_angle = max_selected_angle
+        self.load_characters()
 
     def load_characters(self):
         char_indices = range(len(all_chars))
@@ -49,7 +53,7 @@ class CharacterWheelNew:
 
         for i in char_indices:
             self.characters.append(
-                CharacterSelectCharacter(all_chars[i](), int(angle_divis * i), self.x, self.y))
+                CharacterSelectCharacter(all_chars[i](), int(angle_divis * i), self.x, self.y, self.min_selected_angle, self.max_selected_angle))
 
         temp_stupid_array = self.characters
         temp_stupid_array[-1].angle += (360 if temp_stupid_array[-1].angle <= 0 else 0)
@@ -95,24 +99,26 @@ class CharacterWheelNew:
         self.update_chars(0)  # Todo:  this is kind of hacky
 
     def confirm_character(self):
+        self.get_selected_character().flash_factor = 2
+        self.flash_timer = 15
         self.confirmed = True
 
     def update_chars(self, angle_inc):
+        if self.confirmed:
+            angle_inc = 0
         for char in self.characters:
+            if (self.despawning or self.despawned) and char.selected:
+                continue
             char.radius = self.radius + 30
-            char.angle = (char.angle + angle_inc) % 360
-            char.update()
+            char.update(angle_inc)
 
     def get_selected_character(self):
-        # TODO:  make this a comprehension
-        # for char in self.characters:
-        #     if self.min_selected_angle < char.angle < self.max_selected_angle:
-        #         return char.character
-        for char in self.characters:
-            if char.scale > .75:
-                return char.character
-
-        return None
+        if self.spawning:
+            return None
+        try:
+            return [x for x in self.characters if x.selected][0]
+        except:
+            return None
 
 
     def update(self, angle):
@@ -122,32 +128,41 @@ class CharacterWheelNew:
             if self.spawn_counter > self.blend_frames:
                 self.spawning = False
                 self.spawned = True
+        if self.despawning:
+            self.despawn_counter += 1
+            self.radius -= 300 / self.blend_frames
+            if self.despawn_counter > self.blend_frames:
+                self.despawning = False
+                self.despawned = True
 
+        self.flash_timer = max(self.flash_timer-1, 0)
+        if self.flash_timer == 1:
+            self.get_selected_character().flash_factor = 1000
         self.angle = (self.angle + angle) % 360
-        self.update_chars(angle)
+        self.update_chars(self.angle)
         self.color = self.all_colors[(self.angle) % 360]
 
     def spawn_or_confirm(self):
         if self.spawned:
             if not self.moving:
                 self.confirm_character()
+                self.despawning = True
         else:
             self.spawning = True
-            # color = self.get_selected_character().color
-            # self.set_color(color[0], color[1], color[2])
 
     def draw_stats(self, screen):
-        if self.get_selected_character() is not None:
+        char = self.get_selected_character()
+        if char is not None:
             if not self.moving:
-                name = self.get_selected_character().name
-                stats = self.get_selected_character().attributes
+                name = char.character.name
+                stats = char.character.attributes
                 font = pygame.font.SysFont('Comic Sans MS', 25)
-                label = font.render(name, 1, self.get_selected_character().color)
-                screen.blit(label, (self.x + (200 * self.factor), 600))
-                stat_y = 620
+                label = font.render(name, 1, char.character.color)
+                screen.blit(label, (char.x + char.width + 10, char.y))
+                stat_y = char.y + 20
                 for stat in stats:
-                    label = font.render(stat, 1, self.get_selected_character().color)
-                    screen.blit(label, (self.x + (250 * self.factor) - 100, stat_y))
+                    label = font.render(stat, 1, colors.white)
+                    screen.blit(label, (char.x + char.width + 10, stat_y))
                     stat_y += 20
 
                 label = font.render('PRESS BUTTON TO CONFIRM', 1, (200, 200, 200))
@@ -161,7 +176,7 @@ class CharacterWheelNew:
         pygame.draw.circle(screen, self.color, (self.x, self.y), int(self.radius + 1), 1)
 
     def draw(self, screen):
-        if not self.spawning and self.radius == 0:
+        if not self.spawned and not self.spawning:
             font = pygame.font.SysFont('Comic Sans MS', 15)
             label = font.render('PRESS KEY TO JOIN', 1, (200, 200, 200))
             screen.blit(label, (self.x + (200 * self.factor) - 75, 200))
@@ -174,8 +189,13 @@ class CharacterWheelNew:
         if self.confirmed:
             # TODO:  ugly
             font = pygame.font.SysFont('Comic Sans MS', 40)
-            label = font.render(self.get_selected_character().name, 1, self.get_selected_character().color)
+            label = font.render(self.get_selected_character().character.name, 1, self.get_selected_character().character.color)
             screen.blit(label, (self.x + (200 * self.factor) - 75, 650))
 
-        for char in sorted(self.characters, key=lambda c: c.scale):
-            char.draw(screen)
+        if self.spawning or self.spawned:
+            if not self.confirmed:
+                for char in sorted(self.characters, key=lambda c: c.scale):
+                    char.draw(screen)
+
+            else:
+                self.get_selected_character().draw(screen)
