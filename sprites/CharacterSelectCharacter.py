@@ -8,9 +8,8 @@ import vars
 from colors import selected_character_colors
 
 
-
 class CharacterSelectCharacter(pygame.sprite.Sprite):
-    def __init__(self, character, init_angle, offset_x, offset_y, min_angle, max_angle ):
+    def __init__(self, character, init_angle, offset_x, offset_y, min_angle, max_angle):
         self.flash_factor = 3
 
         super().__init__()
@@ -36,12 +35,13 @@ class CharacterSelectCharacter(pygame.sprite.Sprite):
         self.angle = (self.init_angle + angle_offset) % 360
         if self.min_angle < self.angle < self.max_angle:
             self.selected = True
-            if self.angle < int((self.min_angle + self.max_angle)/2):
-                ratio = (self.angle - self.min_angle) / ((self.min_angle + self.max_angle)/2)
-            elif self.angle >= int((self.min_angle + self.max_angle)/2):
-                ratio = math.fabs(self.angle - self.max_angle) / ((self.min_angle + self.max_angle) / 2)
+            ratio = 0
+            if self.angle < int((self.min_angle + self.max_angle) / 2):
+                ratio = (self.angle - self.min_angle) / ((self.max_angle - self.min_angle) / 2)
+            elif self.angle >= int((self.min_angle + self.max_angle) / 2):
+                ratio = (self.max_angle - self.angle) / ((self.max_angle - self.min_angle) / 2)
 
-            self.scale = 0.4 + (ratio)
+            self.scale = min(0.4 + ratio, 0.8)
         else:
             self.selected = False
             self.scale = 0.4
@@ -65,6 +65,10 @@ class CharacterSelectCharacter(pygame.sprite.Sprite):
             pygame.draw.rect(screen, (150, 150, 150), (self.x, self.y, self.current_sprite.get_width(), self.current_sprite.get_height()), 4)
 
         self.selected_color_flag = (self.selected_color_flag + 1) % (self.flash_factor * 2)
+
+        # font = pygame.font.SysFont('Comic Sans MS', 15)
+        # label = font.render(str(self.angle), 1, colors.white)
+        # screen.blit(label, (self.x+5, self.y+5))
 
     @property
     def width(self):

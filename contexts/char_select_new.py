@@ -17,8 +17,8 @@ transition_frames = 25
 class CharacterSelectTrackballContext:
 
     def __init__(self, screen, p1, p2):
-        self.left_wheel = CharacterWheelNew(-100, 200, transition_frames, 0, 1, 15, 40)
-        self.right_wheel = CharacterWheelNew(vars.SCREEN_WIDTH+100, 200, transition_frames, -1 * (360 / len(all_chars) * (len(all_chars) / 2 - 1)), -1, 130, 165)
+        self.left_wheel = CharacterWheelNew(-100, 200, transition_frames, 0, vars.SCREEN_WIDTH/4, 15, 40, False)
+        self.right_wheel = CharacterWheelNew(vars.SCREEN_WIDTH+100, 200, transition_frames, -1 * (360 / len(all_chars) * (len(all_chars) / 2 - 1)), vars.SCREEN_WIDTH/4*3, 130, 155, True)
         self.players = (p1, p2)
         self.screen = screen
         self.clock = pygame.time.Clock()
@@ -73,13 +73,14 @@ class CharacterSelectTrackballContext:
                 start_timer += 1
 
             if self.both_wheels_confirmed():
-                if end_timer > int(vars.fps / 2):
+                if end_timer > int(vars.fps):
                     return [self.left_wheel.get_selected_character().character, self.right_wheel.get_selected_character().character,]
                 else:
-                    fade_overlay = pygame.Surface((vars.SCREEN_WIDTH, vars.SCREEN_HEIGHT))
-                    fade_overlay.fill(colors.black)
-                    fade_overlay.set_alpha((end_timer / int(vars.fps / 2)) * 255)
-                    self.screen.blit(fade_overlay, (0, 0))
+                    if end_timer > int(vars.fps/2):
+                        fade_overlay = pygame.Surface((vars.SCREEN_WIDTH, vars.SCREEN_HEIGHT))
+                        fade_overlay.fill(colors.black)
+                        fade_overlay.set_alpha((end_timer / int(vars.fps / 2)) * 255)
+                        self.screen.blit(fade_overlay, (0, 0))
                     end_timer += 1
 
             pygame.display.update()

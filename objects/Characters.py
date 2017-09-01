@@ -13,7 +13,7 @@ ACCEL_COEF = 1
 
 
 def get_all_characters():
-    return [Carlos, Doge, TestCharacter, Nort, Carlos, Doge, TestCharacter, Nort,  Carlos, Doge, TestCharacter, Nort]
+    return [Carlos, Doge, TestCharacter, Nort, Carlos, Doge, TestCharacter, Nort, Carlos, Doge, TestCharacter, Nort, Carlos, Doge, TestCharacter, Nort, ]
 
 
 # TODO:  THIS IS TRASH

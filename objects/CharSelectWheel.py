@@ -4,7 +4,7 @@ import pygame
 
 from objects.Characters import get_all_characters
 all_chars = get_all_characters()
-from sprites.CharacterSelectCharacter import CharacterSelectCharacter
+from sprites.CharacterSelectCharacter_old import CharacterSelectCharacter
 from vars import radians_factor
 
 
