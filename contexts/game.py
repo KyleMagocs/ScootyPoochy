@@ -48,8 +48,8 @@ class GameContext:
 
     def draw_hud(self, screen):
         pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH/2, 100), (vars.SCREEN_WIDTH/2, vars.SCREEN_HEIGHT-100), 4)
-        pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH / 2 - 50, 100), (vars.SCREEN_WIDTH / 2 + 50, 100), 4)
-        pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH / 2 - 50, vars.SCREEN_HEIGHT-100), (vars.SCREEN_WIDTH / 2 + 50, vars.SCREEN_HEIGHT-100), 4)
+        pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH / 2 - 35, 100), (vars.SCREEN_WIDTH / 2 + 35, 100), 4)
+        pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH / 2 - 35, vars.SCREEN_HEIGHT-100), (vars.SCREEN_WIDTH / 2 + 35, vars.SCREEN_HEIGHT-100), 4)
         pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH / 2 - 25, vars.SCREEN_HEIGHT/2), (vars.SCREEN_WIDTH / 2 + 25, vars.SCREEN_HEIGHT/2), 4)
         # draw p1
         # draw p2
