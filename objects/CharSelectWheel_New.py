@@ -92,9 +92,10 @@ class CharacterWheelNew:
         self.update_chars(0)  # Todo:  this is kind of hacky
 
     def confirm_character(self):
-        self.get_selected_character().flash_factor = 2
-        self.flash_timer = 30
-        self.confirmed = True
+        if self.get_selected_character() is not None:
+            self.get_selected_character().flash_factor = 2
+            self.flash_timer = 30
+            self.confirmed = True
 
     def update_chars(self, angle_inc):
         if self.confirmed:
