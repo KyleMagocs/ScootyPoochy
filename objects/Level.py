@@ -49,7 +49,7 @@ class Level:
                 self.walls.add(_room.top_wall)
             self.objects.add(_room.objects)
             floor_image = pygame.image.load_extended(_room.floor_image).convert()
-            for y in range(height+125, height + _room.height + 125, floor_image.get_height()):
+            for y in range(height+136, height + _room.height + 125, floor_image.get_height()):
                 _im.blit(floor_image, (0, y))
             height += _room.height
         self.height = height
@@ -108,13 +108,13 @@ class TempLevel(Level):
 class ButtLevel(Level):
 
     def __init__(self):
-        from objects.Room import Room_Finish, Room_One, Room_Start, Room_Two, Room_Three, Bathroom
+        from objects.Room import Room_Finish, Room_One, Room_Start, Room_Two, Room_Three, Bathroom, Backyard
         super().__init__()
         self.theme = TempTheme()
         self.width = self.theme.background_sprite.get_width()
 
-        my_rooms = Room_Finish, Room_Three, Room_One, Room_Two, Bathroom, Room_Three, Room_Start
-        my_doors = 0,           75,         75,       150,      75,       150,        100
+        my_rooms = Room_Finish, Room_Three, Room_One, Room_Two, Bathroom, Room_Three, Backyard, Room_Start
+        my_doors = 0,           75,         75,       150,      75,       150,        75,       100
 
         # my_rooms = Room_Finish, Room_Start
         # my_doors = 0,           100

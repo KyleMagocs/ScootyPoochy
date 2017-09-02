@@ -113,3 +113,8 @@ class BathroomWall(Wall):
     side_image = 'objects/bathroom_wall_side.png'
     top_image = 'objects/bathroom_wall_top.png'
     bottom_image = 'objects/bathroom_wall_bottom.png'
+
+class BackyardWall(Wall):
+    side_image = 'objects/backyard_wall_side.png'
+    top_image = 'objects/backyard_wall_top.png'
+    bottom_image = 'objects/backyard_wall_bottom.png'
