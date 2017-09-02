@@ -99,6 +99,7 @@ class CharacterWheelNew:
     def update_chars(self, angle_inc):
         if self.confirmed:
             angle_inc = 0
+            return
         for char in self.characters:
             if (self.despawning or self.despawned) and char.selected:
                 continue
