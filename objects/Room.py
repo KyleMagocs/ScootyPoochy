@@ -3,6 +3,7 @@ import os
 import pygame
 
 from objects.LevelObjects import Lamp, Table, Couch, Vase, Cuckoo, HDTV, BookShelf
+from objects.LevelObjects_Backyard import Gnome, BirdBath
 from objects.LevelObjects_Bathroom import BathroomSink, Shower, Toilet, SinkStuff, BathMat
 from objects.Wall import Wall, BathroomWall, BackyardWall
 
@@ -88,7 +89,11 @@ class Backyard(Room):
     height = 500
 
     floor_image = os.path.join(ASSETS_PATH, 'backyard_bg.png')
-    objects = pygame.sprite.Group(    )
+    objects = pygame.sprite.Group(
+        Gnome((300, 230)),
+        Gnome((280, 270)),
+        BirdBath((430, 300)),
+    )
 
     def load_wall(self, door_x):
         self.top_wall = BackyardWall(0, self.y_position, door_x)
