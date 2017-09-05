@@ -2,6 +2,7 @@ import os
 import pygame
 
 import colors
+import debugcontrols
 import vars
 from objects.CollideObject import collide_object
 from utils.hollow import textHollow, textOutline
@@ -39,7 +40,7 @@ class LevelObject(pygame.sprite.Sprite):
         if self.get_draw_rect().bottom + y_offset < 0 or self.get_draw_rect().top + y_offset > vars.SCREEN_HEIGHT:
             return
         screen.blit(self.image, (self.x + x_offset, self.y + y_offset))
-        if vars.draw_rects:
+        if debugcontrols.draw_rects:
             _rect = self.get_collide_rect()
             _rect.x += x_offset
             _rect.y += y_offset

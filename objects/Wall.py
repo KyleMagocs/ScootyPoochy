@@ -2,6 +2,7 @@ import os
 
 import pygame
 
+import debugcontrols
 import vars
 from objects.CollideObject import collide_object
 import colors
@@ -101,7 +102,7 @@ class SideWall(collide_object):
         pass
 
     def draw_part_two(self, screen, x_offset, *args):
-        if vars.draw_rects:
+        if debugcontrols.draw_rects:
             _rect = self.rect
             _rect.x += x_offset
             pygame.draw.rect(screen, (0, 255, 255), _rect, 1)

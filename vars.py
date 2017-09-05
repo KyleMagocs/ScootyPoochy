@@ -1,15 +1,10 @@
 import os
 
 fps = 30
-skip_intro = True
-show_velocity = False
-draw_rects = False
-skip_countdown = False
-debug_mode = False
-use_keyboard_character_select = False
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 PLAYER_START_Y = 200
+
 radians_factor = 0.0174533  # Lol this is a constant not a var
 
 selected_character_color_index = 0

@@ -1,6 +1,7 @@
 import pygame
 
 import colors
+import debugcontrols
 from objects.LevelObjects import Lamp
 from objects.Player import Player
 from objects.World import World
@@ -91,7 +92,7 @@ class GameContext:
 
             self.draw_hud(self.screen)
 
-            if vars.debug_mode:
+            if debugcontrols.debug_mode:
                 font = pygame.font.SysFont('Comic Sans MS', 25)
                 label = font.render(str(real_fps), 1, (0,255,255))
                 self.screen.blit(label, (vars.SCREEN_WIDTH/2-label.get_width()/2, vars.SCREEN_HEIGHT-75))

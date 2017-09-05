@@ -7,7 +7,8 @@ import pygame
 from objects.Characters import PoopTrail, Nort
 from utils.sprite_utils import rot_center, angle_between_points
 from utils.spritesheet import spritesheet
-from vars import show_velocity, draw_rects, SCREEN_HEIGHT, PLAYER_START_Y, IMAGES_PATH, radians_factor
+from vars import SCREEN_HEIGHT, PLAYER_START_Y, IMAGES_PATH, radians_factor
+from debugcontrols import show_velocity, draw_rects
 import colors
 
 

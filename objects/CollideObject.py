@@ -1,4 +1,6 @@
 import pygame
+
+import debugcontrols
 import vars
 from utils.sprite_utils import image_to_surface
 
@@ -22,7 +24,7 @@ class collide_object(pygame.sprite.Sprite):
             return
         self.old_rect = self.get_collide_rect()
         screen.blit(self.image_surface, (self.x + x_offset, self.y + y_offset))
-        if vars.draw_rects:
+        if debugcontrols.draw_rects:
             _rect = self.get_collide_rect()
             _rect.x += x_offset
             _rect.y += y_offset

@@ -4,6 +4,7 @@ import math
 import pygame
 
 import colors
+import debugcontrols
 import vars
 from sprites.PlayerCharacter import PlayerCharacter
 from utils.hollow import textOutline
@@ -43,7 +44,7 @@ class World:
         return p1_progress, p2_progress
 
     def update(self, p1_left, p1_right, p2_left, p2_right):
-        if not vars.skip_countdown and len(self.countdown) > 0:
+        if not debugcontrols.skip_countdown and len(self.countdown) > 0:
             self.player_one.update_limbs((0, 0), (0, 0))
             self.player_two.update_limbs((0, 0), (0, 0))
             if self.countdown_timer < int(vars.fps * .75) and len(self.countdown) > 0:
