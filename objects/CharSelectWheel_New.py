@@ -152,7 +152,7 @@ class CharacterWheelNew:
             self.color = colors.white
 
     def spawn_or_confirm(self):
-        if self.spawned:
+        if self.spawned and not self.despawned:
             if not self.moving:
                 self.confirm_character()
                 self.despawning = True

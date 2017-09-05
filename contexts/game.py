@@ -15,8 +15,7 @@ class GameContext:
     num_players = None
     player_sprites = list()
 
-
-    def __init__(self, screen, character_list, levels):  # TODO:  This should receive players, not characters
+    def __init__(self, screen, character_list, levels, p1, p2):  # TODO:  This should receive players, not characters
         self.background = None
         self.num_players = len(character_list)
         self.screen = screen
@@ -28,9 +27,8 @@ class GameContext:
 
         self.players = []
 
-        for i in range(0, len(character_list)):
-            player = Player(i, i)
-            self.players.append(player)
+        self.players.append(p1)
+        self.players.append(p2)
 
         self.world = World(width=600, y_offset=vars.SCREEN_HEIGHT+10, level=levels[0])
 
@@ -40,20 +38,18 @@ class GameContext:
         self.world.player_two.y = levels[0].height - vars.PLAYER_START_Y
         self.world.player_two.set_character(character_list[1])
 
-        # self.players_group = pygame.sprite.Group()
-
         self.clock = pygame.time.Clock()
 
         self.gameOverFlag = 0
         self.gameOverCount = 0
+
+        self.draw_frame = True
 
     def draw_hud(self, screen):
         pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH/2, 100), (vars.SCREEN_WIDTH/2, vars.SCREEN_HEIGHT-100), 4)
         pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH / 2 - 35, 100), (vars.SCREEN_WIDTH / 2 + 35, 100), 4)
         pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH / 2 - 35, vars.SCREEN_HEIGHT-100), (vars.SCREEN_WIDTH / 2 + 35, vars.SCREEN_HEIGHT-100), 4)
         pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH / 2 - 25, vars.SCREEN_HEIGHT/2), (vars.SCREEN_WIDTH / 2 + 25, vars.SCREEN_HEIGHT/2), 4)
-        # draw p1
-        # draw p2
         _prog = self.world.get_progress()
         p1_y = int(_prog[0] * (vars.SCREEN_HEIGHT - 210))
         p2_y = int(_prog[1] * (vars.SCREEN_HEIGHT - 210))
@@ -77,19 +73,17 @@ class GameContext:
         start_timer = 0
         end_timer = 0
         while True:
-
-
+            self.draw_frame = not self.draw_frame
             real_fps = clock.tick(vars.fps)
 
             self.screen.fill(colors.black)
-
 
             p1_left, p1_right = self.players[0].read_input()
             p2_left, p2_right = self.players[1].read_input()
 
             results = self.world.update(p1_left, p1_right, p2_left, p2_right)
-            self.world.draw(self.screen)
 
+            self.world.draw(self.screen)
             self.draw_hud(self.screen)
 
             if debugcontrols.debug_mode:
@@ -120,7 +114,6 @@ class GameContext:
                 # TODO:  FANCY FINISH ANIMATION
 
             self.check_keys()
-
             pygame.display.update()
             pygame.event.get()
 

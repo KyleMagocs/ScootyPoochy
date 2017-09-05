@@ -79,12 +79,12 @@ class World:
         for player in self.player_group:
             player.update_z()
 
-        new_poop = self.player_one.spawn_poop_or_dont()
-        if new_poop is not None:
+        new_poops = self.player_one.spawn_poop_or_dont()
+        for new_poop in new_poops:
             self.poop_surface.blit(new_poop.image, (new_poop.x, new_poop.y))
 
-        new_poop = self.player_two.spawn_poop_or_dont()
-        if new_poop is not None:
+        new_poops = self.player_two.spawn_poop_or_dont()
+        for new_poop in new_poops:
             self.poop_surface.blit(new_poop.image, (new_poop.x, new_poop.y))
 
         return self.game_finished()
@@ -186,7 +186,7 @@ class World:
                     p_sprite.x -= delta_x
                     p_sprite.y -= delta_y
 
-                    # p_sprite.distance_travelled -= math.sqrt(delta_x * delta_x + delta_y * delta_y)
+                    p_sprite.distance_travelled -= math.sqrt(delta_x * delta_x + delta_y * delta_y)
 
             if _min_z is not None:
                 p_sprite.min_z = _min_z

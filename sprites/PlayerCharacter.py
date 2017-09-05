@@ -2,6 +2,8 @@ import math
 import os
 
 import copy
+import random
+
 import pygame
 
 from objects.Characters import PoopTrail, Nort
@@ -164,11 +166,21 @@ class PlayerCharacter(pygame.sprite.Sprite):
             self.jump_state = 0
 
     def spawn_poop_or_dont(self):
-        if self.z_speed == 0 and self.distance_travelled > self.character.poop_factor:
+        if self.z_speed == 0 and self.distance_travelled > 15:
+            print('Spawned a poop after ' + str(self.character.current_poop_factor))
+            self.character.current_poop_factor -= 3
+            if self.character.current_poop_factor < 0:
+                self.character.current_poop_factor = self.character.max_poop_factor
+                self.character.poop_angle = random.randint(0,360)
+
             self.distance_travelled = 0
-            return self.spawn_poop()
+            ret_poops = []
+            for i in range(0, int(self.character.current_poop_factor/3)):
+                ret_poops.append(self.spawn_poop())
+
+            return ret_poops
         else:
-            return None
+            return []
 
     def draw_as_player(self, screen, x_offset, y_offset):
         self.cur_sprite = self.generate_new_sprite()
@@ -221,5 +233,5 @@ class PlayerCharacter(pygame.sprite.Sprite):
             angle = self.angle
         self.last_poop_x = self.x
         self.last_poop_y = self.visible_y
-        self.poop_score += self.character.poop_factor
-        return self.character.get_a_poop(self.x, self.visible_y+self.character.width/2, self.z, angle)
+        self.poop_score += 1
+        return self.character.get_a_poop(self.x + random.randint(-5, 5), self.visible_y+self.character.width/2 +  random.randint(-5, 5), self.z, angle)

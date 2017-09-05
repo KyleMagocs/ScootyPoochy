@@ -45,7 +45,7 @@ class GlobalContext:
             else:
                 characters = [Doge(), Doge()]
             levels = [ButtLevel(), TempLevel()]
-            game = GameContext(self.screen, characters, levels)
+            game = GameContext(self.screen, characters, levels, p1, p2)
             game_data = game.run_game()
 
             scoreboard = ScoreboardContext(self.screen)  # TODO:  Probably needs players

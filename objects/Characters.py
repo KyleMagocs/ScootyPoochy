@@ -19,7 +19,7 @@ def get_all_characters():
 # TODO:  THIS IS TRASH
 
 class PoopTrail(pygame.sprite.Sprite):
-    def __init__(self, character, x, y, z):
+    def __init__(self, character, x, y, z, angle):
         super().__init__()
         self.x = x
         self.y = y
@@ -33,21 +33,11 @@ class PoopTrail(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y
-        self.rotate_image()
+        self.image = self.rotate_image(angle)
 
-    def rotate_image(self, angle=random.randint(0, 360)):
-        self.image = rot_center(self.image, angle)
-
-    def update(self, addtl_x, addtl_y):
-        self.x += addtl_x
-        self.y += addtl_y
-        self.rect.x = self.x
-        self.rect.y = self.y
-
-    def draw(self, screen, x_offset, y_offset):
-        if self.rect.bottom + y_offset < 0 or self.rect.top + y_offset > vars.SCREEN_HEIGHT:
-            return
-        screen.blit(self.image, (self.rect.x + x_offset, self.rect.y + y_offset))
+    def rotate_image(self, angle):
+        # angle = random.randint(0, 360)
+        return rot_center(self.image, angle)
 
 
 class NortPoop(pygame.sprite.Sprite):
@@ -65,19 +55,10 @@ class NortPoop(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y
-        self.rotate_image(angle)
+        self.image = self.rotate_image(angle)
 
     def rotate_image(self, angle=random.randint(0, 360)):
-        self.image = rot_center(self.image, angle)
-
-    def update(self, addtl_x, addtl_y):
-        self.x += addtl_x
-        self.y += addtl_y
-        self.rect.x = self.x
-        self.rect.y = self.y
-
-    def draw(self, screen, x_offset, y_offset):
-        screen.blit(self.image, (self.rect.x + x_offset, self.rect.y + y_offset))
+        return rot_center(self.image, angle)
 
 
 class CharacterBase:
@@ -89,7 +70,7 @@ class CharacterBase:
     handling = .5
     acceleration = .5
     max_speed = 1
-    poop_factor = .5
+    max_poop_factor = 15
     color = (200, 200, 200)
     width = 0
     height = 0
@@ -100,6 +81,8 @@ class CharacterBase:
     def __init__(self):
         self.load_sprite()
         self.load_portrait()
+        self.current_poop_factor = 1
+        self.poop_angle = 0
 
     def load_sprite(self):
         if self.sprite_path is not None:
@@ -115,7 +98,7 @@ class CharacterBase:
             self.portrait = _portrait
 
     def get_a_poop(self, x, y, z, angle):
-        new_poop = PoopTrail(self, x + self.width / 2, y + self.width / 2, z)
+        new_poop = PoopTrail(self, x + self.width / 2, y + self.width / 2, z, self.poop_angle)
         return new_poop
 
 
@@ -126,7 +109,7 @@ class TestCharacter(CharacterBase):
     max_speed = .75 * 6
     handling = .9
     acceleration = .4
-    poop_factor = 50
+    max_poop_factor = 150
     width = 60
     height = 60
     radius = 30
@@ -160,7 +143,7 @@ class Doge(CharacterBase):
     height = 60
     radius = 30
     handling = .95
-    poop_factor = 30
+    max_poop_factor = 50
     color = colors.light_blue
     name = 'DOGE'
     attributes = {
@@ -179,7 +162,7 @@ class Nort(CharacterBase):
     poop_paths = ['nort_poop_temp.png', ]
     max_speed = .7 * 6
     acceleration = .35
-    poop_factor = 5
+    max_poop_factor = 15
     width = 60
     height = 60
     radius = 30
@@ -210,7 +193,7 @@ class Carlos(CharacterBase):
     height = 30
     radius = 15
     handling = .8
-    poop_factor = 30
+    max_poop_factor = 90
     color = colors.green
     name = 'Chichi'
     attributes = {

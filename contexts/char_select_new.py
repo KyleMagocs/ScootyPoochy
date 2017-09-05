@@ -75,13 +75,12 @@ class CharacterSelectTrackballContext:
             if self.both_wheels_confirmed():
                 if end_timer > int(vars.fps):
                     return [self.left_wheel.get_selected_character().character, self.right_wheel.get_selected_character().character,]
-                else:
-                    if end_timer > int(vars.fps/2):
+                elif end_timer > int(vars.fps/2):
                         fade_overlay = pygame.Surface((vars.SCREEN_WIDTH, vars.SCREEN_HEIGHT))
                         fade_overlay.fill(colors.black)
                         fade_overlay.set_alpha((end_timer / int(vars.fps / 2)) * 255)
                         self.screen.blit(fade_overlay, (0, 0))
-                    end_timer += 1
+                end_timer += 1
 
             pygame.display.update()
 
