@@ -70,6 +70,7 @@ class CharacterBase:
     handling = .5
     acceleration = .5
     max_speed = 1
+    poop_factor = 15
     max_poop_factor = 15
     color = (200, 200, 200)
     width = 0
@@ -98,7 +99,7 @@ class CharacterBase:
             self.portrait = _portrait
 
     def get_a_poop(self, x, y, z, angle):
-        new_poop = PoopTrail(self, x + self.width / 2, y + self.width / 2, z, self.poop_angle)
+        new_poop = PoopTrail(self, x + self.width / 2 + random.randint(-5, 5), y + self.width / 2 + random.randint(-5, 5), z, self.poop_angle)
         return new_poop
 
 
@@ -162,7 +163,8 @@ class Nort(CharacterBase):
     poop_paths = ['nort_poop_temp.png', ]
     max_speed = .7 * 6
     acceleration = .35
-    max_poop_factor = 15
+    poop_factor = 1
+    max_poop_factor = 3
     width = 60
     height = 60
     radius = 30
