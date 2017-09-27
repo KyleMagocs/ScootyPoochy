@@ -27,7 +27,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.061165805"
      inkscape:cx="1331.0219"
-     inkscape:cy="-7888.6524"
+     inkscape:cy="-2384.1541"
      inkscape:document-units="in"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -1258,5 +1258,38 @@
          x="-791.59839"
          y="3294.6921"
          style="font-size:158.75px;stroke-width:0.26458335">2 x $26 = $52</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:105.8333355px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458335;"
+       x="1457.7522"
+       y="2922.6843"
+       id="text7135"><tspan
+         sodipodi:role="line"
+         id="tspan7133"
+         x="1457.7522"
+         y="2922.6843"
+         style="stroke-width:0.26458335;font-size:105.8333355px;">CAB SIDE</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:105.8333355px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458335;"
+       x="2824.6653"
+       y="2987.5693"
+       id="text7139"><tspan
+         sodipodi:role="line"
+         id="tspan7137"
+         x="2824.6653"
+         y="2987.5693"
+         style="stroke-width:0.26458335;font-size:105.8333355px;">CAB SIDE</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:105.83333588px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458335"
+       x="1531.2886"
+       y="1227.0201"
+       id="text7143"><tspan
+         sodipodi:role="line"
+         id="tspan7141"
+         x="1531.2886"
+         y="1227.0201"
+         style="font-size:105.83333588px;stroke-width:0.26458335">BASE SIDE</tspan></text>
   </g>
 </svg>
