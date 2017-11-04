@@ -55,7 +55,9 @@ class World:
 
                 self.countdown_timer = 0
         if len(self.countdown) > 1:
+            MusicLib.play_race_start()
             return
+        MusicLib.play_game()
 
         self.player_one.update_limbs(p1_left, p1_right)
         self.player_two.update_limbs(p2_left, p2_right)
@@ -247,7 +249,6 @@ class World:
             self.draw_win_text(screen, x_offset, player.character.color, player.character.finish_text)
 
         if len(self.countdown) > 0:
-            MusicLib.play_race_start()
             self.draw_countdown(screen, x_offset, player.character.color, self.countdown[0], self.countdown_timer * 3)
             font = pygame.font.SysFont('Impact', 18)
             label = font.render('YOU!', 1, player.character.color)
@@ -259,8 +260,6 @@ class World:
             # label = font.render('Player z: ' + str(self.player_one.z), 1, (0, 255, 255))
             # screen.blit(label, (x_offset + self.width / 4 + 2, vars.SCREEN_HEIGHT / 2 - 10 + 2))
             ############################################################################################################
-        else:
-            MusicLib.play_title()
 
     def start_timer(self):
         self.timer_enabled = 1

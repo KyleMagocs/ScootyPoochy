@@ -18,7 +18,7 @@ class MusicLib:
             cls.currently_playing = 'race_start'
 
     @classmethod
-    def play_title(cls):
+    def play_game(cls):
         if not cls.currently_playing == 'title':
             music.load(str(cls.music_path / 'race_audio.wav'))
             music.play(-1)
