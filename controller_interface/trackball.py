@@ -44,15 +44,15 @@ class Trackball:
 #  You will want this later:    https://github.com/walac/pyusb/issues/101
 #  You will probably also want this:    https://www.orangecoat.com/how-to/use-pyusb-to-find-vendor-and-product-ids-for-usb-devices
 def raw_to_x_y(data_array):
-    if data_array[2] == 0 and data_array[1] != 0: # right
+    if data_array[2] == 0 and data_array[1] != 0:  # right
         x_vel = data_array[1] * -1
-    elif data_array[2] == 255 and data_array[1] != 0: # left
+    elif data_array[2] == 255 and data_array[1] != 0:  # left
         x_vel = (255 - data_array[1])
     else:
         x_vel = 0
-    if data_array[4] == 0 and data_array[3] != 0: # down
+    if data_array[4] == 0 and data_array[3] != 0:  # down
         y_vel = data_array[3] * -1
-    elif data_array[4] == 255 and data_array[3] != 0: # up
+    elif data_array[4] == 255 and data_array[3] != 0:  # up
         y_vel = 255 - data_array[3]
     else:
         y_vel = 0

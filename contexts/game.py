@@ -6,7 +6,7 @@ from objects.LevelObjects import Lamp
 from objects.Player import Player
 from objects.World import World
 from utils.hollow import textHollow, textOutline
-
+from utils.sounds import MusicLib
 import vars
 
 
@@ -105,6 +105,7 @@ class GameContext:
                 if end_timer > int(vars.fps / 2):
                     return results
                 else:
+                    MusicLib.update_volume((int(vars.fps/2) - end_timer) / int(vars.fps / 2))
                     fade_overlay = pygame.Surface((vars.SCREEN_WIDTH, vars.SCREEN_HEIGHT))
                     fade_overlay.fill(colors.black)
                     fade_overlay.set_alpha((end_timer / int(vars.fps / 2)) * 255)

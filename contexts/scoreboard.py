@@ -4,6 +4,7 @@ from utils.hollow import textOutline
 from utils.roundrects import round_rect
 import colors
 import vars
+from utils.sounds import SoundLib
 
 TOTAL_WAIT = 5
 
@@ -13,6 +14,11 @@ RIGHT_ALIGN = vars.SCREEN_WIDTH / 6 * 5
 
 
 class ScoreboardContext:
+    sound_one = False
+    sound_two = False
+    sound_three = False
+    sound_four = False
+
     def __init__(self, screen):
         self.screen = screen
         self.clock = pygame.time.Clock()
@@ -60,15 +66,31 @@ class ScoreboardContext:
             pygame.draw.rect(self.screen, self.right_color, (RIGHT_ALIGN-_p2.get_width()/2, 75, _p2.get_width(), _p2.get_height()), 6)
 
             if self.timer > int(vars.fps * 1.75):
+                if not self.sound_one:
+                    SoundLib.woodblock()
+                    self.sound_one = True
+
                 self.show_stat(font, game_data[0]['time'], game_data[1]['time'], 'TIME', 280)
 
             if self.timer > int(vars.fps * 3):
+                if not self.sound_two:
+                    SoundLib.woodblock()
+                    self.sound_two = True
+
                 self.show_stat(font, game_data[0]['break'], game_data[1]['break'], 'ITEMS BROKEN', 340)
 
             if self.timer > int(vars.fps * 4.25):
+                if not self.sound_three:
+                    SoundLib.woodblock()
+                    self.sound_three = True
+
                 self.show_stat(font, game_data[0]['poop'], game_data[1]['poop'], 'POOP', 400)
 
             if self.timer > int(vars.fps * 6.3):
+                if not self.sound_four:
+                    SoundLib.chime()
+                    self.sound_four = True
+
                 self.show_stat(font, l_total, r_total, 'TOTAL', 540)
 
             if start_timer < int(vars.fps / 2):

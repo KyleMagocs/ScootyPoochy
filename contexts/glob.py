@@ -10,7 +10,7 @@ from contexts.scoreboard import ScoreboardContext
 from contexts.startup import StartupContext
 from contexts.title import TitleContext
 from objects.Characters import TestCharacter, Doge
-from objects.Level import TempLevel, ButtLevel
+from objects.Level import TempLevel, ButtLevel, ShortLevel
 from objects.Player import Player
 import vars
 
@@ -44,7 +44,7 @@ class GlobalContext:
                 # TODO:  Build level here
             else:
                 characters = [Doge(), Doge()]
-            levels = [ButtLevel(), TempLevel()]
+            levels = [ShortLevel(), ShortLevel()]
             game = GameContext(self.screen, characters, levels, p1, p2)
             game_data = game.run_game()
 
