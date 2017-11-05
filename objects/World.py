@@ -55,6 +55,7 @@ class World:
 
                 self.countdown_timer = 0
         if len(self.countdown) > 1:
+            MusicLib.update_volume(1)
             MusicLib.play_race_start()
             return
         MusicLib.play_game()

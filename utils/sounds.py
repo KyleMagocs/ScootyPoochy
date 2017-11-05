@@ -11,7 +11,6 @@ class MusicLib:
 
     @classmethod
     def play_race_start(cls):
-
         if not cls.currently_playing == 'race_start':
             music.load(str(cls.music_path / 'race_start.wav'))
             music.play(-1)
@@ -27,7 +26,7 @@ class MusicLib:
     @classmethod
     def update_volume(self, volume):
         music.set_volume(volume)
-        if volume <= 0:
+        if volume <= 0.05:
             self.currently_playing = None
 
 
