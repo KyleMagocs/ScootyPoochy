@@ -47,7 +47,7 @@ class World:
         if not debugcontrols.skip_countdown and len(self.countdown) > 0:
             self.player_one.update_limbs((0, 0), (0, 0))
             self.player_two.update_limbs((0, 0), (0, 0))
-            if self.countdown_timer < int(vars.fps * .75) and len(self.countdown) > 0:
+            if self.countdown_timer < int(vars.fps) and len(self.countdown) > 0:
                 self.countdown_timer += 1
             else:
                 if len(self.countdown) > 0:
