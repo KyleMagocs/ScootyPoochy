@@ -32,7 +32,11 @@ class WinscreenContext:
                 fade_overlay.fill(colors.black)
                 fade_overlay.set_alpha(((int(vars.fps / 2) - self.timer) / int(vars.fps / 2)) * 255)
                 self.screen.blit(fade_overlay, (0, 0))
-                self.timer += 1
+            if self.timer > self.TIMEOUT - int(vars.fps / 2):
+                fade_overlay = pygame.Surface((vars.SCREEN_WIDTH, vars.SCREEN_HEIGHT))
+                fade_overlay.fill(colors.black)
+                fade_overlay.set_alpha((self.timer / int(vars.fps / 2)) * 255)
+                self.screen.blit(fade_overlay, (0, 0))
 
             pygame.display.update()
             pygame.event.get()
