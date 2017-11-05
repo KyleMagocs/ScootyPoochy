@@ -43,4 +43,9 @@ class SoundLib:
         sound = Sound(str(cls.sound_path / 'chime.wav'))
         sound.play()
 
+    @classmethod
+    def winsound(cls, file):
+        sound = Sound(str(cls.sound_path / file))
+        sound.play()
+
 

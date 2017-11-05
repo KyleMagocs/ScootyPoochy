@@ -106,6 +106,7 @@ class CharacterBase:
 class TestCharacter(CharacterBase):
     sprite_path = 'TEMPDOG_sprite_temp.png'
     portrait_path = 'TEMPDOG_PORTRAIT.png'
+    winsound = 'cooldogwin.wav'
     poop_paths = ['poop_temp.png']
     max_speed = .75 * 6
     handling = .9
@@ -116,6 +117,7 @@ class TestCharacter(CharacterBase):
     radius = 30
     color = colors.red
     name = 'XYLONS DOG'
+    wintext = 'OH HEY I GUESS I DID IT'
     attributes = {
         '+ test character',
         '- test character'
@@ -128,7 +130,7 @@ class TestCharacter(CharacterBase):
 class Doge(CharacterBase):
     #sprite_path = 'DOGE_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
     portrait_path = 'DOGE_portrait_temp.png'
-
+    winsound = 'dogewin.wav'
     head_path = 'doge_temp/head.png'
     larm_path = 'doge_temp/leftarm.png'
     rarm_path = 'doge_temp/rightarm.png'
@@ -147,6 +149,7 @@ class Doge(CharacterBase):
     max_poop_factor = 50
     color = colors.light_blue
     name = 'DOGE'
+    wintext = 'WOW'
     attributes = {
         '+ very meme',
         '- much average'
@@ -160,6 +163,7 @@ class Doge(CharacterBase):
 class Nort(CharacterBase):
     sprite_path = 'nort_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
     portrait_path = 'nort_portrait_temp.png'
+    winsound = 'trondogwin.wav'
     poop_paths = ['nort_poop_temp.png', ]
     max_speed = .7 * 6
     acceleration = .35
@@ -171,6 +175,7 @@ class Nort(CharacterBase):
     handling = .95
     color = colors.aqua
     name = 'NORT'
+    wintext = '1982 was a good year'
     attributes = {
         '+ Laser poops',
         '+ Futuristic',
@@ -188,6 +193,7 @@ class Nort(CharacterBase):
 class Carlos(CharacterBase):
     sprite_path = 'carlos_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR CARLOS
     portrait_path = 'carlos_portrait_temp.png'
+    winsound = 'clownwin.wav'
     poop_paths = ['poop_temp.png']
     max_speed = .6 * 6
     acceleration = .5
@@ -198,6 +204,7 @@ class Carlos(CharacterBase):
     max_poop_factor = 90
     color = colors.green
     name = 'Chichi'
+    wintext = 'I AM A BAD DOG AND I SHOULD BE REMOVED FROM THIS GAME'
     attributes = {
         '- lower top speed',
         '+ high acceleration',

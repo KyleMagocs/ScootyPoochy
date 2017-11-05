@@ -9,6 +9,7 @@ from contexts.level_select import LevelSelectContext
 from contexts.scoreboard import ScoreboardContext
 from contexts.startup import StartupContext
 from contexts.title import TitleContext
+from contexts.winscreen import WinscreenContext
 from objects.Characters import TestCharacter, Doge
 from objects.Level import TempLevel, ButtLevel, ShortLevel
 from objects.Player import Player
@@ -50,3 +51,15 @@ class GlobalContext:
 
             scoreboard = ScoreboardContext(self.screen)  # TODO:  Probably needs players
             scoreboard.main_loop(game_data)
+
+            winscreen = WinscreenContext(self.screen)
+
+            # BAD >: ( DON'T DO THIS
+            l_total = int(game_data[0]['time']) + int(game_data[0]['poop']) + int(game_data[0]['break'])
+            r_total = int(game_data[1]['time']) + int(game_data[1]['poop']) + int(game_data[1]['break'])
+            if l_total > r_total:
+                winscreen.display_loop(characters[0])
+            elif r_total > l_total:
+                winscreen.display_loop(characters[1])
+            else:
+                pass # ITS A DRAW, I DON'T KNOW WHAT TO DO
