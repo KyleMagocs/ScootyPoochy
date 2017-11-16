@@ -60,9 +60,9 @@ class GameContext:
     def check_keys(self):
         for event in pygame.event.get():
             if event.type == pygame.KEYUP:
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_f:
                     self.world.player_one.jump()
-                if event.key == pygame.K_RETURN:
+                if event.key == pygame.K_j:
                     self.world.player_two.jump()
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()

@@ -29,7 +29,7 @@ class TitleContext:
             font3 = pygame.font.SysFont('Impact', 30)
 
             title_image = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, 'title.png'))
-            title_image = pygame.transform.scale(title_image, (title_image.get_width()*2, title_image.get_height()*2))
+            # title_image = pygame.transform.scale(title_image, (title_image.get_width()*2, title_image.get_height()*2))
             self.screen.blit(title_image, (vars.SCREEN_WIDTH/2-title_image.get_width()/2,0))
             # if (self.timer // 30) % 2 == 0:
             #     label = font.render('TITLE! {0:.2f}'.format(self.timer/fps), 1, colors.TRANSPARENT)
@@ -39,13 +39,13 @@ class TitleContext:
             #
             # # label = font2.render('SUPER POOCH SCOOT !!'.format(self.timer / fps), 1, colors.TRANSPARENT)
             #
-            title_text = textOutline(font2, 'S', colors.blue, colors.white)
-            self.screen.blit(title_text, (300, 90))
-            sub_text = font.render('© 2017 Rotten Tuna Games', 0, colors.white)
-            self.screen.blit(sub_text, (vars.SCREEN_WIDTH/2-sub_text.get_width()/2, 480))
-
-            sub_text = font.render('Title art by Dylan Gallagher ( @aintnofuntime )', 0, colors.white)
-            self.screen.blit(sub_text, (vars.SCREEN_WIDTH / 2 - sub_text.get_width() / 2, 500))
+            # title_text = textOutline(font2, 'S', colors.blue, colors.white)
+            # self.screen.blit(title_text, (300, 90))
+            # sub_text = font.render('© 2017 Rotten Tuna Games', 0, colors.white)
+            # self.screen.blit(sub_text, (vars.SCREEN_WIDTH/2-sub_text.get_width()/2, 480))
+            #
+            # sub_text = font.render('Title art by Dylan Gallagher ( @aintnofuntime )', 0, colors.white)
+            # self.screen.blit(sub_text, (vars.SCREEN_WIDTH / 2 - sub_text.get_width() / 2, 500))
 
             if (self.timer // 15) % 2 == 0 or (affirmative and self.timer % 2 == 0):
                 if affirmative:
@@ -93,7 +93,7 @@ class TitleContext:
             pygame.event.get()
 
     def parse_keys(self, keys):
-        if keys[pygame.K_RETURN]:
+        if keys[pygame.K_f] or keys[pygame.K_j]:
             pygame.event.clear()
             return True
         if keys[pygame.K_ESCAPE]:

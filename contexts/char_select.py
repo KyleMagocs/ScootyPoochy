@@ -33,13 +33,13 @@ class CharacterSelectContext:
                     self.left_wheel.update_angle(-1)
                 if event.key == pygame.K_s:
                     self.left_wheel.update_angle(1)
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_f:
                     self.left_wheel.spawn_or_confirm()
                 if event.key == pygame.K_UP:
                     self.right_wheel.update_angle(1)
                 if event.key == pygame.K_DOWN:
                     self.right_wheel.update_angle(-1)
-                if event.key == pygame.K_RETURN:
+                if event.key == pygame.K_j:
                     self.right_wheel.spawn_or_confirm()
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()

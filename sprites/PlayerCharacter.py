@@ -167,7 +167,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
 
     def spawn_poop_or_dont(self):
         if self.z_speed == 0 and self.distance_travelled > self.character.poop_factor:
-            print('Spawned a poop after ' + str(self.character.current_poop_factor))
+            # print('Spawned a poop after ' + str(self.character.current_poop_factor))
             self.character.current_poop_factor -= 7
             if self.character.current_poop_factor < 0:
                 self.character.current_poop_factor = self.character.max_poop_factor

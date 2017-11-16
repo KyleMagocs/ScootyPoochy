@@ -34,7 +34,7 @@ class Theme:
 class TempTheme(Theme):
     background_image = 'house_bg_temp.png'
     thumbnail_image = 'test_theme_thumbnail.png'
-    friction = 2
+    friction = 1.4
 
     def __init__(self):
         Theme.__init__(self)

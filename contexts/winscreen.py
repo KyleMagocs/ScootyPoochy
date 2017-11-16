@@ -24,7 +24,7 @@ class WinscreenContext:
 
             self.screen.blit(portrait, (vars.SCREEN_WIDTH/2 - portrait.get_width() / 2, vars.SCREEN_HEIGHT/3))
             font = pygame.font.SysFont('Arial', 40)
-            label = font.render('"' + winning_character.wintext + '"', 1, (100, 150, 200))
+            label = font.render('"' + winning_character.wintext + '"', 1, winning_character.color)
             self.screen.blit(label, (vars.SCREEN_WIDTH/2-label.get_width()/2, 200))
 
             if self.timer < int(vars.fps / 2):

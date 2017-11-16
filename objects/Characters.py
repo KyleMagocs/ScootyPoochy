@@ -71,7 +71,7 @@ class CharacterBase:
     acceleration = .5
     max_speed = 1
     poop_factor = 15
-    max_poop_factor = 15
+    max_poop_factor = 75
     color = (200, 200, 200)
     width = 0
     height = 0
@@ -111,7 +111,7 @@ class TestCharacter(CharacterBase):
     max_speed = .75 * 6
     handling = .9
     acceleration = .4
-    max_poop_factor = 150
+    max_poop_factor = 25
     width = 60
     height = 60
     radius = 30
@@ -146,7 +146,7 @@ class Doge(CharacterBase):
     height = 60
     radius = 30
     handling = .95
-    max_poop_factor = 50
+    max_poop_factor = 75
     color = colors.light_blue
     name = 'DOGE'
     wintext = 'WOW'
@@ -168,7 +168,7 @@ class Nort(CharacterBase):
     max_speed = .7 * 6
     acceleration = .35
     poop_factor = 1
-    max_poop_factor = 3
+    max_poop_factor = 75
     width = 60
     height = 60
     radius = 30
@@ -201,7 +201,7 @@ class Carlos(CharacterBase):
     height = 30
     radius = 15
     handling = .8
-    max_poop_factor = 90
+    max_poop_factor = 75
     color = colors.green
     name = 'Chichi'
     wintext = 'I AM A BAD DOG AND I SHOULD BE REMOVED FROM THIS GAME'

@@ -30,9 +30,9 @@ class CharacterSelectTrackballContext:
     def check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_f:
                     self.left_wheel.spawn_or_confirm()
-                if event.key == pygame.K_RETURN:
+                if event.key == pygame.K_j:
                     self.right_wheel.spawn_or_confirm()
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
