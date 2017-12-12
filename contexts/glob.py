@@ -45,7 +45,7 @@ class GlobalContext:
                 # TODO:  Build level here
             else:
                 characters = [Doge(), Doge()]
-            levels = [ShortLevel(), ShortLevel()]
+            levels = [ButtLevel(), ButtLevel()]
             game = GameContext(self.screen, characters, levels, p1, p2)
             game_data = game.run_game()
 

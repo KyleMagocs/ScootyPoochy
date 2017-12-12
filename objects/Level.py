@@ -104,7 +104,6 @@ class TempLevel(Level):
         _vase2 = Vase((175, 2775,))
         self.objects.add(_vase2)
 
-
 class ButtLevel(Level):
 
     def __init__(self):

@@ -116,6 +116,7 @@ class TestCharacter(CharacterBase):
     height = 60
     radius = 30
     color = colors.red
+    colorcode = b'r'
     name = 'XYLONS DOG'
     wintext = 'OH HEY I GUESS I DID IT'
     attributes = {
@@ -148,6 +149,7 @@ class Doge(CharacterBase):
     handling = .95
     max_poop_factor = 75
     color = colors.light_blue
+    colorcode = b'b'
     name = 'DOGE'
     wintext = 'WOW'
     attributes = {
@@ -174,6 +176,7 @@ class Nort(CharacterBase):
     radius = 30
     handling = .95
     color = colors.aqua
+    colorcode = b'a'
     name = 'NORT'
     wintext = '1982 was a good year'
     attributes = {
@@ -203,6 +206,7 @@ class Carlos(CharacterBase):
     handling = .8
     max_poop_factor = 75
     color = colors.green
+    colorcode = b'g'
     name = 'Chichi'
     wintext = 'I AM A BAD DOG AND I SHOULD BE REMOVED FROM THIS GAME'
     attributes = {

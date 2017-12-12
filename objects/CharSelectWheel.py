@@ -3,6 +3,8 @@ import math
 import pygame
 
 from objects.Characters import get_all_characters
+from utils.lights import ColorLib
+
 all_chars = get_all_characters()
 from sprites.CharacterSelectCharacter_old import CharacterSelectCharacter
 from vars import radians_factor
@@ -100,6 +102,10 @@ class CharacterWheel:
         if self.spawned:
             if not self.moving:
                 self.confirm_character()
+                if self.factor == -1:
+                    ColorLib.set_colors(None, self.get_selected_character().colorcode)
+                elif self.factor == 1:
+                    ColorLib.set_colors(self.get_selected_character().colorcode, None)
         else:
             self.spawning = True
             color = self.get_selected_character().color

@@ -99,14 +99,13 @@ class PlayerCharacter(pygame.sprite.Sprite):
                 head_inc = 1
                 self.right_index = ((self.right_index + 1) % len(self.rarm_images))
             if self.jump_state == 1:
-                self.body_index = min(self.body_index+1, len(self.body_images)-1)
+                self.body_index = min(self.body_index + 1, len(self.body_images) - 1)
             else:
                 self.body_index = 0
             self.tail_index = ((self.tail_index + 1) % len(self.tail_images))
             self.head_index = ((self.head_index + head_inc) % len(self.head_images))
         except:
             pass
-
 
     def start_timer(self):
         if not self.timer_activated:
@@ -166,16 +165,16 @@ class PlayerCharacter(pygame.sprite.Sprite):
             self.jump_state = 0
 
     def spawn_poop_or_dont(self):
-        if self.z_speed == 0 and self.distance_travelled > self.character.poop_factor:
+        if math.fabs(self.z_speed) < 0.02 and self.distance_travelled > self.character.poop_factor:
             # print('Spawned a poop after ' + str(self.character.current_poop_factor))
             self.character.current_poop_factor -= 7
             if self.character.current_poop_factor < 0:
                 self.character.current_poop_factor = self.character.max_poop_factor
-                self.character.poop_angle = random.randint(0,360)
+                self.character.poop_angle = random.randint(0, 360)
 
             self.distance_travelled = 0
             ret_poops = []
-            for i in range(0, int(self.character.current_poop_factor/3)):
+            for i in range(0, int(self.character.current_poop_factor / 3)):
                 ret_poops.append(self.spawn_poop())
 
             return ret_poops
@@ -228,7 +227,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
 
     def spawn_poop(self):
         if len(self.poops) > 0:
-            angle = angle_between_points(self.last_poop_x, self.last_poop_y, self.x, self.visible_y) # TODO:  THIS IS WORKING REALLY POORLY
+            angle = angle_between_points(self.last_poop_x, self.last_poop_y, self.x, self.visible_y)  # TODO:  THIS IS WORKING REALLY POORLY
         else:
             angle = self.angle
         self.last_poop_x = self.x

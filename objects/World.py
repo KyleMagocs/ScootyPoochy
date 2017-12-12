@@ -190,6 +190,8 @@ class World:
                     p_sprite.y -= delta_y
 
                     p_sprite.distance_travelled -= math.sqrt(delta_x * delta_x + delta_y * delta_y)
+                    if p_sprite.distance_travelled < 0:
+                        p_sprite.distance_travelled = 0
 
             if _min_z is not None:
                 p_sprite.min_z = _min_z

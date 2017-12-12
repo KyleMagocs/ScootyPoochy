@@ -2,7 +2,7 @@ import os
 
 from pathlib import Path
 from pygame.mixer import Sound, music
-
+from debugcontrols import music_off
 
 
 class MusicLib:
@@ -13,14 +13,16 @@ class MusicLib:
     def play_race_start(cls):
         if not cls.currently_playing == 'race_start':
             music.load(str(cls.music_path / 'race_start.wav'))
-            music.play(-1)
+            if not music_off:
+                music.play(-1)
             cls.currently_playing = 'race_start'
 
     @classmethod
     def play_game(cls):
         if not cls.currently_playing == 'title':
             music.load(str(cls.music_path / 'race_audio.wav'))
-            music.play(-1)
+            if not music_off:
+                music.play(-1)
             cls.currently_playing = 'title'
 
     @classmethod
