@@ -13,7 +13,7 @@ ACCEL_COEF = 1
 
 
 def get_all_characters():
-    return [Carlos, Doge, TestCharacter, Nort, Carlos, Doge, TestCharacter, Nort, Carlos, Doge, TestCharacter, Nort, Carlos, Doge, TestCharacter, Nort, ]
+    return [Carlos, Doge, TestCharacter, Nort, Beef ]
 
 
 # TODO:  THIS IS TRASH
@@ -132,11 +132,11 @@ class Doge(CharacterBase):
     #sprite_path = 'DOGE_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
     portrait_path = 'DOGE_portrait_temp.png'
     winsound = 'dogewin.wav'
-    head_path = 'doge_temp/head.png'
-    larm_path = 'doge_temp/leftarm.png'
-    rarm_path = 'doge_temp/rightarm.png'
-    tail_path = 'doge_temp/tail.png'
-    body_path = 'doge_temp/body.png'
+    head_path = 'doge/head.png'
+    larm_path = 'doge/leftarm.png'
+    rarm_path = 'doge/rightarm.png'
+    tail_path = 'doge/tail.png'
+    body_path = 'doge/body.png'
 
     finish_text = 'MUCH FINISH'
 
@@ -156,6 +156,39 @@ class Doge(CharacterBase):
         '+ very meme',
         '- much average'
         '      wow'
+    }
+
+    def __init__(self):
+        CharacterBase.__init__(self)
+
+class Beef(CharacterBase):
+    #sprite_path = 'DOGE_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
+    portrait_path = 'beef_portrait_temp.png'
+    winsound = 'beefwin.wav'
+    head_path = 'beef/head.png'
+    larm_path = 'beef/leftarm.png'
+    rarm_path = 'beef/rightarm.png'
+    tail_path = 'beef/tail.png'
+    body_path = 'beef/body.png'
+
+    finish_text = 'finish :('
+
+    poop_paths = ['poop_temp_2.png', 'poop_temp_3.png']
+    max_speed = .7 * 6
+    acceleration = .35
+    width = 60
+    height = 60
+    radius = 30
+    handling = .95
+    max_poop_factor = 75
+    color = colors.light_grey
+    colorcode = b'w'
+    name = 'Roast Beef'
+    wintext = 'Oh dang, I did it'
+    attributes = {
+        '+ is a cat',
+        '- is a sad cat',
+        '+ pretty cute tho'
     }
 
     def __init__(self):
