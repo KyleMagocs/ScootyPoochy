@@ -2,7 +2,7 @@ import os
 
 import pygame
 
-from objects.LevelObjects import Lamp, Table, Couch, Vase, Cuckoo, HDTV, BookShelf
+from objects.LevelObjects import Lamp, Table, Couch, Vase, Cuckoo, HDTV, BookShelf, Grill, Flower1, Flower2, Flower3, Flower4
 from objects.LevelObjects_Backyard import Gnome, BirdBath
 from objects.LevelObjects_Bathroom import BathroomSink, Shower, Toilet, SinkStuff, BathMat
 from objects.Wall import Wall, BathroomWall, BackyardWall
@@ -41,7 +41,7 @@ class Room_One(Room):
     def __init__(self, y_position):
         self.objects = pygame.sprite.Group(
             Lamp((65, 70)),
-            Lamp((535, 70)),
+            Lamp((535, 70), True),
             Table((100, 100)),
             Cuckoo((200, 50)),
             Vase((175, 170))
@@ -69,7 +69,7 @@ class Room_Three(Room):
         self.objects = pygame.sprite.Group(
             Lamp((65, 70)),
             BookShelf((150, 65)),
-            Cuckoo((475, 50)),
+            Cuckoo((275, 50)),
         )
         super().__init__(y_position)
 
@@ -99,6 +99,11 @@ class Backyard(Room):
 
     def __init__(self, y_position):
         self.objects = pygame.sprite.Group(
+            Grill((100, 90)),
+            Flower1((400, 80)),
+            Flower2((355, 85)),
+            Flower3((475, 115)),
+            Flower4((425, 60)),
             Gnome((300, 230)),
             Gnome((280, 270)),
             BirdBath((430, 300)),
