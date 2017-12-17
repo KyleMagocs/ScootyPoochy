@@ -9,9 +9,11 @@ from objects.Wall import Wall, BathroomWall, BackyardWall
 
 ASSETS_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'images', 'level_assets')
 
+
 def load_wall():
     # todo: better
     return Wall(0, 0, 50)
+
 
 class Room:
     objects = None
@@ -46,6 +48,7 @@ class Room_One(Room):
         )
         super().__init__(y_position)
 
+
 class Room_Two(Room):
     height = 400
 
@@ -58,6 +61,7 @@ class Room_Two(Room):
         )
         super().__init__(y_position)
 
+
 class Room_Three(Room):
     height = 400
 
@@ -69,17 +73,20 @@ class Room_Three(Room):
         )
         super().__init__(y_position)
 
+
 class Bathroom(Room):
     height = 350
-
     floor_image = os.path.join(ASSETS_PATH, 'bathroom_bg.png')
-    objects = pygame.sprite.Group(
-        Shower((0, 32)),
-        BathroomSink((170, 80)),
-        SinkStuff((170, 73)),
-        Toilet((295, 90)),
-        BathMat((200, 230))
-    )
+
+    def __init__(self, y_position):
+        self.objects = pygame.sprite.Group(
+            Shower((0, 32)),
+            BathroomSink((170, 80)),
+            SinkStuff((170, 73)),
+            Toilet((295, 90)),
+            BathMat((200, 230))
+        )
+        super().__init__(y_position)
 
     def load_wall(self, door_x):
         self.top_wall = BathroomWall(0, self.y_position, door_x)
@@ -89,11 +96,14 @@ class Backyard(Room):
     height = 500
 
     floor_image = os.path.join(ASSETS_PATH, 'backyard_bg.png')
-    objects = pygame.sprite.Group(
-        Gnome((300, 230)),
-        Gnome((280, 270)),
-        BirdBath((430, 300)),
-    )
+
+    def __init__(self, y_position):
+        self.objects = pygame.sprite.Group(
+            Gnome((300, 230)),
+            Gnome((280, 270)),
+            BirdBath((430, 300)),
+        )
+        super().__init__(y_position)
 
     def load_wall(self, door_x):
         self.top_wall = BackyardWall(0, self.y_position, door_x)

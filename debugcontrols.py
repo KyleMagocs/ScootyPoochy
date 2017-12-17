@@ -1,4 +1,4 @@
-skip_intro = False
+skip_intro = True
 show_velocity = False
 draw_rects = False
 skip_countdown = False
