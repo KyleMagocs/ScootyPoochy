@@ -107,6 +107,11 @@ class Cooper(CharacterBase):
     sprite_path = 'TEMPDOG_sprite_temp.png'
     portrait_path = 'TEMPDOG_PORTRAIT.png'
     winsound = 'cooldogwin.wav'
+    head_path = 'cooper/head.png'
+    larm_path = 'cooper/leftarm.png'
+    rarm_path = 'cooper/rightarm.png'
+    tail_path = 'cooper/tail.png'
+    body_path = 'cooper/body.png'
     poop_paths = ['poop_temp.png']
     max_speed = .75 * 6
     handling = .9
