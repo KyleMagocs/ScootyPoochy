@@ -67,28 +67,28 @@ class ScoreboardContext:
 
             if self.timer > int(vars.fps * 1.75):
                 if not self.sound_one:
-                    SoundLib.woodblock()
+                    SoundLib.score1()
                     self.sound_one = True
 
                 self.show_stat(font, game_data[0]['time'], game_data[1]['time'], 'TIME', 280)
 
             if self.timer > int(vars.fps * 3):
                 if not self.sound_two:
-                    SoundLib.woodblock()
+                    SoundLib.score2()
                     self.sound_two = True
 
                 self.show_stat(font, game_data[0]['break'], game_data[1]['break'], 'ITEMS BROKEN', 340)
 
             if self.timer > int(vars.fps * 4.25):
                 if not self.sound_three:
-                    SoundLib.woodblock()
+                    SoundLib.score3()
                     self.sound_three = True
 
                 self.show_stat(font, game_data[0]['poop'], game_data[1]['poop'], 'POOP', 400)
 
             if self.timer > int(vars.fps * 6.3):
                 if not self.sound_four:
-                    SoundLib.chime()
+                    SoundLib.winchime()
                     self.sound_four = True
 
                 self.show_stat(font, l_total, r_total, 'TOTAL', 540)

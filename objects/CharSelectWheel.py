@@ -116,10 +116,11 @@ class CharacterWheel:
             self.characters[self.selected_character_index].selected = True
             name = self.get_selected_character().name
             stats = self.get_selected_character().attributes
-            font = pygame.font.SysFont('Comic Sans MS', 25)
+            font = pygame.font.SysFont('Comic Sans MS', 40)
             label = font.render(name, 1, self.get_selected_character().color)
-            screen.blit(label, (self.x + (200*self.factor), 600))
+            screen.blit(label, (self.x + (200*self.factor), 500))
             stat_y = 620
+            font = pygame.font.SysFont('Comic Sans MS', 25)
             for stat in stats:
                 label = font.render(stat, 1, self.get_selected_character().color)
                 screen.blit(label, (self.x + (250 * self.factor) - 100, stat_y))

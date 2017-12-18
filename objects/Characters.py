@@ -13,7 +13,7 @@ ACCEL_COEF = 1
 
 
 def get_all_characters():
-    return [Carlos, Doge, TestCharacter, Nort, Beef ]
+    return [Carlos, Doge, Cooper, Nort, Beef]
 
 
 # TODO:  THIS IS TRASH
@@ -103,7 +103,7 @@ class CharacterBase:
         return new_poop
 
 
-class TestCharacter(CharacterBase):
+class Cooper(CharacterBase):
     sprite_path = 'TEMPDOG_sprite_temp.png'
     portrait_path = 'TEMPDOG_PORTRAIT.png'
     winsound = 'cooldogwin.wav'
@@ -117,12 +117,13 @@ class TestCharacter(CharacterBase):
     radius = 30
     color = colors.red
     colorcode = b'r'
-    name = 'XYLONS DOG'
+    name = 'Cooper'
     wintext = 'OH HEY I GUESS I DID IT'
-    attributes = {
-        '+ test character',
-        '- test character'
-    }
+    attributes = (
+        '+ not as in Anderson',
+        '+ it\'s Xylon\'s Dog!',
+        '- who the hell is Xylon?'
+    )
 
     def __init__(self):
         CharacterBase.__init__(self)
@@ -152,11 +153,11 @@ class Doge(CharacterBase):
     colorcode = b'b'
     name = 'DOGE'
     wintext = 'WOW'
-    attributes = {
+    attributes = (
         '+ very meme',
         '- much average'
         '      wow'
-    }
+     )
 
     def __init__(self):
         CharacterBase.__init__(self)
@@ -185,11 +186,12 @@ class Beef(CharacterBase):
     colorcode = b'w'
     name = 'Roast Beef'
     wintext = 'Oh dang, I did it'
-    attributes = {
+    attributes = (
         '+ is a cat',
         '- is a sad cat',
-        '+ pretty cute tho'
-    }
+        '+ pretty cute tho',
+
+    )
 
     def __init__(self):
         CharacterBase.__init__(self)
@@ -212,11 +214,11 @@ class Nort(CharacterBase):
     colorcode = b'a'
     name = 'NORT'
     wintext = '1982 was a good year'
-    attributes = {
+    attributes = (
         '+ Laser poops',
         '+ Futuristic',
         '- bad handling'
-    }
+    )
 
     def __init__(self):
         CharacterBase.__init__(self)
@@ -242,11 +244,11 @@ class Carlos(CharacterBase):
     colorcode = b'g'
     name = 'Chichi'
     wintext = 'I AM A BAD DOG AND I SHOULD BE REMOVED FROM THIS GAME'
-    attributes = {
+    attributes = (
         '- lower top speed',
         '+ high acceleration',
         '+ handles great !'
-    }
+     )
 
     def __init__(self):
         CharacterBase.__init__(self)

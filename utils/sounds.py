@@ -36,14 +36,23 @@ class SoundLib:
     sound_path = Path(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'sounds', )))
 
     @classmethod
-    def woodblock(cls):
-        sound = Sound(str(cls.sound_path / 'woodblock.wav'))
+    def score1(cls):
+        sound = Sound(str(cls.sound_path / 'score1.wav'))
+        sound.play()
+    @classmethod
+    def score2(cls):
+        sound = Sound(str(cls.sound_path / 'score2.wav'))
+        sound.play()
+    @classmethod
+    def score3(cls):
+        sound = Sound(str(cls.sound_path / 'score3.wav'))
         sound.play()
 
     @classmethod
-    def chime(cls):
-        sound = Sound(str(cls.sound_path / 'chime.wav'))
+    def winchime(cls):
+        sound = Sound(str(cls.sound_path / 'winchime2.wav'))
         sound.play()
+
 
     @classmethod
     def winsound(cls, file):

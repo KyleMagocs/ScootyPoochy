@@ -1,6 +1,6 @@
 import pygame
 import math
-from objects.Characters import TestCharacter
+from objects.Characters import Cooper
 from objects.Theme import get_all_themes
 from vars import fps, radians_factor
 import vars

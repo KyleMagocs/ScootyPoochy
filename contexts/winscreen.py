@@ -23,9 +23,10 @@ class WinscreenContext:
             portrait = winning_character.portrait
 
             self.screen.blit(portrait, (vars.SCREEN_WIDTH/2 - portrait.get_width() / 2, vars.SCREEN_HEIGHT/3))
+            pygame.draw.rect(self.screen, winning_character.color, (vars.SCREEN_WIDTH / 2 - portrait.get_width() / 2, vars.SCREEN_HEIGHT/3, portrait.get_width(), portrait.get_height()), 6)
             font = pygame.font.SysFont('Arial', 40)
             label = font.render('"' + winning_character.wintext + '"', 1, winning_character.color)
-            self.screen.blit(label, (vars.SCREEN_WIDTH/2-label.get_width()/2, 200))
+            self.screen.blit(label, (vars.SCREEN_WIDTH/2-label.get_width()/2, 175))
 
             if self.timer < int(vars.fps / 2):
                 fade_overlay = pygame.Surface((vars.SCREEN_WIDTH, vars.SCREEN_HEIGHT))
