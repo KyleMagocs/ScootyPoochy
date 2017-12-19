@@ -13,7 +13,7 @@ ACCEL_COEF = 1
 
 
 def get_all_characters():
-    return [Carlos, Doge, Cooper, Nort, Beef]
+    return [Daisy, Doge, Cooper, Nort, Beef]
 
 
 # TODO:  THIS IS TRASH
@@ -24,7 +24,7 @@ class PoopTrail(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.z = z
-        _sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, 'objects',
+        _sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, 'characters',
                                                           character.poop_paths[random.randint(0, len(
                                                               character.poop_paths) - 1)])).convert()
         _sprite.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
@@ -46,7 +46,7 @@ class NortPoop(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.z = z
-        _sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, 'objects',
+        _sprite = pygame.image.load_extended(os.path.join(IMAGES_PATH, 'characters',
                                                           character.poop_paths[random.randint(0, len(
                                                               character.poop_paths) - 1)])).convert()
         _sprite.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
@@ -99,7 +99,7 @@ class CharacterBase:
             self.portrait = _portrait
 
     def get_a_poop(self, x, y, z, angle):
-        new_poop = PoopTrail(self, x + self.width / 2 + random.randint(-5, 5), y + self.width / 2 + random.randint(-5, 5), z, self.poop_angle)
+        new_poop = PoopTrail(self, x + self.width / 2 + random.randint(-7, 7), y + self.width / 2 + random.randint(-10, 10), z, self.poop_angle)
         return new_poop
 
 
@@ -112,7 +112,7 @@ class Cooper(CharacterBase):
     rarm_path = 'cooper/rightarm.png'
     tail_path = 'cooper/tail.png'
     body_path = 'cooper/body.png'
-    poop_paths = ['poop_temp.png']
+    poop_paths = ['cooper/poop1.png', 'cooper/poop2.png']
     max_speed = .75 * 6
     handling = .9
     acceleration = .4
@@ -123,7 +123,7 @@ class Cooper(CharacterBase):
     color = colors.red
     colorcode = b'r'
     name = 'Cooper'
-    wintext = 'OH HEY I GUESS I DID IT'
+    wintext = 'CANFIELD SUCKS.'
     attributes = (
         '+ not as in Anderson',
         '+ it\'s Xylon\'s Dog!',
@@ -146,7 +146,7 @@ class Doge(CharacterBase):
 
     finish_text = 'MUCH FINISH'
 
-    poop_paths = ['poop_temp_2.png', 'poop_temp_3.png']
+    poop_paths = ['doge/poop1.png', 'doge/poop2.png']
     max_speed = .7 * 6
     acceleration = .35
     width = 60
@@ -177,9 +177,9 @@ class Beef(CharacterBase):
     tail_path = 'beef/tail.png'
     body_path = 'beef/body.png'
 
-    finish_text = 'finish :('
+    finish_text = 'finish (｡-人-｡)'
 
-    poop_paths = ['poop_temp_2.png', 'poop_temp_3.png']
+    poop_paths = ['beef/poop1.png', 'beef/poop2.png']
     max_speed = .7 * 6
     acceleration = .35
     width = 60
@@ -206,7 +206,7 @@ class Nort(CharacterBase):
     sprite_path = 'nort_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
     portrait_path = 'nort_portrait_temp.png'
     winsound = 'trondogwin.wav'
-    poop_paths = ['nort_poop_temp.png', ]
+    poop_paths = ['nort/nort_poop_temp.png', ]
     max_speed = .7 * 6
     acceleration = .35
     poop_factor = 1
@@ -233,11 +233,11 @@ class Nort(CharacterBase):
         return new_poop
 
 
-class Carlos(CharacterBase):
+class Daisy(CharacterBase):
     sprite_path = 'carlos_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR CARLOS
     portrait_path = 'carlos_portrait_temp.png'
     winsound = 'clownwin.wav'
-    poop_paths = ['poop_temp.png']
+    poop_paths = ['daisy/poop1.png', 'daisy/poop2.png']
     max_speed = .6 * 6
     acceleration = .5
     width = 30

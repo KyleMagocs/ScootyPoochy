@@ -93,7 +93,7 @@ class World:
         return self.game_finished()
 
     def game_finished(self):
-        if self.player_one.y < 50 and self.player_two.y < 50:
+        if self.player_one.finished and self.player_two.finished:
             return self.get_scores()
         else:
             return None
@@ -101,12 +101,12 @@ class World:
     def handle_player_vel(self, p1_left, p1_right, p2_left, p2_right):
         p1_vel = get_velocity(p1_left, p1_right)
         p2_vel = get_velocity(p2_left, p2_right)
-        if self.player_one.jump_state == 0 and self.player_one.bounce_count == 0:
+        if self.player_one.jump_state == 0 and self.player_one.bounce_count == 0 and not self.player_one.finished:
             self.player_one.x_speed = (self.player_one.x_speed - p1_vel[0]) / self.level.theme.friction
             self.player_one.y_speed = (self.player_one.y_speed - p1_vel[1]) / self.level.theme.friction
             # TODO:  this should be part of the player, not the world
-            self.player_one.distance_travelled += math.sqrt(p1_vel[0] * p1_vel[0] + p1_vel[1] * p1_vel[1])
-        if self.player_two.jump_state == 0 and self.player_two.bounce_count == 0:
+            self.player_one.distance_travelled += math.sqrt(p1_vel[0] ** 2 + p1_vel[1] ** 2)
+        if self.player_two.jump_state == 0 and self.player_two.bounce_count == 0 and not self.player_two.finished:
             self.player_two.x_speed = (self.player_two.x_speed - p2_vel[0]) / self.level.theme.friction
             self.player_two.y_speed = (self.player_two.y_speed - p2_vel[1]) / self.level.theme.friction
             # TODO:  this should be part of the player, not the world
@@ -177,6 +177,7 @@ class World:
                                            dokillb=False)
         for p_sprite, wall_sprites in walls.items():
             _min_z = None
+            p_sprite_old_x, p_sprite_old_y = p_sprite.old_rect.x, p_sprite.old_rect.y
             for wall in wall_sprites:
                 if wall.height <= p_sprite.z:
                     if _min_z is None:
@@ -189,9 +190,9 @@ class World:
                     p_sprite.x -= delta_x
                     p_sprite.y -= delta_y
 
-                    p_sprite.distance_travelled -= math.sqrt(delta_x * delta_x + delta_y * delta_y)
-                    if p_sprite.distance_travelled < 0:
-                        p_sprite.distance_travelled = 0
+            p_sprite.distance_travelled -= math.sqrt((p_sprite.x - p_sprite_old_x) ** 2 + (p_sprite.y - p_sprite_old_y) ** 2)
+            if p_sprite.distance_travelled < 0:
+                p_sprite.distance_travelled = 0
 
             if _min_z is not None:
                 p_sprite.min_z = _min_z
@@ -248,13 +249,14 @@ class World:
         for sprite in self.level.broken_objects:
             sprite.draw_score(screen, x_offset, y_offset, draw_points=(sprite in player.broken_objects))
 
-        if player.y < 50:
+        if player.check_victory(45):
             self.draw_win_text(screen, x_offset, player.character.color, player.character.finish_text)
 
         if len(self.countdown) > 0:
             self.draw_countdown(screen, x_offset, player.character.color, self.countdown[0], self.countdown_timer * 3)
             font = pygame.font.SysFont('Impact', 18)
-            label = font.render('YOU!', 1, player.character.color)
+            label = textOutline(font, 'YOU!', player.character.color, colors.black)
+            # label = font.render('YOU!', 1, player.character.color)
             screen.blit(label, (x_offset + player.x + label.get_width() / 2, (vars.SCREEN_HEIGHT - vars.PLAYER_START_Y + 75)))
 
             # TODO:  Should put a real debug in here
@@ -284,10 +286,10 @@ class World:
         return ({'time': max(4000 - self.player_one.final_timer, 0),
                  'break': self.player_one.break_score,
                  # todo:  maybe return a list of objects instead and then you can do something neat there?
-                 'poop': self.player_one.poop_score,
+                 'poop': self.player_one.final_poop_score,
                  'char': self.player_one.character, },
                 {'time': max(4000 - self.player_two.final_timer, 0),
                  'break': self.player_two.break_score,
                  # todo:  maybe return a list of objects instead and then you can do something neat there?
-                 'poop': self.player_two.poop_score,
+                 'poop': self.player_two.final_poop_score,
                  'char': self.player_two.character},)

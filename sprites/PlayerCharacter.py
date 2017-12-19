@@ -35,6 +35,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
 
         self.poops = pygame.sprite.Group()
         self.poop_score = 0
+        self.final_poop_score = None
 
         self.distance_travelled = 0
 
@@ -57,6 +58,8 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.body_index = 0
         self.head_images = None
         self.head_index = 0
+
+        self.finished = False
 
         self.timer = 0
         self.timer_activated = False
@@ -81,6 +84,10 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.cur_sprite = self.orig_sprite
         self.radius = character.radius
         # self.rect = self.orig_sprite.get_rect()
+
+    def set_final_poop_score(self):
+        if self.final_poop_score is None:
+            self.final_poop_score = self.poop_score
 
     def jump(self):
         if self.jump_state == 0:
@@ -113,6 +120,8 @@ class PlayerCharacter(pygame.sprite.Sprite):
 
     def check_victory(self, finish_line):
         if self.y < finish_line:
+            self.finished = True
+            self.set_final_poop_score()
             self.final_timer = min(self.final_timer, self.timer)
             return True
 
@@ -138,8 +147,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
 
     def update(self):
         self.old_rect = copy.deepcopy(self.rect)
-        if self.timer_activated:
-            self.timer += 1
+        self.timer += 1
 
         if self.y_speed != 0 and self.bounce_count == 0:
             self.angle = math.atan(self.x_speed / self.y_speed) / 0.0174533
@@ -165,16 +173,18 @@ class PlayerCharacter(pygame.sprite.Sprite):
             self.jump_state = 0
 
     def spawn_poop_or_dont(self):
-        if math.fabs(self.z_speed) < 0.02 and self.distance_travelled > self.character.poop_factor:
+        if math.fabs(self.z_speed) <= 0.02 and self.distance_travelled > self.character.poop_factor / 3.0:
             # print('Spawned a poop after ' + str(self.character.current_poop_factor))
-            self.character.current_poop_factor -= 7
-            if self.character.current_poop_factor < 0:
+            self.character.current_poop_factor /= 1.3
+            if self.character.current_poop_factor < 5:
                 self.character.current_poop_factor = self.character.max_poop_factor
-                self.character.poop_angle = random.randint(0, 360)
+
 
             self.distance_travelled = 0
             ret_poops = []
-            for i in range(0, int(self.character.current_poop_factor / 3)):
+            self.character.poop_angle = random.randint(0, 360)
+            for i in range(0, max(int(self.character.current_poop_factor / 9), 1)):
+
                 ret_poops.append(self.spawn_poop())
 
             return ret_poops
