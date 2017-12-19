@@ -99,7 +99,7 @@ class CharacterBase:
             self.portrait = _portrait
 
     def get_a_poop(self, x, y, z, angle):
-        new_poop = PoopTrail(self, x + self.width / 2 + random.randint(-7, 7), y + self.width / 2 + random.randint(-10, 10), z, self.poop_angle)
+        new_poop = PoopTrail(self, x + self.width / 2 + random.randint(-5, 5), y + self.width / 2 + random.randint(-10, 10), z, self.poop_angle)
         return new_poop
 
 

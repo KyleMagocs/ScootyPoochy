@@ -179,12 +179,10 @@ class PlayerCharacter(pygame.sprite.Sprite):
             if self.character.current_poop_factor < 5:
                 self.character.current_poop_factor = self.character.max_poop_factor
 
-
             self.distance_travelled = 0
             ret_poops = []
             self.character.poop_angle = random.randint(0, 360)
             for i in range(0, max(int(self.character.current_poop_factor / 9), 1)):
-
                 ret_poops.append(self.spawn_poop())
 
             return ret_poops

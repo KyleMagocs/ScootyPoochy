@@ -44,6 +44,8 @@ class World:
         return p1_progress, p2_progress
 
     def update(self, p1_left, p1_right, p2_left, p2_right):
+        p1_start_x, p1_start_y = self.player_one.x, self.player_one.y
+        p2_start_x, p2_start_y = self.player_two.x, self.player_two.y
         if not debugcontrols.skip_countdown and len(self.countdown) > 0:
             self.player_one.update_limbs((0, 0), (0, 0))
             self.player_two.update_limbs((0, 0), (0, 0))
@@ -82,6 +84,9 @@ class World:
         for player in self.player_group:
             player.update_z()
 
+        self.player_one.distance_travelled += math.sqrt(int(self.player_one.x - p1_start_x) ** 2 + int(self.player_one.y - p1_start_y) ** 2)
+        self.player_two.distance_travelled += math.sqrt(int(self.player_two.x - p2_start_x) ** 2 + int(self.player_two.y - p2_start_y) ** 2)
+
         new_poops = self.player_one.spawn_poop_or_dont()
         for new_poop in new_poops:
             self.poop_surface.blit(new_poop.image, (new_poop.x, new_poop.y))
@@ -105,12 +110,12 @@ class World:
             self.player_one.x_speed = (self.player_one.x_speed - p1_vel[0]) / self.level.theme.friction
             self.player_one.y_speed = (self.player_one.y_speed - p1_vel[1]) / self.level.theme.friction
             # TODO:  this should be part of the player, not the world
-            self.player_one.distance_travelled += math.sqrt(p1_vel[0] ** 2 + p1_vel[1] ** 2)
+            # self.player_one.distance_travelled += math.sqrt(p1_vel[0] ** 2 + p1_vel[1] ** 2)
         if self.player_two.jump_state == 0 and self.player_two.bounce_count == 0 and not self.player_two.finished:
             self.player_two.x_speed = (self.player_two.x_speed - p2_vel[0]) / self.level.theme.friction
             self.player_two.y_speed = (self.player_two.y_speed - p2_vel[1]) / self.level.theme.friction
             # TODO:  this should be part of the player, not the world
-            self.player_two.distance_travelled += math.sqrt(p2_vel[0] ** 2 + p2_vel[1] ** 2)
+            # self.player_two.distance_travelled += math.sqrt(p2_vel[0] ** 2 + p2_vel[1] ** 2)
 
     def handle_player_collisions(self):
         for player in self.player_group:
@@ -190,7 +195,7 @@ class World:
                     p_sprite.x -= delta_x
                     p_sprite.y -= delta_y
 
-            p_sprite.distance_travelled -= math.sqrt((p_sprite.x - p_sprite_old_x) ** 2 + (p_sprite.y - p_sprite_old_y) ** 2)
+            # p_sprite.distance_travelled -= math.sqrt((p_sprite.x - p_sprite_old_x) ** 2 + (p_sprite.y - p_sprite_old_y) ** 2)
             if p_sprite.distance_travelled < 0:
                 p_sprite.distance_travelled = 0
 
