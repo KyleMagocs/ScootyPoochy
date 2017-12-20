@@ -177,7 +177,7 @@ class Beef(CharacterBase):
     tail_path = 'beef/tail.png'
     body_path = 'beef/body.png'
 
-    finish_text = 'finish (｡-人-｡)'
+    finish_text = 'finish (´;ω;`)'
 
     poop_paths = ['beef/poop1.png', 'beef/poop2.png']
     max_speed = .7 * 6
