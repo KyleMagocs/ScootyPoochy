@@ -64,8 +64,10 @@ class NortPoop(pygame.sprite.Sprite):
 class CharacterBase:
     sprite_path = None
     portrait_path = None
+    victory_portrait_path = None
     sprite = None
     portrait = None
+    victory_portrait = None
     poop_paths = []
     handling = .5
     acceleration = .5
@@ -97,6 +99,13 @@ class CharacterBase:
                 os.path.join(IMAGES_PATH, 'characters', self.portrait_path)).convert()
             _portrait.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
             self.portrait = _portrait
+        if self.victory_portrait_path is not None:
+            _portrait = pygame.image.load_extended(
+                os.path.join(IMAGES_PATH, 'characters', self.victory_portrait_path)).convert()
+            _portrait.set_colorkey(colors.TRANSPARENT, pygame.RLEACCEL)
+            self.victory_portrait = _portrait
+        else:
+            self.victory_portrait = self.portrait
 
     def get_a_poop(self, x, y, z, angle):
         new_poop = PoopTrail(self, x + self.width / 2 + random.randint(-5, 5), y + self.width / 2 + random.randint(-10, 10), z, self.poop_angle)
@@ -105,7 +114,8 @@ class CharacterBase:
 
 class Cooper(CharacterBase):
     sprite_path = 'TEMPDOG_sprite_temp.png'
-    portrait_path = 'TEMPDOG_PORTRAIT.png'
+    portrait_path = 'cooper/portrait.png'
+    victory_portrait_path = 'cooper/victory.png'
     winsound = 'cooldogwin.wav'
     head_path = 'cooper/head.png'
     larm_path = 'cooper/leftarm.png'
@@ -133,10 +143,9 @@ class Cooper(CharacterBase):
     def __init__(self):
         CharacterBase.__init__(self)
 
-
 class Doge(CharacterBase):
     #sprite_path = 'DOGE_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
-    portrait_path = 'DOGE_portrait_temp.png'
+    portrait_path = 'doge/portrait.png'
     winsound = 'dogewin.wav'
     head_path = 'doge/head.png'
     larm_path = 'doge/leftarm.png'
@@ -168,8 +177,8 @@ class Doge(CharacterBase):
         CharacterBase.__init__(self)
 
 class Beef(CharacterBase):
-    #sprite_path = 'DOGE_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
-    portrait_path = 'beef_portrait_temp.png'
+    portrait_path = 'beef/portrait.png'
+    victory_portrait_path = 'beef/victory.png'
     winsound = 'beefwin.wav'
     head_path = 'beef/head.png'
     larm_path = 'beef/leftarm.png'
@@ -201,10 +210,10 @@ class Beef(CharacterBase):
     def __init__(self):
         CharacterBase.__init__(self)
 
-
 class Nort(CharacterBase):
     sprite_path = 'nort_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
-    portrait_path = 'nort_portrait_temp.png'
+    portrait_path = 'nort/portrait.png'
+    victory_portrait_path = 'nort/victory.png'
     winsound = 'trondogwin.wav'
     poop_paths = ['nort/nort_poop_temp.png', ]
     max_speed = .7 * 6
@@ -232,27 +241,32 @@ class Nort(CharacterBase):
         new_poop = NortPoop(self, x + self.width / 2, y + self.width / 2, z, angle)
         return new_poop
 
-
 class Daisy(CharacterBase):
     sprite_path = 'carlos_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR CARLOS
-    portrait_path = 'carlos_portrait_temp.png'
+    portrait_path = 'daisy/portrait.png'
+    victory_portrait_path = 'daisy/victory.png'
     winsound = 'clownwin.wav'
     poop_paths = ['daisy/poop1.png', 'daisy/poop2.png']
+    head_path = 'daisy/head.png'
+    larm_path = 'daisy/leftarm.png'
+    rarm_path = 'daisy/rightarm.png'
+    tail_path = 'daisy/tail.png'
+    body_path = 'daisy/body.png'
     max_speed = .6 * 6
     acceleration = .5
-    width = 30
-    height = 30
+    width = 60
+    height = 60
     radius = 15
     handling = .8
     max_poop_factor = 75
     color = colors.green
     colorcode = b'g'
     name = 'Chichi'
-    wintext = 'I AM A BAD DOG AND I SHOULD BE REMOVED FROM THIS GAME'
+    wintext = 'I\'ve earned this'
     attributes = (
-        '- lower top speed',
-        '+ high acceleration',
-        '+ handles great !'
+        '- smol',
+        '+ easily agitated'
+        '- YAP YAP YAP YAP YIP YAP'
      )
 
     def __init__(self):

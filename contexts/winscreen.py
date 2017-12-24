@@ -20,7 +20,7 @@ class WinscreenContext:
             self.timer += 1
             self.screen.fill(colors.black)
 
-            portrait = winning_character.portrait
+            portrait = winning_character.victory_portrait
 
             self.screen.blit(portrait, (vars.SCREEN_WIDTH/2 - portrait.get_width() / 2, vars.SCREEN_HEIGHT/3))
             pygame.draw.rect(self.screen, winning_character.color, (vars.SCREEN_WIDTH / 2 - portrait.get_width() / 2, vars.SCREEN_HEIGHT/3, portrait.get_width(), portrait.get_height()), 6)

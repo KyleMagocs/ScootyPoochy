@@ -15,7 +15,8 @@ if __name__ == "__main__":
     # Unix: x11, dga, fbcon, directfb, ggi, vgl, svgalib, aalib
     # os.environ["SDL_VIDEODRIVER"] = "x11"
     pygame.init()
-    screen = pygame.display.set_mode(size, pygame.DOUBLEBUF | pygame.NOFRAME)
+    screen = pygame.display.set_mode(size, pygame.DOUBLEBUF | pygame.NOFRAME | pygame.FULLSCREEN)
+    pygame.mouse.set_visible(False)
 
     # character_select = CharacterSelectContext(screen)
     # selected_characters = character_select.main_loop()
