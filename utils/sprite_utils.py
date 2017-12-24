@@ -39,6 +39,8 @@ def get_velocity(left, right):
 
 
 def angle_between_points(x1, y1, x2, y2):
+    if math.fabs(x2 - x1) < 0.01:
+        return 0
     theta = math.atan(((y2 - y1)*-1) / (x2 - x1)) / vars.radians_factor + 90
     return theta
 

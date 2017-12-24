@@ -218,8 +218,8 @@ class Nort(CharacterBase):
     poop_paths = ['nort/nort_poop_temp.png', ]
     max_speed = .7 * 6
     acceleration = .35
-    poop_factor = 1
-    max_poop_factor = 75
+    poop_factor = 5
+    max_poop_factor = 5
     width = 60
     height = 60
     radius = 30

@@ -235,10 +235,11 @@ class PlayerCharacter(pygame.sprite.Sprite):
 
     def spawn_poop(self):
         if len(self.poops) > 0:
-            angle = angle_between_points(self.last_poop_x, self.last_poop_y, self.x, self.visible_y)  # TODO:  THIS IS WORKING REALLY POORLY
+            angle = angle_between_points(int(self.last_poop_x), int(self.last_poop_y), int(self.x), int(self.visible_y+10))  # TODO:  THIS IS WORKING REALLY POORLY
         else:
             angle = self.angle
+            self.poops = [1,]  # todo:  dumb, hacky
         self.last_poop_x = self.x
-        self.last_poop_y = self.visible_y
+        self.last_poop_y = self.visible_y+10
         self.poop_score += 1
         return self.character.get_a_poop(self.x, self.visible_y+10, self.z, angle)
