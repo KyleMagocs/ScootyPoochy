@@ -241,4 +241,4 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.last_poop_x = self.x
         self.last_poop_y = self.visible_y
         self.poop_score += 1
-        return self.character.get_a_poop(self.x, self.visible_y, self.z, angle)
+        return self.character.get_a_poop(self.x, self.visible_y+10, self.z, angle)
