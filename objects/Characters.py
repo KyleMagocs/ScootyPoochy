@@ -69,14 +69,12 @@ class CharacterBase:
     portrait = None
     victory_portrait = None
     poop_paths = []
-    handling = .5
-    acceleration = .5
-    max_speed = 1
     poop_factor = 15
     max_poop_factor = 75
+    radius = 30
     color = (200, 200, 200)
-    width = 0
-    height = 0
+    width = 60
+    height = 60
     attributes = None
     name = None
     finish_text = 'FINISH !'
@@ -123,13 +121,7 @@ class Cooper(CharacterBase):
     tail_path = 'cooper/tail.png'
     body_path = 'cooper/body.png'
     poop_paths = ['cooper/poop1.png', 'cooper/poop2.png']
-    max_speed = .75 * 6
-    handling = .9
-    acceleration = .4
-    max_poop_factor = 25
-    width = 60
-    height = 60
-    radius = 30
+
     color = colors.red
     colorcode = b'r'
     name = 'Cooper'
@@ -144,7 +136,6 @@ class Cooper(CharacterBase):
         CharacterBase.__init__(self)
 
 class Doge(CharacterBase):
-    #sprite_path = 'DOGE_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
     portrait_path = 'doge/portrait.png'
     winsound = 'dogewin.wav'
     head_path = 'doge/head.png'
@@ -156,13 +147,7 @@ class Doge(CharacterBase):
     finish_text = 'MUCH FINISH'
 
     poop_paths = ['doge/poop1.png', 'doge/poop2.png']
-    max_speed = .7 * 6
-    acceleration = .35
-    width = 60
-    height = 60
-    radius = 30
-    handling = .95
-    max_poop_factor = 75
+
     color = colors.light_blue
     colorcode = b'b'
     name = 'DOGE'
@@ -189,13 +174,7 @@ class Beef(CharacterBase):
     finish_text = 'finish (´;ω;`)'
 
     poop_paths = ['beef/poop1.png', 'beef/poop2.png']
-    max_speed = .7 * 6
-    acceleration = .35
-    width = 60
-    height = 60
-    radius = 30
-    handling = .95
-    max_poop_factor = 75
+
     color = colors.light_grey
     colorcode = b'w'
     name = 'Roast Beef'
@@ -211,19 +190,15 @@ class Beef(CharacterBase):
         CharacterBase.__init__(self)
 
 class Nort(CharacterBase):
-    sprite_path = 'nort_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR DOGE
+    sprite_path = 'nort_sprite_temp.png'
     portrait_path = 'nort/portrait.png'
     victory_portrait_path = 'nort/victory.png'
     winsound = 'trondogwin.wav'
     poop_paths = ['nort/nort_poop_temp.png', ]
-    max_speed = .7 * 6
-    acceleration = .35
+
     poop_factor = 5
     max_poop_factor = 5
-    width = 60
-    height = 60
-    radius = 30
-    handling = .95
+
     color = colors.aqua
     colorcode = b'a'
     name = 'NORT'
@@ -242,7 +217,7 @@ class Nort(CharacterBase):
         return new_poop
 
 class Daisy(CharacterBase):
-    sprite_path = 'carlos_sprite_temp.png'  # TODO: MAKE ACTUAL ART FOR CARLOS
+    sprite_path = 'carlos_sprite_temp.png'
     portrait_path = 'daisy/portrait.png'
     victory_portrait_path = 'daisy/victory.png'
     winsound = 'clownwin.wav'
@@ -252,16 +227,9 @@ class Daisy(CharacterBase):
     rarm_path = 'daisy/rightarm.png'
     tail_path = 'daisy/tail.png'
     body_path = 'daisy/body.png'
-    max_speed = .6 * 6
-    acceleration = .5
-    width = 60
-    height = 60
-    radius = 15
-    handling = .8
-    max_poop_factor = 75
     color = colors.green
     colorcode = b'g'
-    name = 'Chichi'
+    name = 'Daisy'
     wintext = 'I\'ve earned this'
     attributes = (
         '- smol',
