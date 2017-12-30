@@ -8,6 +8,7 @@ aqua = (0, 255, 255)
 black = (2, 2, 2)
 white = (255, 255, 255)
 light_grey = (190, 190, 190)
+yellow = (255, 255, 0)
 TRANSPARENT = (255, 0, 255)
 
 rand_colors = [

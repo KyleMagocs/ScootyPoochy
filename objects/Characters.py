@@ -13,7 +13,7 @@ ACCEL_COEF = 1
 
 
 def get_all_characters():
-    return [Daisy, Doge, Cooper, Nort, Beef, Daisy, Doge, Cooper, Nort, Beef]
+    return [Lucy, Daisy, Doge, Cooper, Nort, Beef, Lucy, Daisy, Doge, Cooper, Nort, Beef]
 
 
 # TODO:  THIS IS TRASH
@@ -135,8 +135,10 @@ class Cooper(CharacterBase):
     def __init__(self):
         CharacterBase.__init__(self)
 
+
 class Doge(CharacterBase):
     portrait_path = 'doge/portrait.png'
+    victory_portrait_path = 'doge/victory.png'
     winsound = 'dogewin.wav'
     head_path = 'doge/head.png'
     larm_path = 'doge/leftarm.png'
@@ -156,10 +158,11 @@ class Doge(CharacterBase):
         '+ very meme',
         '- much average'
         '      wow'
-     )
+    )
 
     def __init__(self):
         CharacterBase.__init__(self)
+
 
 class Beef(CharacterBase):
     portrait_path = 'beef/portrait.png'
@@ -183,6 +186,34 @@ class Beef(CharacterBase):
         '+ is a cat',
         '- is a sad cat',
         '+ pretty cute tho',
+
+    )
+
+    def __init__(self):
+        CharacterBase.__init__(self)
+
+class Lucy(CharacterBase):
+    portrait_path = 'lucy/portrait.png'
+    victory_portrait_path = 'lucy/victory.png'
+    winsound = 'beefwin.wav'  # TODO:  I AINT GOT A SOUND FOR LUCY
+    head_path = 'lucy/head.png'
+    larm_path = 'lucy/leftarm.png'
+    rarm_path = 'lucy/rightarm.png'
+    tail_path = 'lucy/tail.png'
+    body_path = 'lucy/body.png'
+
+    finish_text = 'finish.'
+
+    poop_paths = ['lucy/poop1.png', 'lucy/poop2.png']
+
+    color = colors.yellow
+    colorcode = b'y'
+    name = 'Lucy'
+    wintext = '*WHEEEEZE*'
+    attributes = (
+        '+ extra wrinkly !',
+        '- generations of inbreeding',
+        '+ gives kisses freely',
 
     )
 
@@ -221,6 +252,7 @@ class Nort(CharacterBase):
         new_poop = NortPoop(self, x + self.width / 2, y + self.width / 2, z, angle)
         return new_poop
 
+
 class Daisy(CharacterBase):
     sprite_path = 'carlos_sprite_temp.png'
     portrait_path = 'daisy/portrait.png'
@@ -240,7 +272,7 @@ class Daisy(CharacterBase):
         '- smol',
         '+ easily agitated'
         '- YAP YAP YAP YAP YIP YAP'
-     )
+    )
 
     def __init__(self):
         CharacterBase.__init__(self)
