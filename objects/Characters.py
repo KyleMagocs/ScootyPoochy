@@ -13,8 +13,7 @@ ACCEL_COEF = 1
 
 
 def get_all_characters():
-    return [Lucy, Daisy, Doge, Cooper, Nort, Beef, Lucy, Daisy, Doge, Cooper, Nort, Beef]
-
+    return [Lucy, Daisy, Mikkusu, Doge, Cooper, Nort, Beef, Lucy, Daisy, Mikkusu, Doge, Cooper, Nort, Beef]
 
 # TODO:  THIS IS TRASH
 
@@ -270,8 +269,32 @@ class Daisy(CharacterBase):
     wintext = 'I\'ve earned this'
     attributes = (
         '- smol',
-        '+ easily agitated'
+        '+ easily agitated',
         '- YAP YAP YAP YAP YIP YAP'
+    )
+
+    def __init__(self):
+        CharacterBase.__init__(self)
+
+class Mikkusu(CharacterBase):
+    portrait_path = 'mikkusu/portrait.png'
+    victory_portrait_path = 'mikkusu/victory.png'
+    winsound = 'clownwin.wav'  # TODO:  NEED A VICTORY TUNE HERE
+    poop_paths = ['mikkusu/poop1.png', 'mikkusu/poop2.png']
+    head_path = 'mikkusu/head.png'
+    larm_path = 'mikkusu/leftarm.png'
+    rarm_path = 'mikkusu/rightarm.png'
+    tail_path = 'mikkusu/tail.png'
+    body_path = 'mikkusu/body.png'
+    color = colors.magenta
+    colorcode = b'm'
+    name = 'Mikkusu'
+    wintext = 'Nothin\' personal, kid'
+    attributes = (
+        '+ likes anime',
+        '+ big fluffy coat',
+        '- won\'t stop talking about anime'
+
     )
 
     def __init__(self):
