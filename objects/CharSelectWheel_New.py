@@ -155,7 +155,8 @@ class CharacterWheelNew:
         if self.spawned and not self.despawned:
             if not self.moving:
                 self.confirm_character()
-                self.despawning = True
+                if self.confirmed:
+                    self.despawning = True
         else:
             self.spawning = True
 
