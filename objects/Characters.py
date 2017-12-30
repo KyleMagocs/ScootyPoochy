@@ -13,7 +13,7 @@ ACCEL_COEF = 1
 
 
 def get_all_characters():
-    return [Daisy, Doge, Cooper, Nort, Beef]
+    return [Daisy, Doge, Cooper, Nort, Beef, Daisy, Doge, Cooper, Nort, Beef]
 
 
 # TODO:  THIS IS TRASH
@@ -191,6 +191,11 @@ class Beef(CharacterBase):
 
 class Nort(CharacterBase):
     sprite_path = 'nort_sprite_temp.png'
+    head_path = 'nort/head.png'
+    larm_path = 'nort/leftarm.png'
+    rarm_path = 'nort/rightarm.png'
+    tail_path = 'nort/tail.png'
+    body_path = 'nort/body.png'
     portrait_path = 'nort/portrait.png'
     victory_portrait_path = 'nort/victory.png'
     winsound = 'trondogwin.wav'
