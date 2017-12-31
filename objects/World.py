@@ -60,7 +60,7 @@ class World:
             MusicLib.update_volume(1)
             MusicLib.play_race_start()
             return
-        MusicLib.play_game()
+        # MusicLib.play_game()
 
         self.player_one.update_limbs(p1_left, p1_right)
         self.player_two.update_limbs(p2_left, p2_right)

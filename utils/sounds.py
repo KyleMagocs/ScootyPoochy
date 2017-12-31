@@ -12,13 +12,14 @@ class MusicLib:
     @classmethod
     def play_race_start(cls):
         if not cls.currently_playing == 'race_start':
-            music.load(str(cls.music_path / 'race_start.wav'))
+            music.load(str(cls.music_path / 'RaceThemeMixdown.wav'))
             if not music_off:
                 music.play(-1)
             cls.currently_playing = 'race_start'
 
+
     @classmethod
-    def play_game(cls):
+    def play_title(cls):
         if not cls.currently_playing == 'title':
             music.load(str(cls.music_path / 'race_audio.wav'))
             if not music_off:
