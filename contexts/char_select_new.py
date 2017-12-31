@@ -49,6 +49,7 @@ class CharacterSelectTrackballContext:
     def main_loop(self):
         start_timer = 0
         end_timer = 0
+        left_ang, right_ang = 0,0
         while True:
 
             actual_fps = self.clock.tick(fps)
@@ -58,10 +59,10 @@ class CharacterSelectTrackballContext:
 
             self.timer += 1
             self.check_events()
-
-            left_ang, right_ang = self.get_trackball_input()
-            self.left_wheel.update(left_ang)
-            self.right_wheel.update(right_ang)
+            if self.timer % 3 == 0:
+                left_ang, right_ang = self.get_trackball_input()
+            self.left_wheel.update(left_ang/3)
+            self.right_wheel.update(right_ang/3)
             self.draw()
 
             # TODO:  Maybe refactor ?  Move to draw method ?  Whatever

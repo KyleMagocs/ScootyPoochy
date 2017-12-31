@@ -23,9 +23,10 @@ class GlobalContext:
         self.screen = screen
 
     def main_loop(self):
+        p1 = Player(0, 0)
+        p2 = Player(1, 0)
+
         while True:
-            p1 = Player(0,0)
-            p2 = Player(1,1)
 
             player_array = []
             if not debugcontrols.skip_intro:
@@ -67,4 +68,4 @@ class GlobalContext:
             elif r_total > l_total:
                 winscreen.display_loop(characters[1])
             else:
-                pass # ITS A DRAW, I DON'T KNOW WHAT TO DO
+                pass  # ITS A DRAW, I DON'T KNOW WHAT TO DO

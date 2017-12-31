@@ -9,7 +9,7 @@ from vars import IMAGES_PATH
 import random
 import vars
 
-ACCEL_COEF = 1
+ACCEL_COEF = 0.3
 
 
 def get_all_characters():

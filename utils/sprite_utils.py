@@ -35,7 +35,7 @@ def get_conform_deltas(obstacle, old, new):
 def get_velocity(left, right):
     addtl_y_vel = (left[1] / 10 + right[1] / 10) / 2 * Characters.ACCEL_COEF
     addtl_x_vel = ((left[0] / 10 - 10) + (right[0] / 10 + 10)) / 2 * Characters.ACCEL_COEF
-    return addtl_x_vel, addtl_y_vel
+    return addtl_x_vel * -1, addtl_y_vel * -1
 
 
 def angle_between_points(x1, y1, x2, y2):

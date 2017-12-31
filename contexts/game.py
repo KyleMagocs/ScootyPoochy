@@ -30,7 +30,7 @@ class GameContext:
         self.players.append(p1)
         self.players.append(p2)
 
-        self.world = World(width=600, y_offset=vars.SCREEN_HEIGHT+10, level=levels[0])
+        self.world = World(width=600, players = self.players, y_offset=vars.SCREEN_HEIGHT+10, level=levels[0])
 
         self.world.player_one.y = levels[0].height - vars.PLAYER_START_Y
         self.world.player_one.set_character(character_list[0])
@@ -78,10 +78,8 @@ class GameContext:
 
             self.screen.fill(colors.black)
 
-            p1_left, p1_right = self.players[0].read_input()
-            p2_left, p2_right = self.players[1].read_input()
-
-            results = self.world.update(p1_left, p1_right, p2_left, p2_right)
+            # results = self.world.update(p1_left, p1_right, p2_left, p2_right)
+            results = self.world.update()
 
             self.world.draw(self.screen)
             self.draw_hud(self.screen)

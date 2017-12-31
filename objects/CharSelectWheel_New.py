@@ -5,6 +5,7 @@ import pygame
 
 import colors
 from objects.Characters import get_all_characters
+from utils.lights import ColorLib
 
 all_chars = get_all_characters()
 from sprites.CharacterSelectCharacter import CharacterSelectCharacter
@@ -155,7 +156,13 @@ class CharacterWheelNew:
         if self.spawned and not self.despawned:
             if not self.moving:
                 self.confirm_character()
+
                 if self.confirmed:
+                    if self.reverse_stats:  # False = player 1
+                        ColorLib.set_colors(None, self.get_selected_character().character.colorcode)
+                    elif not self.reverse_stats:
+                        ColorLib.set_colors(self.get_selected_character().character.colorcode, None)
+
                     self.despawning = True
         else:
             self.spawning = True

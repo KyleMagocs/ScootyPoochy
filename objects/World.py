@@ -12,14 +12,16 @@ from utils.sprite_utils import get_conform_deltas, get_velocity
 from utils.sounds import MusicLib
 
 class World:
-    def __init__(self, width, y_offset, level):
+    def __init__(self, width, y_offset, players, level):
+        self.frame = 0
         self.countdown = ['3', '2', '1', 'GO!']
-
+        self.players = players
         self.width = width
         self.break_score = 0
 
         self.finish = False
-
+        self.p1_left, self.p1_right = 0, 0
+        self.p2_left, self.p2_right = 0, 0
         # self.level.update_objects(self.x_offset)
 
         self.player_one = PlayerCharacter(init_x=self.width / 2 - 40,
@@ -43,29 +45,32 @@ class World:
         p2_progress = math.fabs(max((self.player_two.y + vars.PLAYER_START_Y), 0) / self.level.height)
         return p1_progress, p2_progress
 
-    def update(self, p1_left, p1_right, p2_left, p2_right):
-        p1_start_x, p1_start_y = self.player_one.x, self.player_one.y
-        p2_start_x, p2_start_y = self.player_two.x, self.player_two.y
-        if not debugcontrols.skip_countdown and len(self.countdown) > 0:
+    def update(self):
+        self.frame += 1
+
+        if len(self.countdown) > 0:
             self.player_one.update_limbs((0, 0), (0, 0))
             self.player_two.update_limbs((0, 0), (0, 0))
-            if self.countdown_timer < int(vars.fps) and len(self.countdown) > 0:
+            if self.countdown_timer < int(vars.fps):
                 self.countdown_timer += 1
             else:
-                if len(self.countdown) > 0:
-                    self.countdown.remove(self.countdown[0])
-
+                self.countdown.remove(self.countdown[0])
                 self.countdown_timer = 0
         if len(self.countdown) > 1:
             MusicLib.update_volume(1)
             MusicLib.play_race_start()
             return
-        # MusicLib.play_game()
+        if self.frame >= vars.fps/10:
+            self.p1_left, self.p1_right = self.players[0].read_input()
+            self.p2_left, self.p2_right = self.players[1].read_input()
+            self.frame = 0
 
-        self.player_one.update_limbs(p1_left, p1_right)
-        self.player_two.update_limbs(p2_left, p2_right)
+        p1_start_x, p1_start_y = self.player_one.x, self.player_one.y
+        p2_start_x, p2_start_y = self.player_two.x, self.player_two.y
+        self.player_one.update_limbs(self.p1_left, self.p1_right)
+        self.player_two.update_limbs(self.p2_left, self.p2_right)
 
-        self.handle_player_vel(p1_left, p1_right, p2_left, p2_right)
+        self.handle_player_vel(self.p1_left, self.p1_right, self.p2_left, self.p2_right)
 
         self.player_one.update()
         self.player_two.update()
@@ -258,7 +263,7 @@ class World:
             self.draw_win_text(screen, x_offset, player.character.color, player.character.finish_text)
 
         if len(self.countdown) > 0:
-            self.draw_countdown(screen, x_offset, player.character.color, self.countdown[0], self.countdown_timer * 3)
+            self.draw_countdown(screen, x_offset, player.character.color, self.countdown[0], self.countdown_timer)
             font = pygame.font.SysFont('Impact', 18)
             label = textOutline(font, 'YOU!', player.character.color, colors.black)
             # label = font.render('YOU!', 1, player.character.color)
@@ -275,7 +280,7 @@ class World:
         self.timer_enabled = 1
 
     def draw_countdown(self, screen, x_offset, color, text, size):
-        font2 = pygame.font.SysFont('Impact', size)
+        font2 = pygame.font.SysFont('Impact', 60)
         label = textOutline(font2, text, color, colors.black)
         screen.blit(label, (
             x_offset + self.width / 2 - label.get_width() / 2, vars.SCREEN_HEIGHT / 2 - label.get_height() / 2))
