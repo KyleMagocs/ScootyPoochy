@@ -124,7 +124,11 @@ class Cooper(CharacterBase):
     color = colors.red
     colorcode = b'r'
     name = 'Cooper'
-    wintext = 'CANFIELD SUCKS.'
+    wintext = ['"I dislike Ryan Canfield."',
+               '"I want some cheese now"',
+               '"The name\'s Cooper, but not like Anderson"',
+               '"The name\'s Cooper, but not like the cheese"',
+               '"You can get your dog in the game by paying off the creator"']
     attributes = (
         '+ not as in Anderson',
         '+ it\'s Xylon\'s Dog!',
@@ -152,7 +156,9 @@ class Doge(CharacterBase):
     color = colors.light_blue
     colorcode = b'b'
     name = 'DOGE'
-    wintext = 'WOW'
+    wintext = ['"wow"',
+               '"much win"',
+               '"very 1st place"']
     attributes = (
         '+ very meme',
         '- much average'
@@ -180,7 +186,9 @@ class Beef(CharacterBase):
     color = colors.light_grey
     colorcode = b'w'
     name = 'Roast Beef'
-    wintext = 'Oh dang, I did it'
+    wintext = ['"Oh dang, I did it"',
+               '"I deserve a nap"',
+               '*prrrrrr*']
     attributes = (
         '+ is a cat',
         '- is a sad cat',
@@ -208,7 +216,10 @@ class Lucy(CharacterBase):
     color = colors.yellow
     colorcode = b'y'
     name = 'Lucy'
-    wintext = '*WHEEEEZE*'
+    wintext = ['*WHEEEEZE*',
+               '*sputter*',
+               '<eyeball pops out in excitement>']
+
     attributes = (
         '+ extra wrinkly !',
         '- generations of inbreeding',
@@ -237,7 +248,9 @@ class Nort(CharacterBase):
     color = colors.aqua
     colorcode = b'a'
     name = 'NORT'
-    wintext = '1982 was a good year'
+    wintext = [""'\'82 was a good year"',
+               '"Radical."',
+               '"Tubular."']
     attributes = (
         '+ Laser poops',
         '+ Futuristic',
@@ -266,7 +279,9 @@ class Daisy(CharacterBase):
     color = colors.green
     colorcode = b'g'
     name = 'Daisy'
-    wintext = 'I\'ve earned this'
+    wintext = ['"I\'ve earned this"',
+               '"Big surprises come in little packages"',
+               '"Cake is for winners"']
     attributes = (
         '- smol',
         '+ easily agitated',
@@ -289,7 +304,9 @@ class Mikkusu(CharacterBase):
     color = colors.magenta
     colorcode = b'm'
     name = 'Mikkusu'
-    wintext = 'Nothin\' personal, kid'
+    wintext = ['"Nothin\' personal, kid"',
+               '"Omae wa mou shindeiru"',
+               '"OwO what\'s this"']
     attributes = (
         '+ likes anime',
         '+ big fluffy coat',

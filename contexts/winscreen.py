@@ -1,3 +1,5 @@
+import random
+random.seed()
 import pygame
 import vars
 import colors
@@ -15,6 +17,8 @@ class WinscreenContext:
     def display_loop(self, winning_character):
         SoundLib.winsound(winning_character.winsound)
         ColorLib.set_colors(winning_character.colorcode, winning_character.colorcode)
+        text = winning_character.wintext[random.randint(0, len(winning_character.wintext) - 1)]
+
         while self.timer < self.TIMEOUT:
 
             self.clock.tick(vars.fps)
@@ -33,7 +37,8 @@ class WinscreenContext:
             self.screen.blit(label, (vars.SCREEN_WIDTH/2-label.get_width()/2, 70))
             label = font.render(winning_character.name, 1, winning_character.color)
             self.screen.blit(label, (vars.SCREEN_WIDTH / 2 - label.get_width() / 2, 175))
-            label = font.render('"' + winning_character.wintext + '"', 1, winning_character.color)
+
+            label = font.render(text, 1, winning_character.color)
             self.screen.blit(label, (vars.SCREEN_WIDTH/2-label.get_width()/2, vars.SCREEN_HEIGHT/3 + portrait.get_height() + 15))
 
             if self.timer < int(vars.fps / 2):

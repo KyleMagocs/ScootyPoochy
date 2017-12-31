@@ -286,7 +286,7 @@ class World:
             x_offset + self.width / 2 - label.get_width() / 2, vars.SCREEN_HEIGHT / 2 - label.get_height() / 2))
 
     def draw_win_text(self, screen, x_offset, color, text='FINISH !'):
-        font = pygame.font.SysFont('Impact', 70)
+        font = pygame.font.SysFont('Arial', 70)
         text = textOutline(font, text, color,
                            colors.black)
         text.get_width()
