@@ -1,8 +1,13 @@
 import serial
+from serial.tools import list_ports
 
 class ColorLib:
     try:
-        teensy = serial.Serial('COM5')
+        teensy = None
+        for port in list_ports.comports():
+            if 'Teensy' in port.description:
+                teensy = serial.Serial(port.device)
+                break
     except:
         teensy = None
 
