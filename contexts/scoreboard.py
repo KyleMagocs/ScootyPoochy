@@ -1,6 +1,7 @@
 import pygame
 
 from utils.hollow import textOutline
+from utils.lights import ColorLib
 from utils.roundrects import round_rect
 import colors
 import vars
@@ -27,6 +28,8 @@ class ScoreboardContext:
         self.right_color = None
 
     def main_loop(self, game_data):
+        ColorLib.set_colors(b'-', b'-')
+
         self.left_color = game_data[0]['char'].color
         self.right_color = game_data[1]['char'].color
 

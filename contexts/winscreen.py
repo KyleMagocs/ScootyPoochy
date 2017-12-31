@@ -1,6 +1,7 @@
 import pygame
 import vars
 import colors
+from utils.lights import ColorLib
 from utils.sounds import SoundLib
 
 class WinscreenContext:
@@ -13,6 +14,7 @@ class WinscreenContext:
 
     def display_loop(self, winning_character):
         SoundLib.winsound(winning_character.winsound)
+        ColorLib.set_colors(winning_character.colorcode, winning_character.colorcode)
         while self.timer < self.TIMEOUT:
 
             self.clock.tick(vars.fps)

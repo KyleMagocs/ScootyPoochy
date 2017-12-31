@@ -14,6 +14,7 @@ from objects.Characters import Cooper, Doge, Beef
 from objects.Level import TempLevel, ButtLevel, ShortLevel
 from objects.Player import Player
 import vars
+from utils.lights import ColorLib
 from utils.sounds import MusicLib
 
 
@@ -28,7 +29,9 @@ class GlobalContext:
 
             player_array = []
             if not debugcontrols.skip_intro:
+                MusicLib.update_volume(1)
                 MusicLib.play_title()
+                ColorLib.set_colors(b'w', b'w')
                 while True:
                     title = TitleContext(self.screen)
                     if title.display_loop():
