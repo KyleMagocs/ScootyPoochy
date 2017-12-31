@@ -5,6 +5,7 @@ from contexts.char_select import CharacterSelectContext
 from contexts.attract import AttractContext
 from contexts.char_select_new import CharacterSelectTrackballContext
 from contexts.game import GameContext
+from contexts.howtoplay import HowToPlayContext
 from contexts.level_select import LevelSelectContext
 from contexts.scoreboard import ScoreboardContext
 from contexts.startup import StartupContext
@@ -37,8 +38,8 @@ class GlobalContext:
                     title = TitleContext(self.screen)
                     if title.display_loop():
                         break
-                    attract = AttractContext(self.screen)
-                    attract.display_loop()
+                    # attract = AttractContext(self.screen)
+                    # attract.display_loop()
                 pygame.event.clear()
                 if debugcontrols.use_keyboard_character_select:
                     select = CharacterSelectContext(self.screen, p1, p2)

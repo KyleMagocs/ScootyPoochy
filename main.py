@@ -6,7 +6,7 @@ from contexts.char_select import CharacterSelectContext
 from contexts.glob import GlobalContext
 from contexts.level_select import LevelSelectContext
 from contexts.startup import StartupContext
-from vars import SCREEN_WIDTH, SCREEN_HEIGHT
+from vars import SCREEN_WIDTH, SCREEN_HEIGHT, LAUNCH_OPTIONS
 
 size = width, height = SCREEN_WIDTH, SCREEN_HEIGHT
 
@@ -15,7 +15,7 @@ if __name__ == "__main__":
     # Unix: x11, dga, fbcon, directfb, ggi, vgl, svgalib, aalib
     # os.environ["SDL_VIDEODRIVER"] = "x11"
     pygame.init()
-    screen = pygame.display.set_mode(size, pygame.DOUBLEBUF | pygame.NOFRAME | pygame.FULLSCREEN)
+    screen = pygame.display.set_mode(size, )
     pygame.mouse.set_visible(False)
 
     # character_select = CharacterSelectContext(screen)
