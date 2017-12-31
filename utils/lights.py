@@ -5,7 +5,7 @@ class ColorLib:
     try:
         teensy = None
         for port in list_ports.comports():
-            if 'Teensy' in port.description:
+            if 'PJRC' in port.manufacturer:
                 teensy = serial.Serial(port.device)
                 break
     except:
