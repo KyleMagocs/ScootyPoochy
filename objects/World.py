@@ -45,13 +45,13 @@ class World:
         p2_progress = math.fabs(max((self.player_two.y + vars.PLAYER_START_Y), 0) / self.level.height)
         return p1_progress, p2_progress
 
-    def update(self, real_fps):
+    def update(self,):
         self.frame += 1
 
         if len(self.countdown) > 0:
             self.player_one.update_limbs((0, 0), (0, 0))
             self.player_two.update_limbs((0, 0), (0, 0))
-            if self.countdown_timer < int(real_fps):
+            if self.countdown_timer < int(vars.fps):
                 self.countdown_timer += 1
             else:
                 self.countdown.remove(self.countdown[0])

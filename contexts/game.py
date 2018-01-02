@@ -79,7 +79,7 @@ class GameContext:
             self.screen.fill(colors.black)
 
             # results = self.world.update(p1_left, p1_right, p2_left, p2_right)
-            results = self.world.update(real_fps)
+            results = self.world.update()
 
             self.world.draw(self.screen)
             self.draw_hud(self.screen)

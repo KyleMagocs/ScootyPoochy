@@ -15,6 +15,7 @@ ACCEL_COEF = 0.3
 def get_all_characters():
     return [Lucy, Daisy, Mikkusu, Doge, Cooper, Nort, Beef, Lucy, Daisy, Mikkusu, Doge, Cooper, Nort, Beef]
 
+
 # TODO:  THIS IS TRASH
 
 class PoopTrail(pygame.sprite.Sprite):
@@ -110,6 +111,12 @@ class CharacterBase:
 
 
 class Cooper(CharacterBase):
+    wintext = ['"I dislike Ryan Canfield."',
+               '"I want some cheese now"',
+               '"The name\'s Cooper, but not like Anderson"',
+               '"The name\'s Cooper, but not like the cheese"',
+               '"You can get your dog in the game by paying off the creator"']
+
     sprite_path = 'TEMPDOG_sprite_temp.png'
     portrait_path = 'cooper/portrait.png'
     victory_portrait_path = 'cooper/victory.png'
@@ -124,11 +131,7 @@ class Cooper(CharacterBase):
     color = colors.red
     colorcode = b'r'
     name = 'Cooper'
-    wintext = ['"I dislike Ryan Canfield."',
-               '"I want some cheese now"',
-               '"The name\'s Cooper, but not like Anderson"',
-               '"The name\'s Cooper, but not like the cheese"',
-               '"You can get your dog in the game by paying off the creator"']
+
     attributes = (
         '+ not as in Anderson',
         '+ it\'s Xylon\'s Dog!',
@@ -140,6 +143,9 @@ class Cooper(CharacterBase):
 
 
 class Doge(CharacterBase):
+    wintext = ['"wow"',
+               '"much win"',
+               '"very 1st place"']
     portrait_path = 'doge/portrait.png'
     victory_portrait_path = 'doge/victory.png'
     winsound = 'dogewin.wav'
@@ -156,9 +162,7 @@ class Doge(CharacterBase):
     color = colors.light_blue
     colorcode = b'b'
     name = 'DOGE'
-    wintext = ['"wow"',
-               '"much win"',
-               '"very 1st place"']
+
     attributes = (
         '+ very meme',
         '- much average'
@@ -170,6 +174,9 @@ class Doge(CharacterBase):
 
 
 class Beef(CharacterBase):
+    wintext = ['"Oh dang, I did it"',
+               '"I deserve a nap"',
+               '*prrrrrr*']
     portrait_path = 'beef/portrait.png'
     victory_portrait_path = 'beef/victory.png'
     winsound = 'beefwin.wav'
@@ -199,7 +206,11 @@ class Beef(CharacterBase):
     def __init__(self):
         CharacterBase.__init__(self)
 
+
 class Lucy(CharacterBase):
+    wintext = ['*WHEEEEZE*',
+               '*sputter*',
+               '<eyeball pops out in excitement>']
     portrait_path = 'lucy/portrait.png'
     victory_portrait_path = 'lucy/victory.png'
     winsound = 'pug.wav'
@@ -216,9 +227,6 @@ class Lucy(CharacterBase):
     color = colors.yellow
     colorcode = b'y'
     name = 'Lucy'
-    wintext = ['*WHEEEEZE*',
-               '*sputter*',
-               '<eyeball pops out in excitement>']
 
     attributes = (
         '+ extra wrinkly !',
@@ -230,7 +238,11 @@ class Lucy(CharacterBase):
     def __init__(self):
         CharacterBase.__init__(self)
 
+
 class Nort(CharacterBase):
+    wintext = [""'\'82 was a good year"',
+               '"Radical."',
+               '"Tubular."']
     sprite_path = 'nort_sprite_temp.png'
     head_path = 'nort/head.png'
     larm_path = 'nort/leftarm.png'
@@ -248,9 +260,7 @@ class Nort(CharacterBase):
     color = colors.aqua
     colorcode = b'a'
     name = 'NORT'
-    wintext = [""'\'82 was a good year"',
-               '"Radical."',
-               '"Tubular."']
+
     attributes = (
         '+ Laser poops',
         '+ Futuristic',
@@ -266,6 +276,9 @@ class Nort(CharacterBase):
 
 
 class Daisy(CharacterBase):
+    wintext = ['"I\'ve earned this"',
+               '"Big surprises come in little packages"',
+               '"Cake is for winners"']
     sprite_path = 'carlos_sprite_temp.png'
     portrait_path = 'daisy/portrait.png'
     victory_portrait_path = 'daisy/victory.png'
@@ -279,9 +292,7 @@ class Daisy(CharacterBase):
     color = colors.green
     colorcode = b'g'
     name = 'Daisy'
-    wintext = ['"I\'ve earned this"',
-               '"Big surprises come in little packages"',
-               '"Cake is for winners"']
+
     attributes = (
         '- smol',
         '+ easily agitated',
@@ -291,7 +302,14 @@ class Daisy(CharacterBase):
     def __init__(self):
         CharacterBase.__init__(self)
 
+
 class Mikkusu(CharacterBase):
+    wintext = ['"Nothin\' personal, kid"',
+               '"Omae wa mou shindeiru"',
+               '"OwO what\'s this"',
+               '"Your next line is, \"I can\'t believe I lost\""',
+               '"MUDA MUDA MUDA MUDA"',
+               '"100 pushups, 100 situps, 100 squats. And run 10 km.']
     portrait_path = 'mikkusu/portrait.png'
     victory_portrait_path = 'mikkusu/victory.png'
     winsound = 'anime.wav'
@@ -304,12 +322,7 @@ class Mikkusu(CharacterBase):
     color = colors.magenta
     colorcode = b'm'
     name = 'Mikkusu'
-    wintext = ['"Nothin\' personal, kid"',
-               '"Omae wa mou shindeiru"',
-               '"OwO what\'s this"',
-               '"Your next line is, \"I can\'t believe I lost\""',
-               '"MUDA MUDA MUDA MUDA"',
-               '"100 pushups, 100 situps, 100 squats. And run 10 km.']
+
     attributes = (
         '+ likes anime',
         '+ big fluffy coat',
