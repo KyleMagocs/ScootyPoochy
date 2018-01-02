@@ -97,11 +97,16 @@ class Kitchen(Room):
     floor_image = os.path.join(ASSETS_PATH, 'kitchen_bg.png')
 
     def __init__(self, y_position):
+        from objects.LevelObjects_Kitchen import Stove
+        from objects.LevelObjects_Kitchen import Oven
+        from objects.LevelObjects_Kitchen import Counter
+        from objects.LevelObjects_Kitchen import Bottle
         self.objects = pygame.sprite.Group(
-            BathroomSink((170, 80)),
-            SinkStuff((170, 73)),
-            Toilet((295, 90)),
-            BathMat((200, 230))
+            Counter((55, 110,)),
+            Bottle((60, 90)),
+            Stove((160, 105)),
+            Oven((160, 132)),
+
         )
         super().__init__(y_position)
 

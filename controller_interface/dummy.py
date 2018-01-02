@@ -3,7 +3,7 @@ import pygame
 import math
 import vars
 
-
+random.seed()
 
 class Dummy:
     button_one = None
@@ -55,9 +55,9 @@ class SprintDummy(Dummy):
     def read(self):
         try:
             if self.toggle:
-                return random.randint(25, 50), random.randint(150, 200)
+                return random.randint(25, 50), random.randint(150, 300)
             else:
-                return -1 * random.randint(25, 50), random.randint(150, 200)
+                return -1 * random.randint(25, 50), random.randint(150, 300)
         finally:
             self.toggleCount += 1
             if self.toggleCount >= 60:
@@ -72,7 +72,7 @@ class SinDummy(Dummy):
 
     def read(self):
         y = -100
-        x = math.cos(vars.radians_factor*self.counter) * 50
+        x = math.cos(vars.radians_factor*self.counter*2) * 150
         self.counter = (self.counter + 1) % 360
 
         return x, y

@@ -18,7 +18,6 @@ class Gnome(LevelObject):
     width = 25
     x_collide_offset = 50
     y_collide_offset = 0
-    collide_height = 50
 
     sheet_path = 'objects/gnome_sheet.png'
 

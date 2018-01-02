@@ -15,10 +15,15 @@ class HowToPlayContext:
         self.timer = 0
 
     def display_loop(self):
+        start_timer = 0
+        end_timer = 0
+        affirmative = False
+
         howtotrackball = HowToTrackball((SCREEN_WIDTH / 2 - HowToTrackball.width / 2, 95))
         howtojump = HowToJump((25, 360))
         breakstuff = HowToBreakStuff((950, 300))
         button = PawButton((SCREEN_WIDTH/2-PawButton.width, SCREEN_HEIGHT-60))
+
         while True:
             self.timer += 1
             if self.timer > TOTAL_WAIT * fps:
@@ -26,7 +31,7 @@ class HowToPlayContext:
             keystate = pygame.key.get_pressed()
             if keystate:
                 if self.parse_keys(keystate):
-                    return 1
+                    affirmative = True
 
             self.screen.fill((0, 0, 0))
             font = pygame.font.SysFont('IMPACT', 64)
@@ -60,9 +65,39 @@ class HowToPlayContext:
             label = textOutline(font, 'BREAK STUFF!', colors.white, colors.black)
             self.screen.blit(label, (breakstuff.x + breakstuff.width / 2 - label.get_width() / 2, breakstuff.y + 10))
 
-            label = textOutline(font, '  PRESS               TO CONTINUE', colors.white, colors.black)
-            self.screen.blit(label, (SCREEN_WIDTH/2 - label.get_width() / 2, SCREEN_HEIGHT - label.get_height() - 10))
-            button.draw(self.screen, 0, 0)
+            if not affirmative:
+                label = textOutline(font, '  PRESS               TO CONTINUE', colors.white, colors.black)
+                self.screen.blit(label, (SCREEN_WIDTH/2 - label.get_width() / 2, SCREEN_HEIGHT - label.get_height() - 10))
+                button.draw(self.screen, 0, 0)
+
+            if start_timer < int(fps / 2):
+                fade_overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
+                fade_overlay.fill(colors.black)
+                fade_overlay.set_alpha(((int(fps / 2) - start_timer) / int(fps / 2)) * 255)
+                self.screen.blit(fade_overlay, (0, 0))
+                start_timer += 1
+
+            if self.timer > TOTAL_WAIT * fps and not affirmative:
+                if end_timer > int(fps / 2):
+                    # return 0
+                    pass
+                else:
+                    fade_overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
+                    fade_overlay.fill(colors.black)
+                    fade_overlay.set_alpha((end_timer / int(fps / 2)) * 255)
+                    self.screen.blit(fade_overlay, (0, 0))
+                    end_timer += 1
+
+            if affirmative:
+                if end_timer > int(fps / 2):
+                    return 1
+                else:
+                    fade_overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
+                    fade_overlay.fill(colors.black)
+                    fade_overlay.set_alpha((end_timer / int(fps / 2)) * 255)
+                    self.screen.blit(fade_overlay, (0, 0))
+                    end_timer += 1
+
 
             pygame.display.flip()
             self.clock.tick(fps)
