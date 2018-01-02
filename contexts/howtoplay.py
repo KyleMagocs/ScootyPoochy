@@ -1,11 +1,11 @@
 import pygame
 
 import colors
-from objects.tutorialstuff import HowToJump, HowToTrackball, HowToBreakStuff
+from objects.miscsprites import HowToJump, HowToTrackball, HowToBreakStuff, PawButton
 from utils.hollow import textOutline
 from vars import fps, SCREEN_WIDTH, SCREEN_HEIGHT
 
-TOTAL_WAIT = 10
+TOTAL_WAIT = 20
 
 
 class HowToPlayContext:
@@ -18,6 +18,7 @@ class HowToPlayContext:
         howtotrackball = HowToTrackball((SCREEN_WIDTH / 2 - HowToTrackball.width / 2, 95))
         howtojump = HowToJump((25, 360))
         breakstuff = HowToBreakStuff((950, 300))
+        button = PawButton((SCREEN_WIDTH/2-PawButton.width, SCREEN_HEIGHT-60))
         while True:
             self.timer += 1
             if self.timer > TOTAL_WAIT * fps:
@@ -39,7 +40,7 @@ class HowToPlayContext:
             howtotrackball.update(0, 0)
             pygame.draw.rect(self.screen, colors.white, (howtotrackball.x, howtotrackball.y, howtotrackball.width, howtotrackball.height), 4)
             label = textOutline(font, 'SCOOT!', colors.white, colors.black)
-            self.screen.blit(label, (howtotrackball.x + howtotrackball.width / 2 - 40, howtotrackball.y - 30))
+            self.screen.blit(label, (howtotrackball.x + howtotrackball.width / 2 - 40, howtotrackball.y + 10))
             label = textOutline(font, 'or', colors.white, colors.black)
             self.screen.blit(label, (howtotrackball.x + howtotrackball.width / 2 - 20, howtotrackball.y + howtotrackball.height / 2))
 
@@ -48,7 +49,7 @@ class HowToPlayContext:
             howtojump.update(0, 0)
             pygame.draw.rect(self.screen, colors.white, (howtojump.x, howtojump.y, howtojump.width, howtojump.height), 4)
             label = textOutline(font, 'JUMP!', colors.white, colors.black)
-            self.screen.blit(label, (howtojump.x + howtojump.width / 2 - 40, howtojump.y - 30))
+            self.screen.blit(label, (howtojump.x + howtojump.width / 2 - 40, howtojump.y + 10))
             label = textOutline(font, 'or', colors.white, colors.black)
             self.screen.blit(label, (howtojump.x + howtojump.width / 2, howtojump.y + howtojump.height / 2))
 
@@ -57,10 +58,11 @@ class HowToPlayContext:
             breakstuff.update(0, 0)
             pygame.draw.rect(self.screen, colors.white, (breakstuff.x, breakstuff.y, breakstuff.width, breakstuff.height), 4)
             label = textOutline(font, 'BREAK STUFF!', colors.white, colors.black)
-            self.screen.blit(label, (breakstuff.x + breakstuff.width / 2 - label.get_width() / 2, breakstuff.y - 30))
+            self.screen.blit(label, (breakstuff.x + breakstuff.width / 2 - label.get_width() / 2, breakstuff.y + 10))
 
-            label = textOutline(font, 'PRESS       TO CONTINUE', colors.white, colors.black)
+            label = textOutline(font, '  PRESS               TO CONTINUE', colors.white, colors.black)
             self.screen.blit(label, (SCREEN_WIDTH/2 - label.get_width() / 2, SCREEN_HEIGHT - label.get_height() - 10))
+            button.draw(self.screen, 0, 0)
 
             pygame.display.update()
             self.clock.tick(fps)

@@ -2,6 +2,7 @@ import os
 import pygame
 
 import colors
+from objects.miscsprites import PawButton
 from utils.hollow import textHollow, textOutline
 import vars
 TOTAL_WAIT = 10
@@ -17,6 +18,7 @@ class TitleContext:
         start_timer = 0
         end_timer = 0
         affirmative = False
+        button = PawButton((vars.SCREEN_WIDTH/2 - PawButton.width/2, 590))
         while True:
             self.clock.tick(vars.fps)
             self.screen.fill((0, 0, 0))
@@ -47,13 +49,15 @@ class TitleContext:
             # sub_text = font.render('Title art by Dylan Gallagher ( @aintnofuntime )', 0, colors.white)
             # self.screen.blit(sub_text, (vars.SCREEN_WIDTH / 2 - sub_text.get_width() / 2, 500))
 
-            if (self.timer // 15) % 2 == 0 or (affirmative and self.timer % 2 == 0):
+            if (self.timer // (vars.fps/2)) % 2 == 0 or (affirmative and self.timer % 2 == 0):
                 if affirmative:
                     text = 'HERE WE GO!'
                 else:
-                    text = 'PRESS {BUTTON} TO BEGIN'
+                    text = '     PRESS                 TO BEGIN'
+                    button.draw(self.screen, 0, 0)
                 sub_text = font3.render(text, 0, colors.white)
                 self.screen.blit(sub_text, (vars.SCREEN_WIDTH / 2 - sub_text.get_width() / 2, 600))
+
 
             if start_timer < int(vars.fps / 2):
                 fade_overlay = pygame.Surface((vars.SCREEN_WIDTH, vars.SCREEN_HEIGHT))
@@ -64,7 +68,8 @@ class TitleContext:
 
             if self.timer > TOTAL_WAIT * vars.fps and not affirmative:
                 if end_timer > int(vars.fps / 2):
-                    return 0
+                    # return 0
+                    pass
                 else:
                     fade_overlay = pygame.Surface((vars.SCREEN_WIDTH, vars.SCREEN_HEIGHT))
                     fade_overlay.fill(colors.black)

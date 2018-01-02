@@ -53,6 +53,8 @@ class GlobalContext:
             else:
                 characters = [Beef(), Doge()]
             levels = [ShortLevel(), ShortLevel()]
+            howtoplay = HowToPlayContext(self.screen)
+            howtoplay.display_loop()
             game = GameContext(self.screen, characters, levels, p1, p2)
             game_data = game.run_game()
 
