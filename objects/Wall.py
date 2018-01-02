@@ -115,6 +115,11 @@ class BathroomWall(Wall):
     top_image = 'objects/bathroom_wall_top.png'
     bottom_image = 'objects/bathroom_wall_bottom.png'
 
+class KitchenWall(Wall):
+    side_image = 'objects/kitchen_wall_side.png'
+    top_image = 'objects/kitchen_wall_top.png'
+    bottom_image = 'objects/kitchen_wall_bottom.png'
+
 class BackyardWall(Wall):
     side_image = 'objects/backyard_wall_side.png'
     top_image = 'objects/backyard_wall_top.png'

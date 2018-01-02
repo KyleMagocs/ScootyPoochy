@@ -1,6 +1,7 @@
 import pygame
 
 from objects.LevelObjects import Lamp, Couch, Table, Vase
+from objects.Room import Kitchen
 from objects.Theme import TempTheme
 from objects.Wall import Wall, SideWall
 
@@ -112,8 +113,8 @@ class ButtLevel(Level):
         self.theme = TempTheme()
         self.width = self.theme.background_sprite.get_width()
 
-        my_rooms = Room_Finish, Room_Three, Room_One, Room_Two, Bathroom, Room_Three, Backyard, Room_Start
-        my_doors = 0,           75,         75,       150,      75,       150,        350,      350
+        my_rooms = Room_Finish, Room_Three, Room_One, Room_Two, Bathroom, Room_Three, Backyard, Kitchen,  Room_Start
+        my_doors = 0,           75,         75,       150,      75,       150,        350,      150,      350
 
         # my_rooms = Room_Finish, Room_Start
         # my_doors = 0,           100
