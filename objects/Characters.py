@@ -202,7 +202,7 @@ class Beef(CharacterBase):
 class Lucy(CharacterBase):
     portrait_path = 'lucy/portrait.png'
     victory_portrait_path = 'lucy/victory.png'
-    winsound = 'beefwin.wav'  # TODO:  I AINT GOT A SOUND FOR LUCY
+    winsound = 'pug.wav'
     head_path = 'lucy/head.png'
     larm_path = 'lucy/leftarm.png'
     rarm_path = 'lucy/rightarm.png'
@@ -294,7 +294,7 @@ class Daisy(CharacterBase):
 class Mikkusu(CharacterBase):
     portrait_path = 'mikkusu/portrait.png'
     victory_portrait_path = 'mikkusu/victory.png'
-    winsound = 'clownwin.wav'  # TODO:  NEED A VICTORY TUNE HERE
+    winsound = 'anime.wav'
     poop_paths = ['mikkusu/poop1.png', 'mikkusu/poop2.png']
     head_path = 'mikkusu/head.png'
     larm_path = 'mikkusu/leftarm.png'
@@ -306,7 +306,10 @@ class Mikkusu(CharacterBase):
     name = 'Mikkusu'
     wintext = ['"Nothin\' personal, kid"',
                '"Omae wa mou shindeiru"',
-               '"OwO what\'s this"']
+               '"OwO what\'s this"',
+               '"Your next line is, \"I can\'t believe I lost\""',
+               '"MUDA MUDA MUDA MUDA"',
+               '"100 pushups, 100 situps, 100 squats. And run 10 km.']
     attributes = (
         '+ likes anime',
         '+ big fluffy coat',

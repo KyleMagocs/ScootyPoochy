@@ -18,7 +18,7 @@ class World:
         self.players = players
         self.width = width
         self.break_score = 0
-
+        self.race_started = False
         self.finish = False
         self.p1_left, self.p1_right = 0, 0
         self.p2_left, self.p2_right = 0, 0
@@ -45,13 +45,13 @@ class World:
         p2_progress = math.fabs(max((self.player_two.y + vars.PLAYER_START_Y), 0) / self.level.height)
         return p1_progress, p2_progress
 
-    def update(self):
+    def update(self, real_fps):
         self.frame += 1
 
         if len(self.countdown) > 0:
             self.player_one.update_limbs((0, 0), (0, 0))
             self.player_two.update_limbs((0, 0), (0, 0))
-            if self.countdown_timer < int(vars.fps):
+            if self.countdown_timer < int(real_fps):
                 self.countdown_timer += 1
             else:
                 self.countdown.remove(self.countdown[0])
@@ -60,7 +60,8 @@ class World:
             MusicLib.update_volume(1)
             MusicLib.play_race_start()
             return
-        if self.frame >= vars.fps/10:
+        self.race_started = True
+        if self.frame >= vars.fps / 10:
             self.p1_left, self.p1_right = self.players[0].read_input()
             self.p2_left, self.p2_right = self.players[1].read_input()
             self.frame = 0

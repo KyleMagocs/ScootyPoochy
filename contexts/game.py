@@ -30,7 +30,7 @@ class GameContext:
         self.players.append(p1)
         self.players.append(p2)
 
-        self.world = World(width=600, players = self.players, y_offset=vars.SCREEN_HEIGHT+10, level=levels[0])
+        self.world = World(width=600, players=self.players, y_offset=vars.SCREEN_HEIGHT + 10, level=levels[0])
 
         self.world.player_one.y = levels[0].height - vars.PLAYER_START_Y
         self.world.player_one.set_character(character_list[0])
@@ -46,23 +46,23 @@ class GameContext:
         self.draw_frame = True
 
     def draw_hud(self, screen):
-        pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH/2, 100), (vars.SCREEN_WIDTH/2, vars.SCREEN_HEIGHT-100), 4)
+        pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH / 2, 100), (vars.SCREEN_WIDTH / 2, vars.SCREEN_HEIGHT - 100), 4)
         pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH / 2 - 35, 100), (vars.SCREEN_WIDTH / 2 + 35, 100), 4)
-        pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH / 2 - 35, vars.SCREEN_HEIGHT-100), (vars.SCREEN_WIDTH / 2 + 35, vars.SCREEN_HEIGHT-100), 4)
-        pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH / 2 - 25, vars.SCREEN_HEIGHT/2), (vars.SCREEN_WIDTH / 2 + 25, vars.SCREEN_HEIGHT/2), 4)
+        pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH / 2 - 35, vars.SCREEN_HEIGHT - 100), (vars.SCREEN_WIDTH / 2 + 35, vars.SCREEN_HEIGHT - 100), 4)
+        pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH / 2 - 25, vars.SCREEN_HEIGHT / 2), (vars.SCREEN_WIDTH / 2 + 25, vars.SCREEN_HEIGHT / 2), 4)
         _prog = self.world.get_progress()
         p1_y = int(_prog[0] * (vars.SCREEN_HEIGHT - 210))
         p2_y = int(_prog[1] * (vars.SCREEN_HEIGHT - 210))
 
-        pygame.draw.circle(screen, self.world.player_one.character.color, (int(vars.SCREEN_WIDTH/2 - 15), p1_y + 105), 8, 6)
-        pygame.draw.circle(screen, self.world.player_two.character.color, (int(vars.SCREEN_WIDTH/2 + 15), p2_y + 105), 8, 6)
+        pygame.draw.circle(screen, self.world.player_one.character.color, (int(vars.SCREEN_WIDTH / 2 - 15), p1_y + 105), 8, 6)
+        pygame.draw.circle(screen, self.world.player_two.character.color, (int(vars.SCREEN_WIDTH / 2 + 15), p2_y + 105), 8, 6)
 
     def check_keys(self):
         for event in pygame.event.get():
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_f:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_f and self.world.race_started:
                     self.world.player_one.jump()
-                if event.key == pygame.K_j:
+                if event.key == pygame.K_j and self.world.race_started:
                     self.world.player_two.jump()
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
@@ -79,15 +79,15 @@ class GameContext:
             self.screen.fill(colors.black)
 
             # results = self.world.update(p1_left, p1_right, p2_left, p2_right)
-            results = self.world.update()
+            results = self.world.update(real_fps)
 
             self.world.draw(self.screen)
             self.draw_hud(self.screen)
 
             if debugcontrols.debug_mode:
                 font = pygame.font.SysFont('Comic Sans MS', 25)
-                label = font.render(str(real_fps), 1, (0,255,255))
-                self.screen.blit(label, (vars.SCREEN_WIDTH/2-label.get_width()/2, vars.SCREEN_HEIGHT-75))
+                label = font.render(str(real_fps), 1, (0, 255, 255))
+                self.screen.blit(label, (vars.SCREEN_WIDTH / 2 - label.get_width() / 2, vars.SCREEN_HEIGHT - 75))
 
             if start_timer < int(vars.fps / 2):
                 fade_overlay = pygame.Surface((vars.SCREEN_WIDTH, vars.SCREEN_HEIGHT))
@@ -103,19 +103,15 @@ class GameContext:
                 if end_timer > int(vars.fps / 2):
                     return results
                 else:
-                    MusicLib.update_volume((int(vars.fps/2) - end_timer) / int(vars.fps / 2))
+                    MusicLib.update_volume((int(vars.fps / 2) - end_timer) / int(vars.fps / 2))
                     fade_overlay = pygame.Surface((vars.SCREEN_WIDTH, vars.SCREEN_HEIGHT))
                     fade_overlay.fill(colors.black)
                     fade_overlay.set_alpha((end_timer / int(vars.fps / 2)) * 255)
                     self.screen.blit(fade_overlay, (0, 0))
                     end_timer += 1
 
-                # TODO:  FANCY FINISH ANIMATION
+                    # TODO:  FANCY FINISH ANIMATION
 
             self.check_keys()
             pygame.display.update()
             pygame.event.get()
-
-
-
-

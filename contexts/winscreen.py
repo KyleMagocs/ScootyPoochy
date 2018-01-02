@@ -7,7 +7,7 @@ from utils.lights import ColorLib
 from utils.sounds import SoundLib
 
 class WinscreenContext:
-    TIMEOUT = 5 * vars.fps
+    TIMEOUT = 7 * vars.fps
 
     def __init__(self, screen):
         self.screen = screen
