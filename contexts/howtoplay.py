@@ -64,7 +64,7 @@ class HowToPlayContext:
             self.screen.blit(label, (SCREEN_WIDTH/2 - label.get_width() / 2, SCREEN_HEIGHT - label.get_height() - 10))
             button.draw(self.screen, 0, 0)
 
-            pygame.display.update()
+            pygame.display.flip()
             self.clock.tick(fps)
             pygame.event.get()
 

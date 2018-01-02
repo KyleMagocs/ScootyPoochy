@@ -159,6 +159,6 @@ class LevelSelectContext:
             label = font.render('CHOOSE A LEVEL ! {0:.2f}'.format(self.timer / fps), 1, (255, 255, 0))
             self.screen.blit(label, (450, 100))
 
-            pygame.display.update()
+            pygame.display.flip()
 
             self.clock.tick(fps)

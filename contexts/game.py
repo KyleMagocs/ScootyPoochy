@@ -113,5 +113,5 @@ class GameContext:
                     # TODO:  FANCY FINISH ANIMATION
 
             self.check_keys()
-            pygame.display.update()
+            pygame.display.flip()
             pygame.event.get()

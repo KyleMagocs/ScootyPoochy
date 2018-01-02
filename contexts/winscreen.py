@@ -52,5 +52,5 @@ class WinscreenContext:
                 fade_overlay.set_alpha((self.timer / int(vars.fps / 2)) * 255)
                 self.screen.blit(fade_overlay, (0, 0))
 
-            pygame.display.update()
+            pygame.display.flip()
             pygame.event.get()

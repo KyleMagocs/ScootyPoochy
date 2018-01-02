@@ -83,7 +83,7 @@ class CharacterSelectTrackballContext:
                         self.screen.blit(fade_overlay, (0, 0))
                 end_timer += 1
 
-            pygame.display.update()
+            pygame.display.flip()
 
     def draw(self):
         self.draw_background()
