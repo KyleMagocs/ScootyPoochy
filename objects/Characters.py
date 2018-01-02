@@ -191,11 +191,8 @@ class Beef(CharacterBase):
     poop_paths = ['beef/poop1.png', 'beef/poop2.png']
 
     color = colors.light_grey
-    colorcode = b'w'
+    colorcode = b'x'
     name = 'Roast Beef'
-    wintext = ['"Oh dang, I did it"',
-               '"I deserve a nap"',
-               '*prrrrrr*']
     attributes = (
         '+ is a cat',
         '- is a sad cat',
@@ -242,7 +239,8 @@ class Lucy(CharacterBase):
 class Nort(CharacterBase):
     wintext = [""'\'82 was a good year"',
                '"Radical."',
-               '"Tubular."']
+               '"Tubular."',
+               '"Maybe you need to upgrade your system"']
     sprite_path = 'nort_sprite_temp.png'
     head_path = 'nort/head.png'
     larm_path = 'nort/leftarm.png'

@@ -32,7 +32,7 @@ class HowToTrackball(MiscSprite):
 
     def __init__(self, init_pos, mirror=False):
         super().__init__()
-        self.images = self.load_sprite_sheet(self.sheet_path, self.width, self.height, 10, mirror)
+        self.images = self.load_sprite_sheet(self.sheet_path, self.width, self.height, 12, mirror)
         self.image = self.images[0]
         self.image_index = 0
         self.x = init_pos[0]
