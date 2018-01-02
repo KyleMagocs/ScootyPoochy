@@ -62,7 +62,7 @@ class CharacterSelectTrackballContext:
             if self.timer % 3 == 0:
                 left_ang, right_ang = self.get_trackball_input()
             self.left_wheel.update(left_ang/3)
-            self.right_wheel.update(right_ang/3)
+            self.right_wheel.update(right_ang/3*-1)
             self.draw()
 
             # TODO:  Maybe refactor ?  Move to draw method ?  Whatever

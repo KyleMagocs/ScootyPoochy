@@ -173,7 +173,7 @@ class PlayerCharacter(pygame.sprite.Sprite):
             self.jump_state = 0
 
     def spawn_poop_or_dont(self):
-        if self.z - self.min_z <= 0.02 and self.distance_travelled > self.character.poop_factor / 3.0:
+        if self.z - self.min_z <= 0.005 and self.distance_travelled > self.character.poop_factor / 3.0:
             # print('Spawned a poop after ' + str(self.character.current_poop_factor))
             self.character.current_poop_factor /= 1.3
             if self.character.current_poop_factor < 5:
@@ -235,11 +235,11 @@ class PlayerCharacter(pygame.sprite.Sprite):
 
     def spawn_poop(self):
         if len(self.poops) > 0:
-            angle = angle_between_points(int(self.last_poop_x), int(self.last_poop_y), int(self.x), int(self.visible_y+10))  # TODO:  THIS IS WORKING REALLY POORLY
+            angle = angle_between_points(int(self.last_poop_x), int(self.last_poop_y), int(self.x), int(self.visible_y+20))  # TODO:  THIS IS WORKING REALLY POORLY
         else:
             angle = self.angle
             self.poops = [1,]  # todo:  dumb, hacky
         self.last_poop_x = self.x
-        self.last_poop_y = self.visible_y+10
+        self.last_poop_y = self.visible_y+20
         self.poop_score += 1
-        return self.character.get_a_poop(self.x, self.visible_y+10, self.z, angle)
+        return self.character.get_a_poop(self.x, self.visible_y+20, self.z, angle)
