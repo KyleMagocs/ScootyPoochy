@@ -100,7 +100,7 @@ class HowToPlayContext:
 
 
             pygame.display.flip()
-            self.clock.tick(fps)
+            self.clock.tick(fps/2)
             pygame.event.get()
 
     def parse_keys(self, keys):

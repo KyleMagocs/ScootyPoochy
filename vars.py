@@ -2,7 +2,7 @@ import os
 
 import pygame
 
-fps = 30
+fps = 60
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 PLAYER_START_Y = 200
