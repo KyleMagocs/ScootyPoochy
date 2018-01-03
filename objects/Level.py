@@ -48,6 +48,8 @@ class Level:
 
         floor_image = pygame.image.load_extended(Room_Start.floor_image).convert()
         _im.blit(floor_image, (0, 0))
+        bglist = list()
+        bglist.append((floor_image, (0, 0)))
 
         for room, door_x in zip(my_rooms, my_doors):
             _room = room(height)
@@ -58,9 +60,11 @@ class Level:
             floor_image = pygame.image.load_extended(_room.floor_image).convert()
             for y in range(height + 136, height + _room.height + 125, floor_image.get_height()):
                 _im.blit(floor_image, (0, y))
+                bglist.append((floor_image, (0, y)))
             height += _room.height
         self.height = height
         self.bg = _im
+        self.bglist = bglist
         _leftside = SideWall(0, 55, self.height)
         _rightside = SideWall(self.width - 55, 55, self.height)
         self.walls.add(_leftside, _rightside)
@@ -126,14 +130,23 @@ class ButtLevel(Level):
         # my_rooms = Room_Finish, Room_Start
         # my_doors = 0,           100
         self.build_level(my_doors, my_rooms)
+    #
+    # def draw_old(self, screen, x_offset, y_offset):
+    #     from timeit import default_timer as timer
+    #     start = timer()
+    #     screen.blit(self.bg, (self.x + x_offset, self.y + y_offset))
+    #     end = timer()
+    #     elapsed = end-start
+    #     print(elapsed)
 
     def draw(self, screen, x_offset, y_offset):
-        from timeit import default_timer as timer
-        start = timer()
-        screen.blit(self.bg, (self.x + x_offset, self.y + y_offset))
-        end = timer()
-        elapsed = end-start
-        print(elapsed)
+
+        for bg, position in self.bglist:
+            if self.y + position[1] + y_offset + bg.get_height() < 0:
+                continue
+            else:
+                screen.blit(bg, (self.x + x_offset + position[0], self.y + y_offset + position[1]))
+
 
 class ShortLevel(Level):
     def __init__(self):

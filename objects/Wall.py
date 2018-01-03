@@ -48,11 +48,9 @@ class Wall(pygame.sprite.Sprite):
         self.draw_part_one(screen, x_offset, y_offset)
         self.draw_part_two(screen, x_offset, y_offset)
 
-
-
     def draw_part_one(self, screen, x_offset, y_offset):
-        from timeit import default_timer as timer
-        start = timer()
+        # from timeit import default_timer as timer
+        # start = timer()
         if self.y + y_offset + 250 < 0:
             return
         screen.blit(self.left_side, (self.x + x_offset, self.y + y_offset))
@@ -60,11 +58,13 @@ class Wall(pygame.sprite.Sprite):
         self.right_wall.draw(screen, x_offset, y_offset)
         screen.blit(self.right_side, (self.x + x_offset + self.left_side.get_width() + self.left_wall.image_surface.get_width() + self.right_wall.image_surface.get_width(), self.y + y_offset))
 
-        end = timer()
-        elapsed = end - start
-        print(elapsed)
+        # end = timer()
+        # elapsed = end - start
+        # print(elapsed)
 
     def draw_part_two(self, screen, x_offset, y_offset):
+        if self.y + y_offset + 250 < 0:
+            return
         screen.blit(self.top, (self.x + x_offset + self.left_side.get_width(), self.y + y_offset))
 
     def update(self, addtl_x, addtl_y):
