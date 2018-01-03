@@ -51,7 +51,7 @@ class SoundLib:
 
     @classmethod
     def winchime(cls):
-        sound = Sound(str(cls.sound_path / 'winchime2.wav'))
+        sound = Sound(str(cls.sound_path / 'score4.wav'))
         sound.play()
 
 
