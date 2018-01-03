@@ -45,7 +45,7 @@ class LevelObject(pygame.sprite.Sprite):
             _rect = self.get_collide_rect()
             _rect.x += x_offset
             _rect.y += y_offset
-            pygame.draw.rect(screen, (255, 255, 255), _rect, 1)
+            pygame.draw.rect(screen, (0, 255, 0), _rect, 1)
 
     def draw_score(self, screen, x_offset, y_offset, draw_points=False):
         if draw_points and 0 < self.points_delta < 100:
@@ -192,7 +192,7 @@ class HDTV(LevelObject):
         self.y = init_pos[1]
         self.images = self.load_sprite_sheet(self.sheet_path, 100, 160, 11, mirror)
         self.image = self.images[0]
-        self.points = 800
+        self.points = 200
         self.image_index = 0
 
     def update(self, addtl_x, addtl_y):

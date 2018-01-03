@@ -10,9 +10,9 @@ from utils.sprite_utils import image_to_surface
 
 
 class Wall(pygame.sprite.Sprite):
-    side_image = 'objects/house_wall_side.png'
-    top_image = 'objects/house_wall_top.png'
-    bottom_image = 'objects/house_wall_bottom.png'
+    side_image = 'level_assets/house_wall_side.png'
+    top_image = 'level_assets/house_wall_top.png'
+    bottom_image = 'level_assets/house_wall_bottom.png'
 
     def __init__(self, init_x, init_y, door_x):
         super().__init__()
@@ -44,14 +44,25 @@ class Wall(pygame.sprite.Sprite):
         self.rect = self.top.get_rect()
 
     def draw(self, screen, x_offset, y_offset):
+
         self.draw_part_one(screen, x_offset, y_offset)
         self.draw_part_two(screen, x_offset, y_offset)
 
+
+
     def draw_part_one(self, screen, x_offset, y_offset):
+        from timeit import default_timer as timer
+        start = timer()
+        if self.y + y_offset + 250 < 0:
+            return
         screen.blit(self.left_side, (self.x + x_offset, self.y + y_offset))
         self.left_wall.draw(screen, x_offset, y_offset)
         self.right_wall.draw(screen, x_offset, y_offset)
         screen.blit(self.right_side, (self.x + x_offset + self.left_side.get_width() + self.left_wall.image_surface.get_width() + self.right_wall.image_surface.get_width(), self.y + y_offset))
+
+        end = timer()
+        elapsed = end - start
+        print(elapsed)
 
     def draw_part_two(self, screen, x_offset, y_offset):
         screen.blit(self.top, (self.x + x_offset + self.left_side.get_width(), self.y + y_offset))
@@ -69,7 +80,7 @@ class Wall(pygame.sprite.Sprite):
 
 class left_wall(collide_object):
     def get_collide_rect(self):
-        _rect = self.image_surface.subsurface((0, 0, self.image_surface.get_width()-47, self.image_surface.get_height()/1.2)).get_rect()
+        _rect = self.image_surface.subsurface((0, 0, self.image_surface.get_width() - 47, self.image_surface.get_height() / 1.2)).get_rect()
         _rect.x += self.x
         _rect.y += self.y
         return _rect
@@ -77,12 +88,13 @@ class left_wall(collide_object):
 
 class right_wall(collide_object):
     def get_collide_rect(self):
-        _new = self.image_surface.subsurface((0, 0, self.image_surface.get_width() - 42, self.image_surface.get_height()/1.2))
+        _new = self.image_surface.subsurface((0, 0, self.image_surface.get_width() - 42, self.image_surface.get_height() / 1.2))
         _reflip = pygame.transform.flip(_new, True, False)
         _rect = _reflip.get_rect()
         _rect.x += self.x + 49
         _rect.y += self.y
         return _rect
+
 
 class SideWall(collide_object):
     def __init__(self, x, width, height):
@@ -110,17 +122,32 @@ class SideWall(collide_object):
     def get_collide_rect(self):
         return pygame.Rect(self.x, 0, self.width, self.height)
 
+
 class BathroomWall(Wall):
-    side_image = 'objects/bathroom_wall_side.png'
-    top_image = 'objects/bathroom_wall_top.png'
-    bottom_image = 'objects/bathroom_wall_bottom.png'
+    side_image = 'level_assets/bathroom_wall_side.png'
+    top_image = 'level_assets/bathroom_wall_top.png'
+    bottom_image = 'level_assets/bathroom_wall_bottom.png'
+
 
 class KitchenWall(Wall):
-    side_image = 'objects/kitchen_wall_side.png'
-    top_image = 'objects/kitchen_wall_top.png'
-    bottom_image = 'objects/kitchen_wall_bottom.png'
+    side_image = 'level_assets/kitchen_wall_side.png'
+    top_image = 'level_assets/kitchen_wall_top.png'
+    bottom_image = 'level_assets/kitchen_wall_bottom.png'
+
+
+class GarageWall(Wall):
+    side_image = 'level_assets/garage_wall_side.png'
+    top_image = 'level_assets/garage_wall_top.png'
+    bottom_image = 'level_assets/garage_wall_bottom.png'
+
+
+class DiningRoomWall(Wall):
+    side_image = 'level_assets/dining_wall_side.png'
+    top_image = 'level_assets/dining_wall_top.png'
+    bottom_image = 'level_assets/dining_wall_bottom.png'
+
 
 class BackyardWall(Wall):
-    side_image = 'objects/backyard_wall_side.png'
-    top_image = 'objects/backyard_wall_top.png'
-    bottom_image = 'objects/backyard_wall_bottom.png'
+    side_image = 'level_assets/backyard_wall_side.png'
+    top_image = 'level_assets/backyard_wall_top.png'
+    bottom_image = 'level_assets/backyard_wall_bottom.png'

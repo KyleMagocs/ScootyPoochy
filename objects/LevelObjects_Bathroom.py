@@ -12,7 +12,7 @@ from utils.spritesheet import spritesheet
 class Shower(LevelObject, collide_object):
     breakable = 0
     score = 10
-    image_path = 'objects/shower.png'
+    image_path = 'objects/bathroom/shower.png'
     width = 15
     x_collide_offset = 150
 
@@ -32,10 +32,11 @@ class Shower(LevelObject, collide_object):
     def draw(self, screen, x_offset, y_offset, draw_points=False):
         collide_object.draw(self, screen, x_offset, y_offset)
 
+
 class BathroomSink(LevelObject, collide_object):
     breakable = 0
     score = 0
-    image_path = 'objects/bathroomsink.png'
+    image_path = 'objects/bathroom/bathroomsink.png'
     width = 112
     x_collide_offset = 2
 
@@ -59,6 +60,7 @@ class BathroomSink(LevelObject, collide_object):
         _rect = self.image.subsurface((0, 0, self.image.get_width(), self.image.get_height() - 40)).get_rect()
         return _rect
 
+
 class SinkStuff(LevelObject):
     breakable = 1
     broken = None
@@ -66,7 +68,7 @@ class SinkStuff(LevelObject):
     width = 23
     x_collide_offset = 6
 
-    sheet_path = 'objects/bathroomstuff_sheet.png'
+    sheet_path = 'objects/bathroom/bathroomstuff_sheet.png'
 
     def __init__(self, init_pos, mirror=False):
         super().__init__()
@@ -97,10 +99,11 @@ class SinkStuff(LevelObject):
         _rect.y += self.y + self.y_collide_offset
         return _rect
 
+
 class Toilet(LevelObject, collide_object):
     breakable = 1
     score = 50
-    sheet_path = 'objects/toilet_sheet.png'
+    sheet_path = 'objects/bathroom/toilet_sheet.png'
     width = 45
     points = 50
     x_collide_offset = 18
@@ -122,14 +125,14 @@ class Toilet(LevelObject, collide_object):
             self.image_index += 1
 
     def draw(self, screen, x_offset, y_offset, draw_points=False):
-        collide_object.draw(self, screen, x_offset, y_offset)
+        LevelObject.draw(self, screen, x_offset, y_offset, draw_points)
 
 
 class BathMat(LevelObject):
     breakable = 0
     score = 0
 
-    image_path = 'objects/bathmat.png'
+    image_path = 'objects/bathroom/bathmat.png'
 
     def __init__(self, init_pos, mirror=False):
         super().__init__()

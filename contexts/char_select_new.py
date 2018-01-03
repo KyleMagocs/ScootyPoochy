@@ -52,7 +52,7 @@ class CharacterSelectTrackballContext:
         left_ang, right_ang = 0,0
         while True:
 
-            actual_fps = self.clock.tick(fps)
+            actual_fps = 1000 / self.clock.tick(fps)
 
             # if self.timer % 5 == 0:
             #     vars.selected_character_color_index = (vars.selected_character_color_index + 1) % 3

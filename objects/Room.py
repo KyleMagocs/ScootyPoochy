@@ -5,7 +5,8 @@ import pygame
 from objects.LevelObjects import Lamp, Table, Couch, Vase, Cuckoo, HDTV, BookShelf
 from objects.LevelObjects_Backyard import Gnome, BirdBath, Grill, Flower1, Flower2, Flower3, Flower4
 from objects.LevelObjects_Bathroom import BathroomSink, Shower, Toilet, SinkStuff, BathMat
-from objects.Wall import Wall, BathroomWall, BackyardWall, KitchenWall
+from objects.LevelObjects_Garage import ScootPooch, Workbench, WaterHeater, PaintCans, Saw
+from objects.Wall import Wall, BathroomWall, BackyardWall, KitchenWall, GarageWall
 
 ASSETS_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'images', 'level_assets')
 
@@ -113,6 +114,33 @@ class Kitchen(Room):
     def load_wall(self, door_x):
         self.top_wall = KitchenWall(0, self.y_position, door_x)
 
+class DiningRoom(Room):
+    height = 500
+    floor_image = os.path.join(ASSETS_PATH, 'dining_bg.png')
+
+    def __init__(self, y_position):
+        from objects.LevelObjects_DiningRoom import DiningTable, Chair, Candle, Painting_One, Painting_Two, Plate
+        self.objects = pygame.sprite.Group(
+            Chair((370, 180),),
+            Chair((240, 180), mirror = True),
+            Chair((370, 300),),
+            Chair((240, 300), mirror = True),
+            DiningTable((300-DiningTable.width/2, 200,)),
+            Candle((210, 150)),
+            Candle((275, 250), mirror=True),
+            Plate((325, 180)),
+            Plate((325, 300)),
+            Plate((275, 180), mirror = True),
+            Plate((275, 300), mirror = True),
+
+            Painting_Two((300, 40)),
+            Painting_One((450, 40)),
+        )
+        super().__init__(y_position)
+
+    def load_wall(self, door_x):
+        self.top_wall = KitchenWall(0, self.y_position, door_x)
+
 
 class Backyard(Room):
     height = 500
@@ -121,7 +149,7 @@ class Backyard(Room):
 
     def __init__(self, y_position):
         self.objects = pygame.sprite.Group(
-            Grill((100, 90)),
+            Grill((100, 260)),
             Flower2((355, 75)),
             Flower1((400, 80)),
             Flower3((465, 115)),
@@ -134,6 +162,26 @@ class Backyard(Room):
 
     def load_wall(self, door_x):
         self.top_wall = BackyardWall(0, self.y_position, door_x)
+
+
+class Garage(Room):
+    height = 600
+    floor_image = os.path.join(ASSETS_PATH, 'garage_bg.png')
+
+    def __init__(self, y_position):
+
+        self.objects = pygame.sprite.Group(
+            WaterHeater((10, 20)),
+            Workbench((225, 115)),
+            ScootPooch((385, 25)),
+            PaintCans((234, 20)),
+            Saw((240, 80)),
+
+        )
+        super().__init__(y_position)
+
+    def load_wall(self, door_x):
+        self.top_wall = GarageWall(0, self.y_position, door_x)
 
 
 class Room_Start(Room):

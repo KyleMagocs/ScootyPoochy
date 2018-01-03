@@ -74,7 +74,7 @@ class GameContext:
         end_timer = 0
         while True:
             self.draw_frame = not self.draw_frame
-            real_fps = clock.tick(vars.fps)
+            real_fps = int(1000 / clock.tick(vars.fps))
 
             self.screen.fill(colors.black)
 
