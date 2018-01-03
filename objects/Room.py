@@ -94,7 +94,7 @@ class Bathroom(Room):
 
 
 class Kitchen(Room):
-    height = 400
+    height = 300
     floor_image = os.path.join(ASSETS_PATH, 'kitchen_bg.png')
 
     def __init__(self, y_position):
@@ -171,7 +171,7 @@ class Garage(Room):
     def __init__(self, y_position):
 
         self.objects = pygame.sprite.Group(
-            WaterHeater((10, 20)),
+            WaterHeater((5, 20)),
             Workbench((225, 115)),
             ScootPooch((385, 25)),
             PaintCans((234, 20)),

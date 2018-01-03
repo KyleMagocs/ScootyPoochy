@@ -69,6 +69,14 @@ class Level:
         _rightside = SideWall(self.width - 55, 55, self.height)
         self.walls.add(_leftside, _rightside)
 
+    def draw(self, screen, x_offset, y_offset):
+
+        for bg, position in self.bglist:
+            if self.y + position[1] + y_offset + bg.get_height() < 0:
+                continue
+            else:
+                screen.blit(bg, (self.x + x_offset + position[0], self.y + y_offset + position[1]))
+
 
 class TempLevel(Level):
     def __init__(self):
@@ -124,28 +132,27 @@ class ButtLevel(Level):
         self.theme = TempTheme()
         self.width = self.theme.background_sprite.get_width()
 
-        my_rooms = Room_Finish, Room_Three, Room_One, Room_Two, Bathroom, Room_Three, Backyard,  DiningRoom, Kitchen, Garage
-        my_doors = 0,           75,         75,       150,      75,       150,        350,       400,        150,     365
+        my_rooms = Room_Finish, Room_Three, Room_One, Room_Two, Bathroom, Room_Three, Backyard, DiningRoom, Kitchen, Garage
+        my_doors = 0, 75, 75, 150, 75, 150, 350, 400, 150, 365
 
         # my_rooms = Room_Finish, Room_Start
         # my_doors = 0,           100
         self.build_level(my_doors, my_rooms)
-    #
-    # def draw_old(self, screen, x_offset, y_offset):
-    #     from timeit import default_timer as timer
-    #     start = timer()
-    #     screen.blit(self.bg, (self.x + x_offset, self.y + y_offset))
-    #     end = timer()
-    #     elapsed = end-start
-    #     print(elapsed)
 
-    def draw(self, screen, x_offset, y_offset):
 
-        for bg, position in self.bglist:
-            if self.y + position[1] + y_offset + bg.get_height() < 0:
-                continue
-            else:
-                screen.blit(bg, (self.x + x_offset + position[0], self.y + y_offset + position[1]))
+class DecentLevel(Level):
+    def __init__(self):
+        from objects.Room import Room_Finish, Room_One, Room_Start, Room_Two, Room_Three, Bathroom, Backyard
+        super().__init__()
+        self.theme = TempTheme()
+        self.width = self.theme.background_sprite.get_width()
+
+        my_rooms = Room_Finish, Backyard, Garage, Room_Two, Bathroom, Room_Three, Kitchen, DiningRoom, Room_Start
+        my_doors = 0, 75, 365, 150, 75, 100, 222, 350, 225
+
+        # my_rooms = Room_Finish, Room_Start
+        # my_doors = 0,           100
+        self.build_level(my_doors, my_rooms)
 
 
 class ShortLevel(Level):
@@ -179,6 +186,3 @@ class ShortLevel(Level):
         _leftside = SideWall(0, 55, self.height)
         _rightside = SideWall(self.width - 55, 55, self.height)
         self.walls.add(_leftside, _rightside)
-
-    def draw(self, screen, x_offset, y_offset):
-        screen.blit(self.bg, (self.x + x_offset, self.y + y_offset))

@@ -12,7 +12,7 @@ from contexts.startup import StartupContext
 from contexts.title import TitleContext
 from contexts.winscreen import WinscreenContext
 from objects.Characters import Cooper, Doge, Beef
-from objects.Level import TempLevel, ButtLevel, ShortLevel
+from objects.Level import TempLevel, ButtLevel, ShortLevel, DecentLevel
 from objects.Player import Player
 import vars
 from utils.lights import ColorLib
@@ -52,7 +52,7 @@ class GlobalContext:
                 # TODO:  Build level here
             else:
                 characters = [Beef(), Doge()]
-            levels = [ButtLevel(), ShortLevel()]
+            levels = [DecentLevel(), None]
             if not debugcontrols.skip_intro:
                 howtoplay = HowToPlayContext(self.screen)
                 howtoplay.display_loop()
