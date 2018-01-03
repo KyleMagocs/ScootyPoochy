@@ -6,7 +6,7 @@ from objects.LevelObjects import Lamp, Table, Couch, Vase, Cuckoo, HDTV, BookShe
 from objects.LevelObjects_Backyard import Gnome, BirdBath, Grill, Flower1, Flower2, Flower3, Flower4
 from objects.LevelObjects_Bathroom import BathroomSink, Shower, Toilet, SinkStuff, BathMat
 from objects.LevelObjects_Garage import ScootPooch, Workbench, WaterHeater, PaintCans, Saw
-from objects.Wall import Wall, BathroomWall, BackyardWall, KitchenWall, GarageWall
+from objects.Wall import Wall, BathroomWall, BackyardWall, KitchenWall, GarageWall, DiningRoomWall
 
 ASSETS_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'images', 'level_assets')
 
@@ -126,7 +126,7 @@ class DiningRoom(Room):
             Chair((370, 300),),
             Chair((240, 300), mirror = True),
             DiningTable((300-DiningTable.width/2, 200,)),
-            Candle((210, 150)),
+            Candle((210, 170)),
             Candle((275, 250), mirror=True),
             Plate((325, 180)),
             Plate((325, 300)),
@@ -139,7 +139,7 @@ class DiningRoom(Room):
         super().__init__(y_position)
 
     def load_wall(self, door_x):
-        self.top_wall = KitchenWall(0, self.y_position, door_x)
+        self.top_wall = DiningRoomWall(0, self.y_position, door_x)
 
 
 class Backyard(Room):
@@ -165,7 +165,7 @@ class Backyard(Room):
 
 
 class Garage(Room):
-    height = 600
+    height = 300
     floor_image = os.path.join(ASSETS_PATH, 'garage_bg.png')
 
     def __init__(self, y_position):
