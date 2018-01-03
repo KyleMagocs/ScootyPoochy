@@ -117,7 +117,7 @@ class ScootPooch(LevelObject, collide_object):
 class WaterHeater(LevelObject, collide_object):
     breakable = 1
     broken = None
-
+    breaksound = 'explode.wav'
     width = 46
     x_collide_offset = 62
     y_collide_offset = 45

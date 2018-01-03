@@ -19,6 +19,7 @@ class Candle(LevelObject):
     collide_height = 70
     x_collide_offset = 74
     y_collide_offset = 10
+    points = 100
     z = .5
 
     sheet_path = 'objects/diningroom/candle.png'
@@ -31,7 +32,6 @@ class Candle(LevelObject):
         self.image_index = 0
         self.x = init_pos[0]
         self.y = init_pos[1]
-        self.points = 50
         if mirror:
             # self.x -= self.image.get_width()
             self.x_collide_offset = 7
@@ -81,11 +81,12 @@ class DiningTable(LevelObject, collide_object):
 class Plate(LevelObject):
     breakable = 1
     broken = None
-
+    breaksound = 'glass.wav'
     width = 43
     x_collide_offset = 8
     y_collide_offset = 40
     collide_height = 20
+    points = 50
 
     sheet_path = 'objects/diningroom/plate.png'
 
@@ -115,8 +116,9 @@ class Painting_One(LevelObject):
     broken = None
     z = .5
     width = 59
-
+    breaksound = 'rip.wav'
     sheet_path = 'objects/diningroom/painting1.png'
+    points = 400
 
     def __init__(self, init_pos, mirror=False):
         super().__init__()
@@ -124,7 +126,7 @@ class Painting_One(LevelObject):
         self.y = init_pos[1]
         self.images = self.load_sprite_sheet(self.sheet_path, 59, 75, 7, mirror)
         self.image = self.images[0]
-        self.points = 300
+
         self.image_index = 0
 
     def update(self, addtl_x, addtl_y):
@@ -140,8 +142,9 @@ class Painting_Two(LevelObject):
     broken = None
     z = .5
     width = 59
-
+    breaksound = 'rip.wav'
     sheet_path = 'objects/diningroom/painting2.png'
+    points = 400
 
     def __init__(self, init_pos, mirror=False):
         super().__init__()
@@ -149,7 +152,6 @@ class Painting_Two(LevelObject):
         self.y = init_pos[1]
         self.images = self.load_sprite_sheet(self.sheet_path, 67, 136, 9, mirror)
         self.image = self.images[0]
-        self.points = 300
         self.image_index = 0
 
     def update(self, addtl_x, addtl_y):
@@ -168,6 +170,7 @@ class Chair(LevelObject):
     collide_height = 50
     x_collide_offset = 0
     y_collide_offset = 54
+    points = 50
 
     sheet_path = 'objects/diningroom/chair.png'
 
@@ -179,7 +182,6 @@ class Chair(LevelObject):
         self.image_index = 0
         self.x = init_pos[0]
         self.y = init_pos[1]
-        self.points = 50
         if mirror:
             self.x -= self.image.get_width()
             self.x_collide_offset = self.image.get_width() - self.width - 4

@@ -120,7 +120,7 @@ class Cooper(CharacterBase):
     sprite_path = 'TEMPDOG_sprite_temp.png'
     portrait_path = 'cooper/portrait.png'
     victory_portrait_path = 'cooper/victory.png'
-    winsound = 'cooldogwin.wav'
+    winsound = 'cooperwin.wav'
     head_path = 'cooper/head.png'
     larm_path = 'cooper/leftarm.png'
     rarm_path = 'cooper/rightarm.png'
@@ -213,7 +213,7 @@ class Lucy(CharacterBase):
     portrait_path = 'lucy/portrait.png'
     victory_portrait_path = 'lucy/victory.png'
     selectsound='lucy.wav'
-    winsound = 'pug.wav'
+    winsound = 'lucywin.wav'
     head_path = 'lucy/head.png'
     larm_path = 'lucy/leftarm.png'
     rarm_path = 'lucy/rightarm.png'
@@ -253,7 +253,7 @@ class Nort(CharacterBase):
     body_path = 'nort/body.png'
     portrait_path = 'nort/portrait.png'
     victory_portrait_path = 'nort/victory.png'
-    winsound = 'trondogwin.wav'
+    winsound = 'nortwin.wav'
     poop_paths = ['nort/nort_poop_temp.png', ]
 
     poop_factor = 5
@@ -284,7 +284,7 @@ class Daisy(CharacterBase):
     sprite_path = 'carlos_sprite_temp.png'
     portrait_path = 'daisy/portrait.png'
     victory_portrait_path = 'daisy/victory.png'
-    winsound = 'clownwin.wav'
+    winsound = 'daisywin.wav'
     selectsound='daisy.wav'
     poop_paths = ['daisy/poop1.png', 'daisy/poop2.png']
     head_path = 'daisy/head.png'

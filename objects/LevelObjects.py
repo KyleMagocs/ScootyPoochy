@@ -6,6 +6,7 @@ import debugcontrols
 import vars
 from objects.CollideObject import collide_object
 from utils.hollow import textHollow, textOutline
+from utils.sounds import SoundLib
 from utils.sprite_utils import image_to_surface
 from utils.spritesheet import spritesheet
 
@@ -15,6 +16,8 @@ class LevelObject(pygame.sprite.Sprite):
     broken = 0  # 1 = breaking, 2 = broken
     passable = 1  #
     image_path = None
+    image_index = 0
+    breaksound = None
     height = 0
     collide_height = 0
     z = 0
@@ -46,6 +49,8 @@ class LevelObject(pygame.sprite.Sprite):
             _rect.x += x_offset
             _rect.y += y_offset
             pygame.draw.rect(screen, (0, 255, 0), _rect, 1)
+        if self.image_index == 1 and self.breaksound is not None:  # TODO:  THIS IS NOT THE PLACE FOR THIS, YOU ASSHOLE
+            SoundLib.playsound(self.breaksound)
 
     def draw_score(self, screen, x_offset, y_offset, draw_points=False):
         if draw_points and 0 < self.points_delta < 100:

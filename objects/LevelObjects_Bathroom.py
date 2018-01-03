@@ -104,6 +104,7 @@ class Toilet(LevelObject, collide_object):
     breakable = 1
     score = 50
     sheet_path = 'objects/bathroom/toilet_sheet.png'
+    breaksound = 'flush.wav'
     width = 45
     points = 50
     x_collide_offset = 18

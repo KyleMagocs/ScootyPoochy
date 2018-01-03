@@ -197,7 +197,7 @@ class Flower4(LevelObject):
 class Grill(LevelObject):
     breakable = 1
     broken = None
-
+    breaksound = 'fireball.wav'
     width = 45
     collide_height = 80
     x_collide_offset = 37
