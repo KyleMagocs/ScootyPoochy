@@ -116,7 +116,7 @@ class Cooper(CharacterBase):
                '"The name\'s Cooper, but not like Anderson"',
                '"The name\'s Cooper, but not like the cheese"',
                '"You can get your dog in the game by paying off the creator"']
-
+    selectsound = 'cooper.wav'
     sprite_path = 'TEMPDOG_sprite_temp.png'
     portrait_path = 'cooper/portrait.png'
     victory_portrait_path = 'cooper/victory.png'
@@ -148,6 +148,7 @@ class Doge(CharacterBase):
                '"very 1st place"']
     portrait_path = 'doge/portrait.png'
     victory_portrait_path = 'doge/victory.png'
+    selectsound='doge.wav'
     winsound = 'dogewin.wav'
     head_path = 'doge/head.png'
     larm_path = 'doge/leftarm.png'
@@ -179,6 +180,7 @@ class Beef(CharacterBase):
                '*prrrrrr*']
     portrait_path = 'beef/portrait.png'
     victory_portrait_path = 'beef/victory.png'
+    selectsound='beef.wav'
     winsound = 'beefwin.wav'
     head_path = 'beef/head.png'
     larm_path = 'beef/leftarm.png'
@@ -210,6 +212,7 @@ class Lucy(CharacterBase):
                '<eyeball pops out in excitement>']
     portrait_path = 'lucy/portrait.png'
     victory_portrait_path = 'lucy/victory.png'
+    selectsound='lucy.wav'
     winsound = 'pug.wav'
     head_path = 'lucy/head.png'
     larm_path = 'lucy/leftarm.png'
@@ -242,6 +245,7 @@ class Nort(CharacterBase):
                '"Tubular."',
                '"Maybe you need to upgrade your system"']
     sprite_path = 'nort_sprite_temp.png'
+    selectsound='nort.wav'
     head_path = 'nort/head.png'
     larm_path = 'nort/leftarm.png'
     rarm_path = 'nort/rightarm.png'
@@ -281,6 +285,7 @@ class Daisy(CharacterBase):
     portrait_path = 'daisy/portrait.png'
     victory_portrait_path = 'daisy/victory.png'
     winsound = 'clownwin.wav'
+    selectsound='daisy.wav'
     poop_paths = ['daisy/poop1.png', 'daisy/poop2.png']
     head_path = 'daisy/head.png'
     larm_path = 'daisy/leftarm.png'
@@ -310,6 +315,7 @@ class Mikkusu(CharacterBase):
                '"100 pushups, 100 situps, 100 squats. And run 10 km.']
     portrait_path = 'mikkusu/portrait.png'
     victory_portrait_path = 'mikkusu/victory.png'
+    selectsound='mikkusu.wav'
     winsound = 'anime.wav'
     poop_paths = ['mikkusu/poop1.png', 'mikkusu/poop2.png']
     head_path = 'mikkusu/head.png'

@@ -5,7 +5,9 @@ import pygame
 
 import colors
 from objects.Characters import get_all_characters
+from objects.miscsprites import PawButton
 from utils.lights import ColorLib
+from utils.sounds import SoundLib
 
 all_chars = get_all_characters()
 from sprites.CharacterSelectCharacter import CharacterSelectCharacter
@@ -95,7 +97,7 @@ class CharacterWheelNew:
     def confirm_character(self):
         if self.get_selected_character() is not None:
             self.get_selected_character().flash_factor = 2
-
+            SoundLib.playsound(self.get_selected_character().character.selectsound)
             self.flash_timer = 30
             self.confirmed = True
 
@@ -206,10 +208,13 @@ class CharacterWheelNew:
         pygame.draw.circle(screen, self.color, (self.x, self.y), int(self.radius + 1), 1)
 
     def draw(self, screen):
+
         if not self.spawned and not self.spawning:
-            font = pygame.font.SysFont('Comic Sans MS', 15)
-            label = font.render('PRESS KEY TO JOIN', 1, (200, 200, 200))
+            font = pygame.font.SysFont('IMPACT', 30)
+            label = font.render('   PRESS                TO JOIN', 1, (200, 200, 200))
+            button = PawButton((self.align_x - label.get_width()/2+100, 180))
             screen.blit(label, (self.align_x - label.get_width()/2, 200))
+            button.draw(screen, 0, 0)
 
         self.draw_circles(screen)
 
@@ -218,7 +223,7 @@ class CharacterWheelNew:
 
         if self.confirmed:
             # TODO:  ugly
-            font = pygame.font.SysFont('Comic Sans MS', 40)
+            font = pygame.font.SysFont('IMPACT', 40)
             label = font.render(self.get_selected_character().character.name, 1, self.get_selected_character().character.color)
             screen.blit(label, (self.align_x - label.get_width()/2, 650))
 

@@ -18,7 +18,7 @@ class CharacterSelectTrackballContext:
 
     def __init__(self, screen, p1, p2):
         self.left_wheel = CharacterWheelNew(-100, 200, transition_frames, 0, vars.SCREEN_WIDTH/4, 15, 40, False)
-        self.right_wheel = CharacterWheelNew(vars.SCREEN_WIDTH+100, 200, transition_frames, -1 * (360 / len(all_chars) * (len(all_chars) / 2 - 1)), vars.SCREEN_WIDTH/4*3, 130, 155, True)
+        self.right_wheel = CharacterWheelNew(vars.SCREEN_WIDTH+100, 200, transition_frames, -1 * (360 / len(all_chars) * (len(all_chars) / 2 - 1)), vars.SCREEN_WIDTH/4*3, 140, 165, True)
         self.players = (p1, p2)
         self.screen = screen
         self.clock = pygame.time.Clock()
@@ -92,7 +92,7 @@ class CharacterSelectTrackballContext:
 
     def draw_background(self):
         self.screen.fill(background_fill)
-        font = pygame.font.SysFont('Impact', 20)
+        font = pygame.font.SysFont('Impact', 50)
         label = font.render('CHOOSE YOUR CHARACTERS!'.format(self.timer / fps), 1, (100, 200, 100))
         self.screen.blit(label, (vars.SCREEN_WIDTH/2 - label.get_width()/2, 100))
 
