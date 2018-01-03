@@ -95,6 +95,7 @@ class CharacterWheelNew:
     def confirm_character(self):
         if self.get_selected_character() is not None:
             self.get_selected_character().flash_factor = 2
+
             self.flash_timer = 30
             self.confirmed = True
 
@@ -164,7 +165,7 @@ class CharacterWheelNew:
                         ColorLib.set_colors(self.get_selected_character().character.colorcode, None)
 
                     self.despawning = True
-        else:
+        elif not self.confirmed:
             self.spawning = True
 
     def draw_stats(self, screen):

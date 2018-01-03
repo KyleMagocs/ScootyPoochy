@@ -15,7 +15,7 @@ class WinscreenContext:
         self.timer = 0
 
     def display_loop(self, winning_character):
-        SoundLib.winsound(winning_character.winsound)
+        SoundLib.playsound(winning_character.playsound)
         ColorLib.set_colors(winning_character.colorcode, winning_character.colorcode)
         text = winning_character.wintext[random.randint(0, len(winning_character.wintext) - 1)]
 

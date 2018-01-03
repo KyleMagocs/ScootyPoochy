@@ -1,7 +1,7 @@
-skip_intro = True
+skip_intro = False
 show_velocity = False
-draw_rects = True
+draw_rects = False
 skip_countdown = False
 debug_mode = True
-music_off = True
-use_keyboard_character_select = True
+music_off = False
+use_keyboard_character_select = False

@@ -72,7 +72,7 @@ class World:
         self.player_two.update_limbs(self.p2_left, self.p2_right)
 
         self.handle_player_vel(self.p1_left, self.p1_right, self.p2_left, self.p2_right)
-
+        
         self.player_one.update()
         self.player_two.update()
 
