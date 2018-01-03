@@ -52,7 +52,7 @@ class GlobalContext:
                 # TODO:  Build level here
             else:
                 characters = [Beef(), Doge()]
-            levels = [DecentLevel(), None]
+            levels = [ButtLevel(), None]
             if not debugcontrols.skip_intro:
                 howtoplay = HowToPlayContext(self.screen)
                 howtoplay.display_loop()

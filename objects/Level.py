@@ -3,7 +3,7 @@ import datetime
 import pygame
 
 from objects.LevelObjects import Lamp, Couch, Table, Vase
-from objects.Room import Kitchen, DiningRoom, Garage
+from objects.Room import Kitchen, DiningRoom, Garage, Backyard2
 from objects.Theme import TempTheme
 from objects.Wall import Wall, SideWall
 
@@ -132,11 +132,9 @@ class ButtLevel(Level):
         self.theme = TempTheme()
         self.width = self.theme.background_sprite.get_width()
 
-        my_rooms = Room_Finish, Room_Three, Room_One, Room_Two, Bathroom, Room_Three, Backyard, DiningRoom, Kitchen, Garage
-        my_doors = 0, 75, 75, 150, 75, 150, 350, 400, 150, 365
+        my_rooms = Room_Finish, Room_Three, Room_One, Room_Two, Bathroom, Room_Three, Backyard, DiningRoom, Kitchen,
+        my_doors = 0, 75, 75, 150, 75, 150, 350, 400, 225,
 
-        # my_rooms = Room_Finish, Room_Start
-        # my_doors = 0,           100
         self.build_level(my_doors, my_rooms)
 
 
@@ -147,11 +145,9 @@ class DecentLevel(Level):
         self.theme = TempTheme()
         self.width = self.theme.background_sprite.get_width()
 
-        my_rooms = Room_Finish, Backyard, Garage, Room_Two, Bathroom, Room_Three, Kitchen, DiningRoom, Room_Start
+        my_rooms = Room_Finish, Backyard2, Garage, Room_Two, Bathroom, Room_Three, Kitchen, DiningRoom, Room_Start
         my_doors = 0, 75, 365, 150, 75, 100, 222, 350, 225
 
-        # my_rooms = Room_Finish, Room_Start
-        # my_doors = 0,           100
         self.build_level(my_doors, my_rooms)
 
 

@@ -6,6 +6,7 @@ from objects.LevelObjects import Lamp, Table, Couch, Vase, Cuckoo, HDTV, BookShe
 from objects.LevelObjects_Backyard import Gnome, BirdBath, Grill, Flower1, Flower2, Flower3, Flower4
 from objects.LevelObjects_Bathroom import BathroomSink, Shower, Toilet, SinkStuff, BathMat
 from objects.LevelObjects_Garage import ScootPooch, Workbench, WaterHeater, PaintCans, Saw
+from objects.LevelObjects_Kitchen import Counter2, Mixer, Cabinet, KitchenSink
 from objects.Wall import Wall, BathroomWall, BackyardWall, KitchenWall, GarageWall, DiningRoomWall
 
 ASSETS_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'images', 'level_assets')
@@ -103,10 +104,14 @@ class Kitchen(Room):
         from objects.LevelObjects_Kitchen import Counter
         from objects.LevelObjects_Kitchen import Bottle
         self.objects = pygame.sprite.Group(
-            Counter((55, 110,)),
+            Counter((50, 100,)),
+            Counter2((380, 100,)),
             Bottle((60, 90)),
+            Mixer((450, 20)),
+            Cabinet((350, 40)),
             Stove((160, 105)),
-            Oven((160, 132)),
+            Oven((160, 138)),
+            KitchenSink((360, 96))
 
         )
         super().__init__(y_position)
@@ -154,6 +159,27 @@ class Backyard(Room):
             Flower1((400, 80)),
             Flower3((465, 115)),
             Flower4((425, 60)),
+            Gnome((300, 230)),
+            Gnome((280, 270)),
+            BirdBath((430, 300)),
+        )
+        super().__init__(y_position)
+
+    def load_wall(self, door_x):
+        self.top_wall = BackyardWall(0, self.y_position, door_x)
+
+class Backyard2(Room):
+    height = 500
+
+    floor_image = os.path.join(ASSETS_PATH, 'backyard_bg.png')
+
+    def __init__(self, y_position):
+        self.objects = pygame.sprite.Group(
+            Grill((100, 260)),
+            Flower2((255, 75)),
+            Flower1((300, 80)),
+            Flower3((365, 115)),
+            Flower4((325, 60)),
             Gnome((300, 230)),
             Gnome((280, 270)),
             BirdBath((430, 300)),

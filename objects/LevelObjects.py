@@ -105,7 +105,7 @@ class LevelObject(pygame.sprite.Sprite):
 class Lamp(LevelObject):
     breakable = 1
     broken = None
-
+    breaksound= 'glass.wav'
     width = 30
     x_collide_offset = 6
 
@@ -138,7 +138,7 @@ class Vase(LevelObject):
     broken = None
 
     width = 32
-
+    breaksound = 'chunkyglass.wav'
     sheet_path = 'objects/vase_sheet.png'
 
     def __init__(self, init_pos, mirror=False):

@@ -87,7 +87,7 @@ class ScootPooch(LevelObject, collide_object):
     x_collide_offset = 0
     y_collide_offset = 0
     collide_height = 0
-    points = 250
+    points = 500
     z = 1
 
     sheet_path = 'objects/garage/pooch.png'
@@ -122,7 +122,7 @@ class WaterHeater(LevelObject, collide_object):
     x_collide_offset = 62
     y_collide_offset = 45
     collide_height = 120
-    points = 200
+    points = 1000
     z = 1
 
     sheet_path = 'objects/garage/waterheater.png'
@@ -150,6 +150,7 @@ class WaterHeater(LevelObject, collide_object):
 
     def draw(self, screen, x_offset, y_offset, draw_points=False):
         LevelObject.draw(self, screen, x_offset, y_offset, draw_points)
+
 
 class Saw(LevelObject):
     breakable = 1
