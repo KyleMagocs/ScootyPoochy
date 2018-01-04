@@ -112,6 +112,8 @@ class CharacterWheelNew:
             char.update(angle_inc)
 
     def get_selected_character(self):
+        if not self.spawned and not self.spawning:
+            return None
         if self.spawning:
             return None
         try:
@@ -176,7 +178,7 @@ class CharacterWheelNew:
             if not self.moving:
                 name = char.character.name
                 stats = char.character.attributes
-                font = pygame.font.SysFont('Comic Sans MS', 25)
+                font = pygame.font.SysFont('Impact', 25)
 
                 max_label_width = 0
                 for stat in stats:
@@ -197,8 +199,10 @@ class CharacterWheelNew:
                         screen.blit(label, (char.x + char.width + 10, stat_y))
                     stat_y += 20
 
-                label = font.render('PRESS BUTTON TO CONFIRM', 1, (200, 200, 200))
+                label = font.render('PRESS                     TO CONFIRM', 1, (200, 200, 200))
                 screen.blit(label, (self.align_x - label.get_width()/2, vars.SCREEN_HEIGHT - 100))
+                button = PawButton((self.align_x - label.get_width() / 2 + 70, vars.SCREEN_HEIGHT - 120))
+                button.draw(screen, 0, 0)
                 stat_y += 20
 
     def draw_circles(self, screen):
@@ -209,7 +213,7 @@ class CharacterWheelNew:
 
     def draw(self, screen):
 
-        if not self.spawned and not self.spawning:
+        if not self.spawned and not self.spawning and not self.confirmed:
             font = pygame.font.SysFont('IMPACT', 30)
             label = font.render('   PRESS                TO JOIN', 1, (200, 200, 200))
             button = PawButton((self.align_x - label.get_width()/2+100, 180))
@@ -223,9 +227,10 @@ class CharacterWheelNew:
 
         if self.confirmed:
             # TODO:  ugly
-            font = pygame.font.SysFont('IMPACT', 40)
-            label = font.render(self.get_selected_character().character.name, 1, self.get_selected_character().character.color)
-            screen.blit(label, (self.align_x - label.get_width()/2, 650))
+            if self.get_selected_character() is not None:
+                font = pygame.font.SysFont('IMPACT', 40)
+                label = font.render(self.get_selected_character().character.name, 1, self.get_selected_character().character.color)
+                screen.blit(label, (self.align_x - label.get_width()/2, 650))
 
         if self.spawning or self.spawned:
             if not self.confirmed:

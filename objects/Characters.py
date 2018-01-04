@@ -188,7 +188,7 @@ class Beef(CharacterBase):
     tail_path = 'beef/tail.png'
     body_path = 'beef/body.png'
 
-    finish_text = 'finish (´;ω;`)'
+    finish_text = 'finish   :3 '
 
     poop_paths = ['beef/poop1.png', 'beef/poop2.png']
 

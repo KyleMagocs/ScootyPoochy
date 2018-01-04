@@ -4,6 +4,7 @@ import colors
 from colors import *
 from objects.CharSelectWheel import CharacterWheel
 from objects.CharSelectWheel_New import CharacterWheelNew
+from objects.miscsprites import PawButton
 from vars import fps
 
 from objects.Characters import get_all_characters
@@ -31,8 +32,13 @@ class CharacterSelectTrackballContext:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_f:
+                    if self.left_wheel.confirmed and not self.right_wheel.spawned and not self.right_wheel.spawning:
+                        self.right_wheel.confirmed = True
                     self.left_wheel.spawn_or_confirm()
+
                 if event.key == pygame.K_j:
+                    if self.right_wheel.confirmed and not self.left_wheel.spawned and not self.left_wheel.spawning:
+                        self.left_wheel.confirmed = True
                     self.right_wheel.spawn_or_confirm()
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
@@ -75,7 +81,9 @@ class CharacterSelectTrackballContext:
 
             if self.both_wheels_confirmed():
                 if end_timer > int(vars.fps*3):
-                    return [self.left_wheel.get_selected_character().character, self.right_wheel.get_selected_character().character,]
+                    left = self.left_wheel.get_selected_character().character if self.left_wheel.get_selected_character() is not None else None
+                    right = self.right_wheel.get_selected_character().character if self.right_wheel.get_selected_character() is not None else None
+                    return [left, right]
                 elif end_timer > int(vars.fps*2):
                         fade_overlay = pygame.Surface((vars.SCREEN_WIDTH, vars.SCREEN_HEIGHT))
                         fade_overlay.fill(colors.black)
@@ -89,12 +97,25 @@ class CharacterSelectTrackballContext:
         self.draw_background()
         self.left_wheel.draw(self.screen)
         self.right_wheel.draw(self.screen)
+        if self.left_wheel.confirmed and not self.right_wheel.spawned and not self.right_wheel.spawning and not self.both_wheels_confirmed():
+            font = pygame.font.SysFont('Impact', 25)
+            label = font.render('PRESS                     FOR ONE PLAYER', 1, (200, 200, 200))
+            self.screen.blit(label, (self.left_wheel.align_x - label.get_width() / 2, vars.SCREEN_HEIGHT - 100))
+            button = PawButton((self.left_wheel.align_x - label.get_width() / 2 + 70, vars.SCREEN_HEIGHT - 120))
+            button.draw(self.screen, 0, 0)
+        if self.right_wheel.confirmed and not self.left_wheel.spawned and not self.left_wheel.spawning and not self.both_wheels_confirmed():
+            font = pygame.font.SysFont('Impact', 25)
+            label = font.render('PRESS                     FOR ONE PLAYER', 1, (200, 200, 200))
+            self.screen.blit(label, (self.right_wheel.align_x - label.get_width() / 2, vars.SCREEN_HEIGHT - 100))
+            button = PawButton((self.right_wheel.align_x - label.get_width() / 2 + 70, vars.SCREEN_HEIGHT - 120))
+            button.draw(self.screen, 0, 0)
 
     def draw_background(self):
         self.screen.fill(background_fill)
         font = pygame.font.SysFont('Impact', 50)
-        label = font.render('CHOOSE YOUR CHARACTERS!'.format(self.timer / fps), 1, (100, 200, 100))
-        self.screen.blit(label, (vars.SCREEN_WIDTH/2 - label.get_width()/2, 100))
+        if not self.both_wheels_confirmed():
+            label = font.render('CHOOSE YOUR CHARACTERS!'.format(self.timer / fps), 1, (100, 200, 100))
+            self.screen.blit(label, (vars.SCREEN_WIDTH/2 - label.get_width()/2, 100))
 
 
 

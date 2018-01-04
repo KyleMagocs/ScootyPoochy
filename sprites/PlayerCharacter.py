@@ -68,6 +68,9 @@ class PlayerCharacter(pygame.sprite.Sprite):
         self.radius = 50
 
     def set_character(self, character):
+        if character is None:
+            self.finished = True
+            return
         self.character = character
         self.orig_sprite = character.sprite
         if hasattr(character, 'head_path'):
@@ -146,6 +149,8 @@ class PlayerCharacter(pygame.sprite.Sprite):
         return _images
 
     def update(self):
+        if self.character is None:
+            return
         self.old_rect = copy.deepcopy(self.rect)
         self.timer += 1
 
@@ -173,6 +178,8 @@ class PlayerCharacter(pygame.sprite.Sprite):
             self.jump_state = 0
 
     def spawn_poop_or_dont(self):
+        if self.character is None:
+            return []
         if self.z - self.min_z <= 0.005 and self.distance_travelled > self.character.poop_factor / 3.0:
             # print('Spawned a poop after ' + str(self.character.current_poop_factor))
             self.character.current_poop_factor /= 1.3
@@ -190,6 +197,8 @@ class PlayerCharacter(pygame.sprite.Sprite):
             return []
 
     def draw_as_player(self, screen, x_offset, y_offset):
+        if self.character is None:
+            return
         self.cur_sprite = self.generate_new_sprite()
         self.cur_sprite = pygame.transform.scale(self.cur_sprite, (int(self.character.width * (self.z / 3 + 1)), int(self.character.height * (self.z / 3 + 1))))
         _scale_dif = (self.z / 3 + 1) * self.character.width - self.character.width
@@ -209,6 +218,8 @@ class PlayerCharacter(pygame.sprite.Sprite):
             pygame.draw.rect(screen, self.character.color, _rect, 1)  #
 
     def draw_normal(self, screen, x_offset, y_offset):
+        if self.character is None:
+            return
         self.cur_sprite = self.generate_new_sprite()
         self.cur_sprite = pygame.transform.scale(self.cur_sprite, (int(self.character.width * (self.z / 3 + 1)), int(self.character.height * (self.z / 3 + 1))))
         _scale_dif = (self.z / 3 + 1) * self.character.width - self.character.width

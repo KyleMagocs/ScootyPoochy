@@ -165,7 +165,7 @@ class Painting_Two(LevelObject):
 class Chair(LevelObject):
     breakable = 1
     broken = None
-
+    breaksound = 'woodbreak.wav'
     width = 50
     collide_height = 50
     x_collide_offset = 0

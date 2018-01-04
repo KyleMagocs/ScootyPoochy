@@ -11,6 +11,7 @@ from utils.hollow import textOutline
 from utils.sprite_utils import get_conform_deltas, get_velocity
 from utils.sounds import MusicLib
 
+
 class World:
     def __init__(self, width, y_offset, players, level):
         self.frame = 0
@@ -28,6 +29,7 @@ class World:
                                           init_y=y_offset)  # TODO:  This math is bad
         self.player_two = PlayerCharacter(init_x=self.width / 2 + 40,
                                           init_y=y_offset)
+
         self.player_group = pygame.sprite.Group(self.player_one, self.player_two)
 
         self.level = level
@@ -45,7 +47,7 @@ class World:
         p2_progress = math.fabs(max((self.player_two.y + vars.PLAYER_START_Y), 0) / self.level.height)
         return p1_progress, p2_progress
 
-    def update(self,):
+    def update(self, ):
         self.frame += 1
 
         if len(self.countdown) > 0:
@@ -72,7 +74,7 @@ class World:
         self.player_two.update_limbs(self.p2_left, self.p2_right)
 
         self.handle_player_vel(self.p1_left, self.p1_right, self.p2_left, self.p2_right)
-        
+
         self.player_one.update()
         self.player_two.update()
 
@@ -217,6 +219,18 @@ class World:
         self.draw_a_player(screen, self.player_two, self.player_one, vars.SCREEN_WIDTH - self.width)
 
     def draw_a_player(self, screen, player, other_player, x_offset):
+        if player.character is None:
+            center_line = x_offset + vars.SCREEN_WIDTH/4
+
+            font = pygame.font.SysFont('Impact', 32)
+            label = textOutline(font, 'SINGLE PLAYER MODE SUCKS', colors.white, colors.black)
+            screen.blit(label, (center_line - label.get_width() / 2, 300))
+            label = textOutline(font, 'FIND SOMEONE TO PLAY WITH', colors.white, colors.black)
+            screen.blit(label, (center_line - label.get_width() / 2, 400))
+            label = textOutline(font, 'WHEN YOU\'RE DONE', colors.white, colors.black)
+            screen.blit(label, (center_line - label.get_width() / 2, 450))
+
+            return
         if player.y > vars.SCREEN_HEIGHT - vars.PLAYER_START_Y:
             y_offset = (0 - player.y) + (vars.SCREEN_HEIGHT - vars.PLAYER_START_Y)
             player_y_offset = 0
@@ -268,9 +282,8 @@ class World:
         if len(self.countdown) > 0:
             self.draw_countdown(screen, x_offset, player.character.color, self.countdown[0], self.countdown_timer)
             font = pygame.font.SysFont('Impact', 18)
-            label = textOutline(font, 'YOU!', player.character.color, colors.black)
-            # label = font.render('YOU!', 1, player.character.color)
-            screen.blit(label, (x_offset + player.x + label.get_width() / 2, (vars.SCREEN_HEIGHT - vars.PLAYER_START_Y + 75)))
+            youlabel = textOutline(font, 'YOU!', player.character.color, colors.black)
+            screen.blit(youlabel, (x_offset + player.x + youlabel.get_width() / 2, (vars.SCREEN_HEIGHT - vars.PLAYER_START_Y + 75)))
 
             # TODO:  Should put a real debug in here
             # # IF YOU'RE LOOKING FOR A GOOD PLACE TO LOG SOME CRAP TO THE SCREEN, THIS WOULD BE A PRETTY GOOD SPOT # #
@@ -299,10 +312,10 @@ class World:
         return ({'time': max(4000 - self.player_one.final_timer, 0),
                  'break': self.player_one.break_score,
                  # todo:  maybe return a list of objects instead and then you can do something neat there?
-                 'poop': self.player_one.final_poop_score,
+                 'poop': self.player_one.final_poop_score if self.player_one.final_poop_score is not None else 0,
                  'char': self.player_one.character, },
                 {'time': max(4000 - self.player_two.final_timer, 0),
                  'break': self.player_two.break_score,
                  # todo:  maybe return a list of objects instead and then you can do something neat there?
-                 'poop': self.player_two.final_poop_score,
+                 'poop': self.player_two.final_poop_score if self.player_two.final_poop_score is not None else 0,
                  'char': self.player_two.character},)

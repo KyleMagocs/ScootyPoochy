@@ -51,8 +51,8 @@ class GlobalContext:
                 # theme = theme_select.main_loop()
                 # TODO:  Build level here
             else:
-                characters = [Beef(), Doge()]
-            levels = [ButtLevel(), None]
+                characters = [Beef(), None]
+            levels = [ShortLevel(), None]
             if not debugcontrols.skip_intro:
                 howtoplay = HowToPlayContext(self.screen)
                 howtoplay.display_loop()

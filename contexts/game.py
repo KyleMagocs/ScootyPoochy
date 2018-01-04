@@ -34,9 +34,13 @@ class GameContext:
 
         self.world.player_one.y = levels[0].height - vars.PLAYER_START_Y
         self.world.player_one.set_character(character_list[0])
+        if character_list[0] is None:  # TODO:  DUMB AND HACKY
+            self.world.player_group.remove(self.world.player_one)
 
         self.world.player_two.y = levels[0].height - vars.PLAYER_START_Y
         self.world.player_two.set_character(character_list[1])
+        if character_list[1] is None:   # TODO:  DUMB AND HACKY
+            self.world.player_group.remove(self.world.player_two)
 
         self.clock = pygame.time.Clock()
 
@@ -54,8 +58,10 @@ class GameContext:
         p1_y = int(_prog[0] * (vars.SCREEN_HEIGHT - 210))
         p2_y = int(_prog[1] * (vars.SCREEN_HEIGHT - 210))
 
-        pygame.draw.circle(screen, self.world.player_one.character.color, (int(vars.SCREEN_WIDTH / 2 - 15), p1_y + 105), 8, 6)
-        pygame.draw.circle(screen, self.world.player_two.character.color, (int(vars.SCREEN_WIDTH / 2 + 15), p2_y + 105), 8, 6)
+        if self.world.player_one.character is not None:
+            pygame.draw.circle(screen, self.world.player_one.character.color, (int(vars.SCREEN_WIDTH / 2 - 15), p1_y + 105), 8, 6)
+        if self.world.player_two.character is not None:
+            pygame.draw.circle(screen, self.world.player_two.character.color, (int(vars.SCREEN_WIDTH / 2 + 15), p2_y + 105), 8, 6)
 
     def check_keys(self):
         for event in pygame.event.get():

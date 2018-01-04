@@ -2,12 +2,12 @@ import os
 
 import pygame
 
-fps = 60
+fps = 40
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 PLAYER_START_Y = 200
 LAUNCH_OPTIONS = pygame.DOUBLEBUF | pygame.NOFRAME
-# LAUNCH_OPTIONS = pygame.DOUBLEBUF | pygame.NOFRAME | pygame.FULLSCREEN | pygame.HWSURFACE
+#LAUNCH_OPTIONS = pygame.DOUBLEBUF | pygame.NOFRAME | pygame.FULLSCREEN | pygame.HWSURFACE
 radians_factor = 0.0174533  # Lol this is a constant not a var
 
 selected_character_color_index = 0
