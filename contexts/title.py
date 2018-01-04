@@ -27,7 +27,7 @@ class TitleContext:
 
 
             font = pygame.font.SysFont('Impact', 15)
-            font2 = pygame.font.SysFont('Impact', 300)
+            font2 = pygame.font.SysFont('Comic Sans MS', 30)
             font3 = pygame.font.SysFont('Impact', 30)
 
             title_image = pygame.image.load_extended(os.path.join(vars.IMAGES_PATH, 'title.png'))
@@ -48,7 +48,8 @@ class TitleContext:
             #
             # sub_text = font.render('Title art by Dylan Gallagher ( @aintnofuntime )', 0, colors.white)
             # self.screen.blit(sub_text, (vars.SCREEN_WIDTH / 2 - sub_text.get_width() / 2, 500))
-
+            betalabel = font2.render('v0.9(beta)', 0, colors.light_grey)
+            self.screen.blit(betalabel, (vars.SCREEN_WIDTH - betalabel.get_width()*1.5, vars.SCREEN_HEIGHT-betalabel.get_height()*1.5))
             if (self.timer // (vars.fps/2)) % 2 == 0 or (affirmative and self.timer % 2 == 0):
                 if affirmative:
                     text = 'HERE WE GO!'
