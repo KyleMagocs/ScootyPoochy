@@ -221,7 +221,7 @@ class Cabinet(LevelObject):
     def __init__(self, init_pos, mirror=False):
         super().__init__()
 
-        self.images = self.load_sprite_sheet(self.sheet_path, 95, 99, 9, mirror)
+        self.images = self.load_sprite_sheet(self.sheet_path, 93, 99, 9, mirror)
         self.image = self.images[0]
         self.image_index = 0
         self.x = init_pos[0]
