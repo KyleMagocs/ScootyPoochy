@@ -120,7 +120,7 @@ class Lamp(LevelObject):
         self.image_index = 0
         self.x = init_pos[0]
         self.y = init_pos[1]
-        self.points = 100
+        self.points = 50
         if mirror:
             self.x -= self.image.get_width()
             self.x_collide_offset = self.image.get_width() - self.width - 4
@@ -147,7 +147,7 @@ class Vase(LevelObject):
         self.y = init_pos[1]
         self.images = self.load_sprite_sheet(self.sheet_path, 32, 32, 8, mirror)
         self.image = self.images[0]
-        self.points = 400
+        self.points = 200
         self.image_index = 0
 
     def update(self, addtl_x, addtl_y):
@@ -163,7 +163,7 @@ class Cuckoo(LevelObject):
     broken = None
     z = .5
     width = 30
-
+    breaksound = 'cuckoo.wav'
     sheet_path = 'objects/clock_sheet.png'
 
     def __init__(self, init_pos, mirror=False):
@@ -172,7 +172,7 @@ class Cuckoo(LevelObject):
         self.y = init_pos[1]
         self.images = self.load_sprite_sheet(self.sheet_path, 60, 90, 9, mirror)
         self.image = self.images[0]
-        self.points = 800
+        self.points = 250
         self.image_index = 0
 
     def update(self, addtl_x, addtl_y):
@@ -197,7 +197,7 @@ class HDTV(LevelObject):
         self.y = init_pos[1]
         self.images = self.load_sprite_sheet(self.sheet_path, 100, 160, 11, mirror)
         self.image = self.images[0]
-        self.points = 200
+        self.points = 500
         self.image_index = 0
 
     def update(self, addtl_x, addtl_y):

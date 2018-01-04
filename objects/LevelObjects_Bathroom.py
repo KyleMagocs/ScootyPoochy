@@ -117,6 +117,7 @@ class Toilet(LevelObject, collide_object):
         self.height = .3
         self.z = .3
         self.image_index = 0
+        self.points = 50
 
     def update(self, addtl_x, addtl_y):
         if self.image_index >= len(self.images):
@@ -132,7 +133,7 @@ class Toilet(LevelObject, collide_object):
 class BathMat(LevelObject):
     breakable = 0
     score = 0
-
+    width = 100
     image_path = 'objects/bathroom/bathmat.png'
 
     def __init__(self, init_pos, mirror=False):

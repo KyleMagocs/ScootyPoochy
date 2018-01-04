@@ -32,6 +32,7 @@ class Candle(LevelObject):
         self.image_index = 0
         self.x = init_pos[0]
         self.y = init_pos[1]
+        self.points = 100
         if mirror:
             # self.x -= self.image.get_width()
             self.x_collide_offset = 7
@@ -126,7 +127,7 @@ class Painting_One(LevelObject):
         self.y = init_pos[1]
         self.images = self.load_sprite_sheet(self.sheet_path, 59, 75, 7, mirror)
         self.image = self.images[0]
-
+        self.points = 400
         self.image_index = 0
 
     def update(self, addtl_x, addtl_y):
@@ -153,6 +154,7 @@ class Painting_Two(LevelObject):
         self.images = self.load_sprite_sheet(self.sheet_path, 67, 136, 9, mirror)
         self.image = self.images[0]
         self.image_index = 0
+        self.points = 400
 
     def update(self, addtl_x, addtl_y):
         if self.image_index >= len(self.images):
@@ -182,6 +184,7 @@ class Chair(LevelObject):
         self.image_index = 0
         self.x = init_pos[0]
         self.y = init_pos[1]
+        self.points = 50
         if mirror:
             self.x -= self.image.get_width()
             self.x_collide_offset = self.image.get_width() - self.width - 4

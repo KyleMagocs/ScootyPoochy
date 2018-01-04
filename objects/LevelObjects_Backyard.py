@@ -213,7 +213,7 @@ class Grill(LevelObject):
         self.image_index = 0
         self.x = init_pos[0]
         self.y = init_pos[1]
-        self.points = 150
+        self.points = 200
         if mirror:
             self.x -= self.image.get_width()
             self.x_collide_offset = self.image.get_width() - self.width - 4

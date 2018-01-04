@@ -20,6 +20,7 @@ class PaintCans(LevelObject):
     y_collide_offset = 50
     collide_height = 50
     z = .5
+    breaksound = 'can.wav'
 
     sheet_path = 'objects/garage/paintcans.png'
 
@@ -101,7 +102,7 @@ class ScootPooch(LevelObject, collide_object):
         self.image_index = 0
         self.x = init_pos[0]
         self.y = init_pos[1]
-        self.points = 250
+        self.points = 500
         if mirror:
             self.x -= self.image.get_width()
             self.x_collide_offset = self.image.get_width()
@@ -155,7 +156,7 @@ class WaterHeater(LevelObject, collide_object):
 class Saw(LevelObject):
     breakable = 1
     broken = None
-
+    breaksound = 'saw.wav'
     width = 20
     x_collide_offset = 10
     y_collide_offset = 0
