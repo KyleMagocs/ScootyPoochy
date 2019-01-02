@@ -66,8 +66,9 @@ class World:
                 self.countdown_timer = 0
         if len(self.countdown) > 1:
             MusicLib.update_volume(1)
-            MusicLib.play_race_start()
+            MusicLib.play_race_start_old()
             return
+        MusicLib.play_race_start() # this is a hack for now because I don't want to splice the old countdown into the new music
         self.race_started = True
         if self.frame >= vars.fps / 10:
             self.p1_left, self.p1_right = self.players[0].read_input()
