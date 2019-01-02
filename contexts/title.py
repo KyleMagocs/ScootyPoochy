@@ -50,7 +50,7 @@ class TitleContext:
             # self.screen.blit(sub_text, (vars.SCREEN_WIDTH / 2 - sub_text.get_width() / 2, 500))
             betalabel = font2.render('v0.9.2(still beta)', 0, colors.light_grey)
             self.screen.blit(betalabel, (vars.SCREEN_WIDTH - betalabel.get_width()*1.5, vars.SCREEN_HEIGHT-betalabel.get_height()*1.5))
-            if (self.timer // (vars.fps/2)) % 2 == 0 or (affirmative and self.timer % 2 == 0):
+            if (self.timer // (vars.fps/2)) % 2 == 0 or (affirmative and self.timer % 3 == 0):
                 if affirmative:
                     text = 'HERE WE GO!'
                 else:
@@ -59,7 +59,6 @@ class TitleContext:
                 sub_text = font3.render(text, 0, colors.white)
                 self.screen.blit(sub_text, (vars.SCREEN_WIDTH / 2 - sub_text.get_width() / 2, 600))
 
-
             if start_timer < int(vars.fps / 2):
                 fade_overlay = pygame.Surface((vars.SCREEN_WIDTH, vars.SCREEN_HEIGHT))
                 fade_overlay.fill(colors.black)
@@ -67,16 +66,16 @@ class TitleContext:
                 self.screen.blit(fade_overlay, (0, 0))
                 start_timer += 1
 
-            if self.timer > TOTAL_WAIT * vars.fps and not affirmative:
-                if end_timer > int(vars.fps / 2):
-                    # return 0
-                    pass
-                else:
-                    fade_overlay = pygame.Surface((vars.SCREEN_WIDTH, vars.SCREEN_HEIGHT))
-                    fade_overlay.fill(colors.black)
-                    fade_overlay.set_alpha((end_timer / int(vars.fps / 2)) * 255)
-                    self.screen.blit(fade_overlay, (0, 0))
-                    end_timer += 1
+            # if self.timer > TOTAL_WAIT * vars.fps and not affirmative:
+            #     if end_timer > int(vars.fps / 2):
+            #         # return 0
+            #         pass
+            #     else:
+            #         fade_overlay = pygame.Surface((vars.SCREEN_WIDTH, vars.SCREEN_HEIGHT))
+            #         fade_overlay.fill(colors.black)
+            #         fade_overlay.set_alpha((end_timer / int(vars.fps / 2)) * 255)
+            #         self.screen.blit(fade_overlay, (0, 0))
+            #         end_timer += 1
 
             keystate = pygame.key.get_pressed()
             if keystate:
@@ -84,12 +83,12 @@ class TitleContext:
                     affirmative = True
 
             if affirmative:
-                if end_timer > int(vars.fps / 2):
+                if end_timer > int(vars.fps * 2):
                     return 1
                 else:
                     fade_overlay = pygame.Surface((vars.SCREEN_WIDTH, vars.SCREEN_HEIGHT))
                     fade_overlay.fill(colors.black)
-                    fade_overlay.set_alpha((end_timer / int(vars.fps / 2)) * 255)
+                    fade_overlay.set_alpha((end_timer / int(vars.fps * 2)) * 255)
                     self.screen.blit(fade_overlay, (0, 0))
                     end_timer += 1
 

@@ -8,7 +8,7 @@ const int p1butt = 3;
 const int p2butt = 5;
 const int led1 = 8;
 const int led2 = 11;
-const int TIMEOUT = 300;
+const int TIMEOUT = 0;
 
 int p1timeout = 0;
 int p2timeout = 0;
