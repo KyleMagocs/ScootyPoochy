@@ -156,7 +156,7 @@ class WaterHeater(LevelObject, collide_object):
 class Saw(LevelObject):
     breakable = 1
     broken = None
-    breaksound = 'saw.wav'
+    breaksound = 'blender.wav'
     width = 20
     x_collide_offset = 10
     y_collide_offset = 0

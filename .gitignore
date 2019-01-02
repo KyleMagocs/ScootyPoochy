@@ -3,3 +3,4 @@
 .idea/
 contexts/__pycache__/
 objects/__pycache__/
+error_logs/*.txt
