@@ -11,7 +11,7 @@ from utils.hollow import textOutline
 from utils.sprite_utils import get_conform_deltas, get_velocity
 from utils.sounds import MusicLib
 from utils.sounds import SoundLib
-
+import random
 class World:
     def __init__(self, width, y_offset, players, level):
         self.frame = 0
@@ -145,7 +145,10 @@ class World:
                         self.bounce_player(player, player2)
 
     def bounce_player(self, bouncee, bouncer):
-        SoundLib.playsound(bouncee.character.selectsound)
+        if random.randint(0, 1):
+            SoundLib.playsound(bouncee.character.selectsound, 0.4)
+        else:
+            SoundLib.playsound(bouncer.character.selectsound, 0.4)
         C1Speed = math.sqrt((bouncee.x_speed ** 2) + (bouncee.y_speed ** 2))
         XDiff = -(bouncee.x - bouncer.x)
         YDiff = -(bouncee.y - bouncer.y)

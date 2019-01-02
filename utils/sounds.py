@@ -65,8 +65,9 @@ class SoundLib:
 
 
     @classmethod
-    def playsound(cls, file):
+    def playsound(cls, file, volume = 1):
         sound = Sound(str(cls.sound_path / file))
+        sound.set_volume(volume)
         sound.play()
 
 
