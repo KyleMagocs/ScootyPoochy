@@ -33,21 +33,17 @@ void fcnProcessButtons()
   if ( boolBtnLeft )
   {
     //Set key1 to the U key
-    Keyboard.set_key1( KEY_F );
-  } else {
-    Keyboard.set_key1( 0 );
+    Keyboard.press( KEY_F );
   }
   boolean boolBtnRight = !digitalRead(pinBtnRight);
   if ( boolBtnRight )
   {
     //Set key1 to the U key
-    Keyboard.set_key2( KEY_J );
-  } else {
-    Keyboard.set_key2( 0 );
+    Keyboard.press( KEY_J );
   }
     
   //Send all of the set keys.
-  Keyboard.send_now();
+//  Keyboard.send_now();
  
  
 }

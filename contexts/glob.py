@@ -24,8 +24,8 @@ class GlobalContext:
         self.screen = screen
 
     def main_loop(self):
-        p1 = Player(0, 0)
-        p2 = Player(1, 0)
+        p1 = Player(0, 1)
+        p2 = Player(1, 1)
 
         while True:
 

@@ -8,7 +8,10 @@ const int p1butt = 3;
 const int p2butt = 5;
 const int led1 = 8;
 const int led2 = 11;
+const int TIMEOUT = 300;
 
+int p1timeout = 0;
+int p2timeout = 0;
 int sensor1Value = 0;        // value read from the pot
 int sensor2Value = 0;        // value read from the pot
 
@@ -50,7 +53,10 @@ void loop() {
   
   if (sensor1Value < cutoff1 || digitalRead(p1butt) == LOW) {
     digitalWrite(led1, HIGH);
-    Keyboard.print('f');
+    if (p1timeout <= 0){
+      p1timeout = TIMEOUT;
+      Keyboard.print('f');
+    }
   }
   else{
     digitalWrite(led1, LOW);
@@ -58,11 +64,20 @@ void loop() {
 
   if (sensor2Value < cutoff2  || digitalRead(p2butt) == LOW) {
     digitalWrite(led2, HIGH);
-    Keyboard.print('j');
+    if (p2timeout <= 0){
+      p2timeout = TIMEOUT;
+      Keyboard.print('j');
+    }
   }
   else{
     digitalWrite(led2, LOW);
   }
+  p1timeout -= 10;
+    if (p1timeout < 0)
+      p1timeout = 0;
+  p2timeout -= 10;
+    if (p2timeout < 0)
+      p2timeout = 0;
   delay(10);
 }
 // 

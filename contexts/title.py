@@ -48,7 +48,7 @@ class TitleContext:
             #
             # sub_text = font.render('Title art by Dylan Gallagher ( @aintnofuntime )', 0, colors.white)
             # self.screen.blit(sub_text, (vars.SCREEN_WIDTH / 2 - sub_text.get_width() / 2, 500))
-            betalabel = font2.render('v0.9(beta)', 0, colors.light_grey)
+            betalabel = font2.render('v0.9.2(still beta)', 0, colors.light_grey)
             self.screen.blit(betalabel, (vars.SCREEN_WIDTH - betalabel.get_width()*1.5, vars.SCREEN_HEIGHT-betalabel.get_height()*1.5))
             if (self.timer // (vars.fps/2)) % 2 == 0 or (affirmative and self.timer % 2 == 0):
                 if affirmative:

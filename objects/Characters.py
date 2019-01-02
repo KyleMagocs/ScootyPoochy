@@ -132,6 +132,8 @@ class Cooper(CharacterBase):
     colorcode = b'r'
     name = 'Cooper'
 
+    finish_text = "i'm done"
+
     attributes = (
         '+ not as in Anderson',
         '+ it\'s Xylon\'s Dog!',
@@ -193,7 +195,7 @@ class Beef(CharacterBase):
     poop_paths = ['beef/poop1.png', 'beef/poop2.png']
 
     color = colors.light_grey
-    colorcode = b'x'
+    colorcode = b'w'
     name = 'Roast Beef'
     attributes = (
         '+ is a cat',
@@ -262,6 +264,8 @@ class Nort(CharacterBase):
     color = colors.aqua
     colorcode = b'a'
     name = 'NORT'
+
+    finish_text = "far out"
 
     attributes = (
         '+ Laser poops',

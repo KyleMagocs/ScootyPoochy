@@ -12,7 +12,8 @@ class MusicLib:
     @classmethod
     def play_race_start(cls):
         if not cls.currently_playing == 'race_start':
-            music.load(str(cls.music_path / 'RaceTheme.wav'))
+            music.load(str(cls.music_path / 'RaceTheme_mt.wav'))
+            MusicLib.update_volume(.75)
             if not music_off:
                 music.play(-1)
             cls.currently_playing = 'race_start'

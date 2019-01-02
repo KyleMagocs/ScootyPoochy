@@ -88,7 +88,7 @@ class ScootPooch(LevelObject, collide_object):
     x_collide_offset = 0
     y_collide_offset = 0
     collide_height = 0
-    points = 500
+    points = 250
     z = 1
 
     sheet_path = 'objects/garage/pooch.png'
@@ -123,7 +123,7 @@ class WaterHeater(LevelObject, collide_object):
     x_collide_offset = 62
     y_collide_offset = 45
     collide_height = 120
-    points = 1000
+    points = 500
     z = 1
 
     sheet_path = 'objects/garage/waterheater.png'
@@ -137,7 +137,7 @@ class WaterHeater(LevelObject, collide_object):
         self.image_index = 0
         self.x = init_pos[0]
         self.y = init_pos[1]
-        self.points = 1000
+        self.points = 500
         if mirror:
             self.x -= self.image.get_width()
             self.x_collide_offset = self.image.get_width()

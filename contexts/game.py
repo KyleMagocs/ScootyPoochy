@@ -23,6 +23,7 @@ class GameContext:
 
         self.start_timer = 0
         self.finish_timer = 0
+
         # self.objects = pygame.sprite.Group()  # hold level objects
 
         self.players = []
@@ -50,10 +51,11 @@ class GameContext:
         self.draw_frame = True
 
     def draw_hud(self, screen):
-        pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH / 2, 100), (vars.SCREEN_WIDTH / 2, vars.SCREEN_HEIGHT - 100), 4)
-        pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH / 2 - 35, 100), (vars.SCREEN_WIDTH / 2 + 35, 100), 4)
-        pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH / 2 - 35, vars.SCREEN_HEIGHT - 100), (vars.SCREEN_WIDTH / 2 + 35, vars.SCREEN_HEIGHT - 100), 4)
-        pygame.draw.line(screen, colors.white, (vars.SCREEN_WIDTH / 2 - 25, vars.SCREEN_HEIGHT / 2), (vars.SCREEN_WIDTH / 2 + 25, vars.SCREEN_HEIGHT / 2), 4)
+        pygame.draw.line(screen, colors.light_grey, (vars.SCREEN_WIDTH / 2, 100), (vars.SCREEN_WIDTH / 2, vars.SCREEN_HEIGHT - 100), 4)
+        pygame.draw.line(screen, colors.light_grey, (vars.SCREEN_WIDTH / 2 - 35, 100), (vars.SCREEN_WIDTH / 2 + 35, 100), 4)
+        pygame.draw.line(screen, colors.light_grey, (vars.SCREEN_WIDTH / 2 - 35, vars.SCREEN_HEIGHT - 100), (vars.SCREEN_WIDTH / 2 + 35, vars.SCREEN_HEIGHT - 100), 4)
+        pygame.draw.line(screen, colors.light_grey, (vars.SCREEN_WIDTH / 2 - 25, vars.SCREEN_HEIGHT / 2), (vars.SCREEN_WIDTH / 2 + 25, vars.SCREEN_HEIGHT / 2), 4)
+
         _prog = self.world.get_progress()
         p1_y = int(_prog[0] * (vars.SCREEN_HEIGHT - 210))
         p2_y = int(_prog[1] * (vars.SCREEN_HEIGHT - 210))
@@ -62,6 +64,18 @@ class GameContext:
             pygame.draw.circle(screen, self.world.player_one.character.color, (int(vars.SCREEN_WIDTH / 2 - 15), p1_y + 105), 8, 6)
         if self.world.player_two.character is not None:
             pygame.draw.circle(screen, self.world.player_two.character.color, (int(vars.SCREEN_WIDTH / 2 + 15), p2_y + 105), 8, 6)
+
+        font = pygame.font.SysFont('Arial', 20)
+        text = textOutline(font, 'TIME', colors.black,
+                           colors.red)
+        text.get_width()
+        screen.blit(text, (vars.SCREEN_WIDTH / 2 - text.get_width() / 2, 15))
+
+        font = pygame.font.SysFont('Arial', 60)
+        text = textOutline(font, str(round(self.world.game_timer / vars.fps)), colors.black,
+                           colors.red)
+        text.get_width()
+        screen.blit(text, (vars.SCREEN_WIDTH / 2 - text.get_width() / 2, 25))
 
     def check_keys(self):
         for event in pygame.event.get():
@@ -81,7 +95,6 @@ class GameContext:
         while True:
             self.draw_frame = not self.draw_frame
             real_fps = int(1000 / clock.tick(vars.fps))
-
             self.screen.fill(colors.black)
 
             # results = self.world.update(p1_left, p1_right, p2_left, p2_right)

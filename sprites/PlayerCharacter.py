@@ -157,6 +157,9 @@ class PlayerCharacter(pygame.sprite.Sprite):
         if self.y_speed != 0 and self.bounce_count == 0:
             self.angle = math.atan(self.x_speed / self.y_speed) / 0.0174533
 
+        if self.y <= 0:
+            self.y = 0
+
         self.x += self.x_speed
         self.y += self.y_speed
         self.rect.x = self.x

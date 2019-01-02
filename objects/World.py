@@ -23,6 +23,8 @@ class World:
         self.finish = False
         self.p1_left, self.p1_right = 0, 0
         self.p2_left, self.p2_right = 0, 0
+        self.game_timer = 99 * vars.fps
+
         # self.level.update_objects(self.x_offset)
 
         self.player_one = PlayerCharacter(init_x=self.width / 2 - 40,
@@ -49,6 +51,10 @@ class World:
 
     def update(self, ):
         self.frame += 1
+
+        if self.race_started:
+            self.game_timer -= 1
+        self.game_timer = max(self.game_timer, 0)
 
         if len(self.countdown) > 0:
             self.player_one.update_limbs((0, 0), (0, 0))
@@ -78,6 +84,11 @@ class World:
         self.player_one.update()
         self.player_two.update()
 
+        if self.player_one.y > self.level.height - 30:
+            self.player_one.y = self.level.height - 30
+        if self.player_two.y > self.level.height - 30:
+            self.player_two.y = self.level.height - 30
+
         self.handle_player_collisions()
 
         self.handle_breakable_collisions()
@@ -106,7 +117,7 @@ class World:
         return self.game_finished()
 
     def game_finished(self):
-        if self.player_one.finished and self.player_two.finished:
+        if (self.player_one.finished and self.player_two.finished) or self.game_timer <= 0:
             return self.get_scores()
         else:
             return None
@@ -223,7 +234,7 @@ class World:
             center_line = x_offset + vars.SCREEN_WIDTH/4
 
             font = pygame.font.SysFont('Impact', 32)
-            label = textOutline(font, 'SINGLE PLAYER MODE SUCKS', colors.white, colors.black)
+            label = textOutline(font, 'SINGLE PLAYER MODE SUCKS, SORRY', colors.white, colors.black)
             screen.blit(label, (center_line - label.get_width() / 2, 300))
             label = textOutline(font, 'FIND SOMEONE TO PLAY WITH', colors.white, colors.black)
             screen.blit(label, (center_line - label.get_width() / 2, 400))
@@ -278,6 +289,10 @@ class World:
 
         if player.check_victory(45):
             self.draw_win_text(screen, x_offset, player.character.color, player.character.finish_text)
+
+        else:
+            if(self.game_timer <= 0):
+                self.draw_win_text(screen, x_offset, player.character.color, "TIME OVER")
 
         if len(self.countdown) > 0:
             self.draw_countdown(screen, x_offset, player.character.color, self.countdown[0], self.countdown_timer)
