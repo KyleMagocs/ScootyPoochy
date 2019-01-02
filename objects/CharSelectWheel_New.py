@@ -96,10 +96,12 @@ class CharacterWheelNew:
 
     def confirm_character(self):
         if self.get_selected_character() is not None:
-            self.get_selected_character().flash_factor = 2
             SoundLib.playsound(self.get_selected_character().character.selectsound)
-            self.flash_timer = 30
-            self.confirmed = True
+
+            if not self.confirmed:
+                self.get_selected_character().flash_factor = 2
+                self.flash_timer = 30
+                self.confirmed = True
 
     def update_chars(self, angle_inc):
         if self.confirmed:
